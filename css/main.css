@@ -20,43 +20,57 @@ html {
     font-family: 'Nunito-Bold';
 }
 body {
-    background: #f5f5f5;
+    background: #ffdcdc;
 }
+
+/* ------------------------------------------------------------------------- navbar */
 .navbar {
+    padding: 0;
     font-family: 'Nunito-Bold';
-    background-color: transparent;
-    filter: drop-shadow(0 0 10px blue);
     position: fixed;
-    top: 0;
     width: 100%;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 300ms;
     z-index: 1000;
 }
 .navbar .container {
+    padding: 0;
+    height: 100%;
+}
+.navbar .container div:nth-child(1) {
+    padding: 0;
+    margin-top: -15px;
     display: flex;
     align-items: center;
-    filter: drop-shadow(0 0 10px blue);
+    height: 100%;
 }
 .navbar .logo {
+    margin: 0;
     width: 70px;
-    height: 80px;
-    margin-right: 10px;
+    height: 75px;
     filter: drop-shadow(0 0 10px blue);
+    cursor: pointer;
 }
 .navbar .navbar-brand.text-white.ps-2 {
-    font-size: 24px;
+    font-size: 25px;
+    filter: drop-shadow(0 0 10px blue);
 }
 .navbar ul {
-    margin: auto;
+    margin-right: -100px;
     list-style: none;
     display: flex;
     padding: 20px;
     text-align: center;
+    height: 100%;
+    filter: drop-shadow(0 0 10px blue);
 }
 .navbar ul li {
-    width: 135px;
+    width: 115px;
     display: flex;
     justify-content: center;
-
 }
 .navbar ul li a {
     padding: 8px;
@@ -75,47 +89,209 @@ body {
     box-shadow: 0 10px 50px 0 rgba(0, 255, 255, 0.322);
 }
 .navbar .loginBtn {
+    margin-top: -15px;
     background: #E2A606;
     color: white;
     padding: 10px 20px;
+    border: 2px solid transparent;
     border-radius: 35px;
     width: 100px;
-    border: none;
     transition: 200ms;
 }
 .navbar .loginBtn:hover {
     background: #E2A606;
     color: white;
+    border: 2px solid white;
     transform: translateY(-5px);
     box-shadow: 0 15px 50px 0 rgba(255, 255, 0, 0.322);
 }
+.navbar .theme {
+    position: absolute;
+    top: 35px;
+    right: 25px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+}
+.theme .theme-icon {
+    position: absolute;
+    display: flex;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: black;
+    cursor: pointer;
+}
+
+/* ------------------------------------------------------------------------- hero */
+
 .hero {
-    background-color: transparent;
-    /* color: white; */
+    position: relative;
+    top: 0;
     padding: 120px 20px;
+    padding-top: 220px;
     text-align: center;
-    height: 500px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-image: url('../attachments/wallpapers/FCAIH.jpg');
+    color: white;
+    width: 100%;
+    height: 700px;
 }
 .hero::before {
     content: "";
     position: absolute;
     top: 0;
     right: 0;
-    transform: translate(50%, -50%);
-    background-color: #111;
+    background: 
+        linear-gradient(rgba(0,0,0,1), rgba(143, 0, 0, 0.3)),
+        url('../attachments/wallpapers/FCAIH.jpg') fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
     width: 100%;
-    z-index: 0;
+    height: 100%;
+    z-index: -1;
 }
-
 .hero h1 {
     font-size: 40px;
 }
 
-.project-card {
+/* ------------------------------------------------------------------------- about */
+
+.about {
+    font-family: 'Nunito-Bold';
+    scroll-margin-top: 135px;
+    padding: 40px 20px;
+    background: #1f0000;
+    color: white;
+    border: 10px solid brown;
+    border-radius: 35px;
+    box-shadow: 0 20px 100px 15px rgba(255, 0, 0, 0.322);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    height: 400px;
+    transition: 200ms;
+}
+.about h1 {
+    filter: drop-shadow(0 0 10px blue);
+}
+.about p {
+    font-size: 22px;
+    width: 80%;
+}
+.about #volunteers {
+    background: #E2A606;
+    color: white;
+    border: 2px solid transparent;
+    padding: 10px 20px;
+    border-radius: 35px;
+    width: 150px;
+    transition: 200ms;
+}
+.about #volunteers:hover {
+    background: #E2A606;
+    color: white;
+    border: 2px solid white;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px 0 rgba(255, 255, 0, 0.322);
+}
+.pop-up {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    backdrop-filter: blur(15px);
+    z-index: 1000;
+}
+.pop-up #closeBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgb(255, 194, 194);
+    color: black;
+    width: 40px;
+    height: 40px;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 200ms;
+}
+.pop-up #closeBtn:hover {
+    background-color: red;
+    color: white;
+}
+.pop-up .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #FFDCDC;
+    padding: 20px;
+    border-radius: 10px;
+    width: 70%;
+    height: 95%;
+}
+.pop-up .container .container2 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+}
+.pop-up .container .container2 .div1,
+.pop-up .container .container2 .div2,
+.pop-up .container .container2 .div3 {
+    width: 30%;
+    height: 90%;
+    background: #E2A606;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    border-radius: 10px;
+    transition: 200ms;
+}
+.pop-up .container .container2 .div1 div,
+.pop-up .container .container2 .div2 div,
+.pop-up .container .container2 .div3 div {
+    width: 90%;
+    height: 45%;
+    background: #FFDCDC;
+    color: #a37802;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    transition: 200ms;
+}
+.pop-up .container .container2 .div1 img,
+.pop-up .container .container2 .div2 img,
+.pop-up .container .container2 .div3 img {
+    width: 100px;
+    height: 100px;
+    box-shadow: 0 0 10px 0 black;
+    margin: 15px 0;
+}
+
+/* ------------------------------------------------------------------------- projects */
+.projects {
+    scroll-margin-top: 115px;
+    display: block;
+    gap: 20px;
+    background-color: #E2A606;
+}
+.projects .row {
+    display: flex;
+}
+.row .project-card {
     transition: 0.3s;
+    
 }
 
 .project-card:hover {

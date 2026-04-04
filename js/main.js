@@ -9,6 +9,23 @@ window.onscroll = function () {
     }
 };
 
+// button about volunteers
+
+let volunteerBtn = document.getElementById("volunteers");
+volunteerBtn.addEventListener(
+    "click",
+    function () {
+        document.getElementById("volunteerdiv").style.display =
+            document.getElementById("volunteerdiv").style.display === "block"
+                ? "none"
+                : "block";
+    }
+);
+
+let closeBtn = document.getElementById("closeBtn");
+closeBtn.addEventListener("click", function () {
+    document.getElementById("volunteerdiv").style.display = "none";
+});
 
 document.getElementById("donationForm")
     .addEventListener("submit", function (e) {

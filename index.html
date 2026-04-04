@@ -6,29 +6,85 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
     <title>FCAICapU-crowdfunding</title>
-    <link rel="shortcut icon" href="attachments/logos/logo1.png" type="image/x-icon">
+    <link rel="icon" href="attachments/logos/logo1.png">
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
             <div>
-                <img src="attachments/logos/logo1.png" alt="Logo" class="logo">
+                <img src="attachments/logos/logo1.png" alt="Logo" class="logo" onclick="window.location.href='/index.html'">
                 <a class="navbar-brand text-white ps-2" href="/index.html">FCAICapU-crowdfunding.</a>
             </div>
             <ul>
-                <li><a href="#home" class="text-white mx-2">Home</a></li>
+                <li><a href="#Home" class="text-white mx-2">Home</a></li>
+                <li><a href="#about" class="text-white mx-2">About</a></li>
                 <li><a href="#projects" class="text-white mx-2">Projects</a></li>
-                <li><a href="#donate" class="text-white mx-2">Donate</a></li>
                 <li><a href="#contact" class="text-white mx-2">Contact</a></li>
             </ul>
             <a href="html/login.html" class="btn btn-light mx-1 loginBtn">Login</a>
+            <div class="theme">
+                <i class="bi bi-sun-fill theme-icon"></i>
+                <i class="bi bi-moon-fill theme-icon"></i>
+            </div>
         </div>
     </nav>
-    <section class="hero">
+
+    <!-- hero -->
+    <section class="hero" id="Home">
         <h1>Contribute to Developing and Building Your University🎓</h1>
         <p>Every Pound Makes a Difference❤️</p>
+        <p>الجنيه لوحده رايح ف داهية</p>
+        <p>انتا عارف الدولار بكام النهاردة</p>
+        <p>مش فارقة لو بعتت فلوس او لا .. مش عايزين حاجة من وشك روح نااام</p>
     </section>
-    <section class="container my-5">
+
+    <!--   about   -->
+    <section class="container my-5 about" id="about">
+        <h1 class="text-center mb-4">About Us</h1>
+        <p>We are a student-led initiative at FCAI aiming to raise funds for various projects that enhance our university experience. From improving facilities to supporting student activities, we believe in the power of community and collective effort. Join us in making a positive impact on our campus!</p>
+        <button id="volunteers">Volunteers</button>
+        <div class="pop-up" id="volunteerdiv">
+            <div class="container">
+                <button id="closeBtn">&times;</button>
+                <div class="container2">
+                    <div class="div1">
+                        <div>
+                            <img src="attachments/logos/logo1.png" alt="">
+                            <p>Tarouq</p>
+                        </div>
+                        <div>
+                            <img src="attachments/logos/logo1.png" alt="">
+                            <p>Tarouq</p>
+                        </div>
+                    </div>
+                    <div class="div2">
+                        <div>
+                            <img src="attachments/logos/logo1.png" alt="">
+                            <p>Tarouq</p>
+                        </div>
+                        <div>
+                            <img src="attachments/logos/logo1.png" alt="">
+                            <p>Tarouq</p>
+                        </div>
+                    </div>
+                    <div class="div3">
+                        <div>
+                            <img src="attachments/logos/logo1.png" alt="">
+                            <p>Tarouq</p>
+                        </div>
+                        <div>
+                            <img src="attachments/logos/logo1.png" alt="">
+                            <p>Tarouq</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    
+    <!--   projects   -->
+    <section class="container my-5 projects" id="projects">
         <h2 class="text-center mb-4">Current Projects</h2>
         <div class="row">
             <div class="col-md-4">
@@ -41,10 +97,52 @@
                         </div>
                         <a href="#donate" class="btn btn-success mt-3">Donate</a>
                     </div>
+                    <div class="card-body">
+                        <h5>Computer Lab</h5>
+                        <p>Our goal is 50,000 EGP</p>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 60%">60%</div>
+                        </div>
+                        <a href="#donate" class="btn btn-success mt-3">Donate</a>
+                    </div>
+                    <div class="card-body">
+                        <h5>Computer Lab</h5>
+                        <p>Our goal is 50,000 EGP</p>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 60%">60%</div>
+                        </div>
+                        <a href="#donate" class="btn btn-success mt-3">Donate</a>
+                    </div>
+                    <div class="card-body">
+                        <h5>Computer Lab</h5>
+                        <p>Our goal is 50,000 EGP</p>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 60%">60%</div>
+                        </div>
+                        <a href="#donate" class="btn btn-success mt-3">Donate</a>
+                    </div>
+                    <div class="card-body">
+                        <h5>Computer Lab</h5>
+                        <p>Our goal is 50,000 EGP</p>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 60%">60%</div>
+                        </div>
+                        <a href="#donate" class="btn btn-success mt-3">Donate</a>
+                    </div>
+                    <div class="card-body">
+                        <h5>Computer Lab</h5>
+                        <p>Our goal is 50,000 EGP</p>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 60%">60%</div>
+                        </div>
+                        <a href="#donate" class="btn btn-success mt-3">Donate</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- donate -->
     <section id="donate" class="container my-5">
         <h2 class="text-center">Donate Now</h2>
         <form action="php/donate.php" method="POST">
