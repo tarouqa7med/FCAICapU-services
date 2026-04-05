@@ -1,0 +1,57 @@
+
+/* --------------------------------------------------------- CSS for index.html */
+
+@keyframes index-body {
+    from {
+        background: black;
+    } to {
+        background: transparent;
+    }
+}
+@keyframes pop-up {
+    from {
+        backdrop-filter: blur(0px);
+        background: #00000000;
+    } to {
+        backdrop-filter: blur(20px);
+        background: rgba(0, 0, 0, 0.5);
+    }
+}
+@keyframes pop-up2 {
+    from {
+        backdrop-filter: blur(20px);
+        background: rgba(0, 0, 0, 0.5);
+    } to {
+        backdrop-filter: blur(0px);
+        background: #00000000;
+    }
+}
+@keyframes mini-pop-up {
+    from {
+        opacity: 0;
+        right: -50%;
+    } to {
+        opacity: 1;
+        right: 50%;
+    }
+}
+@keyframes mini-pop-up2 {
+    from {
+        opacity: 1;
+        right: 50%;
+    } to {
+        opacity: 0;
+        right: 150%;
+    }
+}
+
+/* --------------------------------------------------------- CSS for login.html & register.html */
+
+@keyframes blur {
+    from {
+        filter: blur(100px);
+    } to {
+        filter: blur(0px);
+    }
+}
+

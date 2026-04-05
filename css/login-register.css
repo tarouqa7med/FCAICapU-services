@@ -21,6 +21,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    animation: blur 350ms forwards ease;
 }
 .form-box {
     font-family: 'Nunito-Bold';
