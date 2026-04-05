@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap/bootstrap-icons.css">
     <link rel="stylesheet" href="css/main.css">
-    <title>FCAICapU-crowdfunding</title>
+    <title>FCAIH-Crowdfunding</title>
     <link rel="icon" href="attachments/logos/logo1.png">
 </head>
 <body>
@@ -14,12 +14,12 @@
         <div class="container">
             <div>
                 <img src="attachments/logos/logo1.png" alt="Logo" class="logo" onclick="window.location.href='/index.html'">
-                <a class="navbar-brand text-white ps-2" href="/index.html">FCAICapU-crowdfunding.</a>
+                <a class="navbar-brand text-white ps-2" href="/index.html">FCAIH-Crowdfunding</a>
             </div>
             <ul>
                 <li><a href="#Home" class="text-white mx-2">Home</a></li>
-                <li><a href="#about" class="text-white mx-2">About</a></li>
-                <li><a href="#projects" class="text-white mx-2">Projects</a></li>
+                <li><a href="#about" class="text-white mx-2">Our Vision</a></li>
+                <li><a href="#projects" class="text-white mx-2">Donation</a></li>
                 <li><a href="#contact" class="text-white mx-2">Contact</a></li>
             </ul>
             <a href="html/login.html" class="btn btn-light mx-1 loginBtn">Login</a>
@@ -40,9 +40,9 @@
         <audio src="attachments/cc.mp3" controls></audio>
     </section>
 
-    <!--   about   -->
+    <!--   our vision   -->
     <section class="container my-5 about" id="about">
-        <h1 class="text-center mb-4">About Us</h1>
+        <h1 class="text-center mb-4">Our Vision</h1>
         <p>We are a student-led initiative at FCAI aiming to raise funds for various projects that enhance our university experience. From improving facilities to supporting student activities, we believe in the power of community and collective effort. Join us in making a positive impact on our campus!</p>
         <button id="volunteers">Volunteers</button>
         <div class="pop-up" id="volunteerdiv">
@@ -87,26 +87,26 @@
     
     <!--   projects   -->
     <section class="container my-5 projects" id="projects">
-        <h2 class="text-center mb-4">Current Projects</h2>
+        <h2 class="text-center mb-4">Donation</h2>
         <div class="card project-card">
             <div class="card-body">
                 <h5>Support for the College</h5>
-                <p>Our goal is 50,000 EGP</p>
+                <p>-----------</p>
                 <a href="html/support-college.html" id="support-college" class="btn btn-success mt-3">Donate</a>
             </div>
             <div class="card-body">
                 <h5>Support for Students</h5>
-                <p>Our goal is 50,000 EGP</p>
+                <p>------------</p>
                 <a href="html/support-students.html" id="support-students" class="btn btn-success mt-3">Donate</a>
             </div>
             <div class="card-body">
                 <h5>Support for Graduation Projects</h5>
-                <p>Our goal is 50,000 EGP</p>
+                <p>------------</p>
                 <a href="html/support-graduationProjects.html" id="support-graduationProjects" class="btn btn-success mt-3">Donate</a>
             </div>
             <div class="card-body">
                 <h5>Support for Workers</h5>
-                <p>Our goal is 50,000 EGP</p>
+                <p>-------------</p>
                 <a href="html/support-workers.html" id="support-workers" class="btn btn-success mt-3">Donate</a>
             </div>
         </div>
@@ -124,19 +124,19 @@
             </div>
             <div class="icon-div">
                 <div class="circle"><i class="bi bi-envelope-fill"></i></div>
-                <p>username@fcai.capu.edu.eg</p>
+                <p>E-mail</p>
             </div>
             <div class="icon-div">
                 <div class="circle"><i class="bi bi-telephone-fill"></i></div>
-                <p>+20 10 9999 9999</button>
+                <p>Phone</button>
             </div>
         </div>
         <form action="php/donate.php" method="POST">
             <div style="display: flex; gap: 10px;">
-                <input type="text" name="name" class="form-control my-2" placeholder="Your Name" required>
-                <input type="email" name="email" class="form-control my-2" placeholder="Your Email" required>
+                <input type="text" name="name" class="form-control my-2" placeholder="Name" required>
+                <input type="email" name="email" class="form-control my-2" placeholder="Email" required>
             </div>
-            <textarea name="" id="" required></textarea>
+            <textarea name="message" id="message" placeholder="Message. . ."  required></textarea>
             <button class="btn btn-success w-100" type="submit">Submit</button>
         </form>
         <p id="msg" class="text-center mt-3"></p>
