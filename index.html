@@ -37,7 +37,7 @@
         <p>الجنيه لوحده رايح ف داهية</p>
         <p>انتا عارف الدولار بكام النهاردة</p>
         <p>مش فارقة لو بعتت فلوس او لا .. مش عايزين حاجة من وشك روح نااام</p>
-        <audio src="attachments/cc.mp3" controls autoplay></audio>
+        <audio src="attachments/cc.mp3" controls></audio>
     </section>
 
     <!--   about   -->
@@ -88,70 +88,56 @@
     <!--   projects   -->
     <section class="container my-5 projects" id="projects">
         <h2 class="text-center mb-4">Current Projects</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card project-card">
-                    <div class="card-body">
-                        <h5>Computer Lab</h5>
-                        <p>Our goal is 50,000 EGP</p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 60%">60%</div>
-                        </div>
-                        <a href="#donate" class="btn btn-success mt-3">Donate</a>
-                    </div>
-                    <div class="card-body">
-                        <h5>Computer Lab</h5>
-                        <p>Our goal is 50,000 EGP</p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 60%">60%</div>
-                        </div>
-                        <a href="#donate" class="btn btn-success mt-3">Donate</a>
-                    </div>
-                    <div class="card-body">
-                        <h5>Computer Lab</h5>
-                        <p>Our goal is 50,000 EGP</p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 60%">60%</div>
-                        </div>
-                        <a href="#donate" class="btn btn-success mt-3">Donate</a>
-                    </div>
-                    <div class="card-body">
-                        <h5>Computer Lab</h5>
-                        <p>Our goal is 50,000 EGP</p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 60%">60%</div>
-                        </div>
-                        <a href="#donate" class="btn btn-success mt-3">Donate</a>
-                    </div>
-                    <div class="card-body">
-                        <h5>Computer Lab</h5>
-                        <p>Our goal is 50,000 EGP</p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 60%">60%</div>
-                        </div>
-                        <a href="#donate" class="btn btn-success mt-3">Donate</a>
-                    </div>
-                    <div class="card-body">
-                        <h5>Computer Lab</h5>
-                        <p>Our goal is 50,000 EGP</p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 60%">60%</div>
-                        </div>
-                        <a href="#donate" class="btn btn-success mt-3">Donate</a>
-                    </div>
-                </div>
+        <div class="card project-card">
+            <div class="card-body">
+                <h5>Support for the College</h5>
+                <p>Our goal is 50,000 EGP</p>
+                <a href="html/support-college.html" id="support-college" class="btn btn-success mt-3">Donate</a>
+            </div>
+            <div class="card-body">
+                <h5>Support for Students</h5>
+                <p>Our goal is 50,000 EGP</p>
+                <a href="html/support-students.html" id="support-students" class="btn btn-success mt-3">Donate</a>
+            </div>
+            <div class="card-body">
+                <h5>Support for Graduation Projects</h5>
+                <p>Our goal is 50,000 EGP</p>
+                <a href="html/support-graduationProjects.html" id="support-graduationProjects" class="btn btn-success mt-3">Donate</a>
+            </div>
+            <div class="card-body">
+                <h5>Support for Workers</h5>
+                <p>Our goal is 50,000 EGP</p>
+                <a href="html/support-workers.html" id="support-workers" class="btn btn-success mt-3">Donate</a>
             </div>
         </div>
     </section>
 
-    <!-- donate -->
-    <section id="donate" class="container my-5">
-        <h2 class="text-center">Donate Now</h2>
+    <!-- contact -->
+    <section id="contact" class="container my-5 contact">
+        <h2 class="text-center">Contact Us</h2>
+        <div class="bootstrap-icons">
+            <div class="icon-div">
+                <div class="circle">
+                    <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <p>Address</p>
+            </div>
+            <div class="icon-div">
+                <div class="circle"><i class="bi bi-envelope-fill"></i></div>
+                <p>username@fcai.capu.edu.eg</p>
+            </div>
+            <div class="icon-div">
+                <div class="circle"><i class="bi bi-telephone-fill"></i></div>
+                <p>+20 10 9999 9999</button>
+            </div>
+        </div>
         <form action="php/donate.php" method="POST">
-            <input type="text" name="name" class="form-control my-2" placeholder="Your Name" required>
-            <input type="email" name="email" class="form-control my-2" placeholder="Your Email" required>
-            <input type="number" name="amount" class="form-control my-2" placeholder="Donation Amount" required>
-            <button class="btn btn-success w-100">Donate Now 💰</button>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" name="name" class="form-control my-2" placeholder="Your Name" required>
+                <input type="email" name="email" class="form-control my-2" placeholder="Your Email" required>
+            </div>
+            <textarea name="" id="" required></textarea>
+            <button class="btn btn-success w-100" type="submit">Submit</button>
         </form>
         <p id="msg" class="text-center mt-3"></p>
     </section>

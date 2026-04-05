@@ -33,6 +33,10 @@ darkMode.addEventListener(
         darkMode.style.display = "none";
         lightMode.style.display = "block";
         document.documentElement.style.setProperty("--primary-color", "#1f0000");
+        document.documentElement.style.setProperty("--third-color", "#711a1a");
+        document.documentElement.style.setProperty("--text-color", "white");
+        document.documentElement.style.setProperty("--text-color-inverted", "white");
+        document.documentElement.style.setProperty("--card-body-p", "black");
     }
 );
 lightMode.addEventListener(
@@ -41,6 +45,10 @@ lightMode.addEventListener(
         lightMode.style.display = "none";
         darkMode.style.display = "block";
         document.documentElement.style.setProperty("--primary-color", "#ffdcdc");
+        document.documentElement.style.setProperty("--third-color", "#ffb7b7");
+        document.documentElement.style.setProperty("--text-color", "black");
+        document.documentElement.style.setProperty("--text-color-inverted", "black");
+        document.documentElement.style.setProperty("--card-body-p", "#aaa");
     }
 );
 
