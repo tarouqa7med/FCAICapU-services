@@ -2,7 +2,7 @@
 
 let navScroll = document.getElementsByClassName("navbar")[0];
 window.onscroll = function () {
-    if (document.documentElement.scrollTop > 100) {
+    if (document.documentElement.scrollTop > 135) {
         navScroll.style.backgroundColor = "brown";
     } else {
         navScroll.style.backgroundColor = "transparent";
@@ -19,6 +19,28 @@ volunteerBtn.addEventListener(
             document.getElementById("volunteerdiv").style.display === "block"
                 ? "none"
                 : "block";
+    }
+);
+
+// Change theme
+
+let darkMode = document.querySelector(".darkMode");
+let lightMode = document.querySelector(".lightMode");
+
+darkMode.addEventListener(
+    "click",
+    function () {
+        darkMode.style.display = "none";
+        lightMode.style.display = "block";
+        document.documentElement.style.setProperty("--primary-color", "#1f0000");
+    }
+);
+lightMode.addEventListener(
+    "click",
+    function () {
+        lightMode.style.display = "none";
+        darkMode.style.display = "block";
+        document.documentElement.style.setProperty("--primary-color", "#ffdcdc");
     }
 );
 
