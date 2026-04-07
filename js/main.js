@@ -45,9 +45,12 @@ darkMode.addEventListener("click", function () {
     color.setProperty("--about-img", "#660011");
     color.setProperty("--text-color", "black");
     color.setProperty("--text-color-inverted", "white");
+    color.setProperty("--whiteGray", "gray");
     color.setProperty("--card-body-p", "black");
     color.setProperty("--drop-shadow-color", "cyan")
-    color.setProperty("--drop-shadow-color-inverted", "blue")
+    color.setProperty("--drop-shadow-color-inverted", "blue");
+    color.setProperty("--donations-bgcolor", "#202020")
+    color.setProperty("--donations-container-bgcolor", "#3a3a3a")
 });
 lightMode.addEventListener("click", function () {
     lightMode.style.display = "none";
@@ -60,9 +63,12 @@ lightMode.addEventListener("click", function () {
     color.setProperty("--about-img", "#ffc0ca");
     color.setProperty("--text-color", "white");
     color.setProperty("--text-color-inverted", "black");
+    color.setProperty("--whiteGray", "white");
     color.setProperty("--card-body-p", "#aaa");
-    color.setProperty("--drop-shadow-color", "blue")
-    color.setProperty("--drop-shadow-color-inverted", "cyan")
+    color.setProperty("--drop-shadow-color", "transparent")
+    color.setProperty("--drop-shadow-color-inverted", "cyan");
+    color.setProperty("--donations-bgcolor", "#d6d6d6");
+    color.setProperty("--donations-container-bgcolor", "#b1b1b1");
 });
 
 document

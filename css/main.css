@@ -11,8 +11,8 @@
     src: url('fonts/Nunito-en/Nunito-Bold.ttf');
 }
 @font-face {
-    font-family: 'Nunito-SemiBold';
-    src: url('fonts/Nunito-en/Nunito-SemiBold.ttf');
+    font-family: 'Nunito-Light';
+    src: url('fonts/Nunito-en/Nunito-Light.ttf');
 }
 
 /* ------------------------------------------------------------------------- Basics */
@@ -26,9 +26,12 @@
     --about-img: #ffc0ca;
     --text-color: white;
     --text-color-inverted: black;
+    --whiteGray: white;
     --card-body-p: #aaa;
-    --drop-shadow-color: blue;
+    --drop-shadow-color: transparent;
     --drop-shadow-color-inverted: cyan;
+    --donations-bgcolor: #d6d6d6;
+    --donations-container-bgcolor: #b1b1b1;
 }
 * {
     font-family: 'Nunito-Bold';
@@ -39,13 +42,9 @@ html {
     font-family: 'Nunito-Bold';
 }
 body {
-    background: var(--primary-color);
 }
 .animated-body {
     animation: index-body 1s forwards ease;
-}
-hr {
-    border: 2px solid var(--secondary-color);
 }
 
 /* ------------------------------------------------------------------------- navbar */
@@ -76,19 +75,14 @@ hr {
     margin: 0;
     width: 70px;
     height: 75px;
-    filter: drop-shadow(0 0 10px var(--drop-shadow-color));
     cursor: pointer;
-    transition: 200ms;
 }
 .navbar .navbar-brand.text-white.ps-2 {
     font-size: 25px;
-    filter: drop-shadow(0 0 10px var(--drop-shadow-color));
-    transition: 200ms;
 }
 .navbar .logo:hover,
 .navbar .navbar-brand.text-white.ps-2:hover {
     font-weight: bold;
-    filter: drop-shadow(0 0 10px var(--drop-shadow-color-inverted));
     scale: 1.02;
 }
 .navbar .navbar-brand.text-white.ps-2:focus {
@@ -101,10 +95,6 @@ hr {
     padding: 22px;
     text-align: center;
     height: 100%;
-    filter: drop-shadow(0 0 10px var(--drop-shadow-color));
-}
-.navbar ul:hover {
-    filter: drop-shadow(0 0 10px var(--drop-shadow-color-inverted));
 }
 .navbar ul li {
     width: 125px;
@@ -125,26 +115,27 @@ hr {
     border-bottom: 2px solid blue;
     font-weight: bold;
     transform: translateY(-5px);
-    box-shadow: 0 10px 50px 0 rgba(0, 255, 255, 0.322);
+    box-shadow: 0 10px 20px 0 rgba(0, 255, 255, 0.322);
 }
 .navbar ul li a:focus {
     scale: 0.75;
 }
 .navbar .loginBtn {
     margin-top: -15px;
-    background: linear-gradient(135deg,pink, red);
-    color: white;
+    background: linear-gradient(135deg,var(--text-color), gray);
+    color: var(--text-color-inverted);
     padding: 10px 20px;
-    border: 2px solid red;
+    border: 2px solid pink;
     border-radius: 35px;
     width: 100px;
     transition: 200ms;
 }
 .navbar .loginBtn:hover {
-    background: linear-gradient(135deg, red,pink);
+    background: linear-gradient(135deg, gray,pink);
+    color: var(--text-color);
     border: 2px solid white;
     transform: translateY(-5px);
-    box-shadow: 0 15px 50px 0 rgba(255, 0, 0, 0.281);
+    box-shadow: 0 15px 10px 0 gray;
 }
 .navbar .loginBtn:focus {
     scale: 0.75;
@@ -202,7 +193,9 @@ hr {
     z-index: -1;
 }
 .hero h1 {
+    margin-top: -35px;
     font-size: 42px;
+    letter-spacing: 10px;
     filter: drop-shadow(0 0 10px red);
 }
 .hero audio {
@@ -210,16 +203,18 @@ hr {
 }
 
 /* ------------------------------------------------------------------------- about */
-
 .about {
+    padding: 50px;
+    background-color: var(--text-color);
+    scroll-margin-top: 75px;
+    transition: 200ms;
+}
+.about .container {
     font-family: 'Nunito-Bold';
-    scroll-margin-top: 125px;
     padding: 40px 20px;
-    background: var(--about);
+    background-color: var(--donations-container-bgcolor);
     color: var(--text-color-inverted);
-    border: 10px solid var(--toBrown);
     border-radius: 35px;
-    box-shadow: 0 20px 100px 15px rgba(255, 0, 0, 0.322);
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -227,24 +222,24 @@ hr {
     text-align: center;
     height: 400px;
 }
-.about h1 {
+.about .container h1 {
     filter: drop-shadow(0 0 10px var(--drop-shadow-color));
 }
-.about p {
+.about .container p {
     font-size: 22px;
     width: 80%;
 }
-.about #volunteers {
-    background: linear-gradient(135deg, pink, red);
-    color: white;
-    border: 2px solid red;
+.container #volunteers {
+    background: linear-gradient(135deg, var(--text-color-inverted), gray);
+    color: var(--text-color);
+    border: 2px solid gray;
     padding: 10px 20px;
     border-radius: 35px;
     width: 150px;
     transition: 200ms;
 }
-.about #volunteers:hover {
-    background: linear-gradient(135deg, red, pink);
+.container #volunteers:hover {
+    background: linear-gradient(135deg, gray, pink);
     color: white;
     border: 2px solid white;
     transform: translateY(-3px);
@@ -269,7 +264,7 @@ hr {
     position: absolute;
     top: 0;
     right: 0;
-    background-color: var(--third-color);
+    background-color: rgba(255, 0, 0, 0.221);
     color: var(--text-color-inverted);
     width: 55px;
     height: 40px;
@@ -287,8 +282,8 @@ hr {
     top: 50%;
     right: 50%;
     transform: translate(50%, -50%);
-    background: linear-gradient(135deg, pink, #944444);
-    box-shadow: 0 0 20px 0 var(--toBrown);
+    background-color: var(--donations-bgcolor);
+    box-shadow: 0 0 0 5px gray;
     padding: 20px;
     border-radius: 35px 0 35px 35px;
     width: 80%;
@@ -307,9 +302,9 @@ hr {
 .mini-pop-up .container2 .div1,
 .mini-pop-up .container2 .div2,
 .mini-pop-up .container2 .div3 {
-    width: 30%;
+    width: calc(100%/3);
     height: 90%;
-    background: linear-gradient(315deg, pink, #944444);
+    background-color: var(--donations-bgcolor);
     color: white;
     display: flex;
     flex-direction: column;
@@ -321,10 +316,9 @@ hr {
 .mini-pop-up .container2 .div1 div,
 .mini-pop-up .container2 .div2 div,
 .mini-pop-up .container2 .div3 div {
-    width: 90%;
+    width: 85%;
     height: 45%;
-    background: linear-gradient(135deg, pink, #944444);
-    box-shadow: 0 0 10px 0 var(--text-color-inverted);
+    background-color: var(--donations-container-bgcolor);
     margin: 10px;
     display: flex;
     flex-direction: column;
@@ -336,25 +330,20 @@ hr {
 .mini-pop-up .container2 .div1 div:hover,
 .mini-pop-up .container2 .div2 div:hover,
 .mini-pop-up .container2 .div3 div:hover {
-    width: 90%;
+    width: 100%;
     height: 70%;
 }
 .mini-pop-up .container2 img {
     margin: 15px 0;
     width: 100px;
     height: 100px;
-    border: 2px solid var(--third-color);
-    box-shadow: 0 0 10px var(--third-color);
+    border: 2px solid gray;
     border-radius: 50%;
-
-}
-.mini-pop-up .container2 img:hover {
-    scale: 1.1;
 }
 .mini-pop-up .container2 p {
     font-size: 18px;
     color: var(--text-color-inverted);
-    filter: drop-shadow(0 0 10px var(--drop-shadow-color-inverted));
+    filter: drop-shadow(0 0 10px var(--drop-shadow-color));
 }
 
 /* ------------------------------------------------------------------------- projects */
@@ -364,28 +353,43 @@ hr {
     display: block;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, transparent, rgba(129, 0, 0, 0.413));
+    background: var(--donations-bgcolor);
     gap: 20px;
 }
-.donations h2 {
+.donations .container {
+    font-family: 'Nunito-Bold';
+    padding: 40px 20px;
+    background: var(--donations-container-bgcolor);
+    color: var(--text-color-inverted);
+    border-radius: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+.donations .container h2 {
+    font-size: 40px;
     text-align: center;
     color: var(--text-color-inverted);
     filter: drop-shadow(0 0 10px var(--drop-shadow-color));
 }
-.donations .project-card {
+.container .project-card {
     padding: 20px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     gap: 35px;
-    background-color: var(--third-color);
+    background-color: transparent;
+    border: none;
 }
-.donations-card .card-body {
+.project-card .card-body {
     justify-content: center;
     width: calc((100% - 50px) / 2);
     height: 250px;
     display: flex;
-    border: 2px solid pink;
+    background: var(--donations-bgcolor);
+    border: 2px solid transparent;
     border-radius: 30px;
     flex-direction: column;
     justify-content: space-around;
@@ -394,7 +398,6 @@ hr {
 }
 .card-body h5,
 .card-body p {
-    background: linear-gradient(90deg, transparent 20%, var(--card-body-p) 50%, transparent 80%);
     width: 100%;
     height: 50px;
     display: flex;
@@ -404,31 +407,46 @@ hr {
     text-align: center;
 }
 .card-body p {
-    background: linear-gradient(90deg, transparent, var(--card-body-p), transparent);
     height: 30px;
 }
 .card-body a {
     scroll-margin-top: 300px;
+    background: linear-gradient(135deg, var(--text-color-inverted), gray);
+    color: var(--text-color);
+    box-shadow: 0 0 10px gray;
+    border: none;
+    border-radius: 30px;
+    width: 100px;
+    transition: 200ms;
 }
-.card-body .progress {
-    width: 100%;
-    height: 10px;
+.card-body a:hover {
+    background: linear-gradient(135deg, gray, pink);
+    color: var(--text-color-inverted);
 }
-.progess .progress-bar {
-    width: 100%;
-    height: 100%;
-    background-color: var(--secondary-color);
+.card-body:nth-child(even) a:hover {
+    box-shadow: 10px 10px 10px gray;
+}
+.card-body:nth-child(odd) a:hover {
+    box-shadow: -10px 10px 10px gray;
 }
 
 /* ------------------------------------------------------------------------- contact */
-
 .contact {
+    padding: 25px;
+    scroll-margin-top: 60px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: var(--text-color);
+    gap: 20px;
+}
+.contact .container {
     padding: 25px;
     scroll-margin-top: 90px;
     display: block;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, transparent, rgba(129, 0, 0, 0.413));
+    background-color: var(--text-color);
 }
 .contact h2 {
     text-align: center;
@@ -440,8 +458,9 @@ hr {
 }
 .contact .bootstrap-icons {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
+    gap: 30px;
     font-size: 30px;
     color: var(--text-color-inverted);
 }
@@ -456,22 +475,85 @@ hr {
     margin-bottom: 15px;
     width: 75px;
     height: 75px;
+    background-color: var(--donations-bgcolor);
+    color: var(--text-color-inverted);
     border: 2px solid var(--text-color-inverted);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(255, 208, 208);
+}
+.icon-div .circle:hover {
+    border: 2px solid yellow;
+    background-color: var(--donations-container-bgcolor);
+    filter: drop-shadow(0 0 5px var(--text-color-inverted));
+    .bi-geo-alt-fill,
+    .bi-envelope-fill,
+    .bi-telephone-fill {
+        color: yellow;
+    }
 }
 .icon-div p {
-    font-size: 18px;
+    font-size: 25px;
+    margin-bottom: 0;
+}
+.icon-div h4 {
+    font-size: 15px;
+    font-family: 'Nunito-Light';
 }
 .contact form {
     width: 50%;
     margin: auto;
+    margin-top: 20px;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
+    /* background-color: blue; */
     gap: 15px;
+}
+.contact form div {
+    width: 100%;
+}
+.contact form div input {
+    outline: 1px solid var(--text-color-inverted);
+    background-color: var(--whiteGray);
+    transition: 500ms;
+}
+.contact form div input::placeholder {
+    color: #505050;
+}
+.contact form div input:focus {
+    outline: 2px solid blue;
+    box-shadow: 0 0 0 5px #bedaf7;
+}
+.contact form textarea {
+    width: 100%;
+    border-radius: 8px;
+    background-color: var(--whiteGray);
+    outline: 2px solid var(--text-color-inverted);
+}
+.contact form textarea::placeholder {
+    color: #505050;
+}
+.contact form textarea:focus {
+    background-color: white;
+    outline: 2px solid blue;
+    box-shadow: 0 0 0 5px #bedaf7;
+}
+.contact form button {
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(135deg, var(--text-color-inverted), gray);
+    color: var(--text-color);
+    box-shadow: 0 0 10px gray;
+    width: 20%;
+    height: 40px;
+    transition: 200ms;
+}
+.contact form button:hover {
+    background: linear-gradient(135deg, var(--donations-container-bgcolor), pink);
+    box-shadow: 10px 10px 10px gray;
 }
 
 /* ------------------------------------------------------------------------- footer */
