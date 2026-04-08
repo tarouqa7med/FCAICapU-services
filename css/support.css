@@ -4,28 +4,87 @@
     padding: 0;
     margin: 0;
 }
+.navbar::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: -1;
+}
 .support {
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: red;
-    height: 450px;
+    padding: 20px;
+    background-color: var(--text-color);
+    width: 100%;
 }
 .support .container {
-    padding: 0;
-    margin: ;
-    background-color: blue;
-    height: 80%;
-    gap: 200px;
+    padding: 50px;
+    background-color: var(--donations-container-bgcolor);
+    border-radius: 30px 30px 0 0;
 }
-.support .container p {
+.support h1 {
     text-align: center;
-    font-family: "Nunito-Bold";
-    font-size: 30px;
+    text-decoration: underline;
+    margin: 30px 0;
 }
-.support .container div {
-    background-color: green;
+.container .analysis {
+    padding: 20px;
+    background-color: var(--donations-bgcolor);
+    border-radius: 20px;
+}
+.analysis h2 {
+    text-align: center;
+    margin-bottom: 50px;
+}
+.analysis .analysis-box {
+    margin: 0 auto;
+    padding: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 90%;
+    border: 1px solid black;
+    border-radius: 20px;
+    gap: 20px;
+}
+.analysis-box div {
+    width: calc(100%/3);
+    background-color: var(--donations-bgcolor);
+    border-radius: 20px;
+    text-align: center;
+}
+.analysis-box div span {
+    font-family: 'Playball';
+    font-weight: bolder;
+    font-size: 25px;
+}
+.analysis-box div p {
+    font-family: "Nunito-Light";
+}
+.analysis .box {
+    padding: 20px;
+    width: 100%;
+    background-color: var(--donations-container-bgcolor);
+    border-radius: 20px;
+    gap: 20px;
+    display: grid;
+    align-items: center;
+}
+.box .s-box {
+    margin: auto;
+    padding: 20px;
     width: 95%;
-    height: 95%;
+    display: grid;
+    background-color: var(--donations-bgcolor);
+    border-radius: 20px;
+}
+.s-box p:nth-child(1) {
+    font-size: x-large;
+    text-align: center;
+}
+.s-box p:nth-child(2) {
+    
 }
