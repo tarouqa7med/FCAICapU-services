@@ -17,7 +17,7 @@
 }
 .support {
     padding: 20px;
-    background-color: var(--text-color);
+    background-color: var(--primary-color);
     width: 100%;
 }
 .support .container {

@@ -28,50 +28,98 @@ closeBtn.addEventListener("click", function () {
     }, 750);
 });
 
-// Change theme
+// change theme and save it with its colours
 
 let darkMode = document.querySelector(".darkMode");
 let lightMode = document.querySelector(".lightMode");
 let color = document.documentElement.style;
 
+let primary = localStorage.getItem("--primary-color");
+
+if (primary) {
+    color.setProperty("--primary-color", localStorage.getItem("--primary-color"));
+    color.setProperty("--secondary-color", localStorage.getItem("--secondary-color"));
+    color.setProperty("--border-color", localStorage.getItem("--border-color"));
+    color.setProperty("--text-color", localStorage.getItem("--text-color"));
+    color.setProperty("--text-color-inverted", localStorage.getItem("--text-color-inverted"));
+    color.setProperty("--owners-div-color", localStorage.getItem("--owners-div-color"));
+    color.setProperty("--donations-div-color", localStorage.getItem("--donations-div-color"));
+    color.setProperty("--drop-shadow-color", localStorage.getItem("--drop-shadow-color"));
+    color.setProperty("--box-shadow-80", localStorage.getItem("--box-shadow-80"));
+    color.setProperty("--contact-color", localStorage.getItem("--contact-color"));
+    color.setProperty("--contact-hover-color", localStorage.getItem("--contact-hover-color"));
+    color.setProperty("--input-color", localStorage.getItem("--input-color"));
+
+    if (localStorage.getItem("--primary-color") === "black") {
+        darkMode.style.display = "none";
+        lightMode.style.display = "block";
+    } else {
+        lightMode.style.display = "none";
+        darkMode.style.display = "block";
+    }
+}
+
 darkMode.addEventListener("click", function () {
     darkMode.style.display = "none";
     lightMode.style.display = "block";
-    color.setProperty("--primary-color", "#1f0000");
-    color.setProperty("--third-color", "#711a1a");
-    color.setProperty("--fourth-color", "#8b4a4a");
-    color.setProperty("--toBrown", "#ec9595");
-    color.setProperty("--about", "#740000");
-    color.setProperty("--about-img", "#660011");
+
+    color.setProperty("--primary-color", "black");
+    localStorage.setItem("--primary-color", "black");
+    color.setProperty("--secondary-color", "#050505");
+    localStorage.setItem("--secondary-color", "#050505");
+    color.setProperty("--border-color", "white");
+    localStorage.setItem("--border-color", "white");
     color.setProperty("--text-color", "black");
+    localStorage.setItem("--text-color", "black");
     color.setProperty("--text-color-inverted", "white");
-    color.setProperty("--whiteGray", "gray");
-    color.setProperty("--card-body-p", "black");
+    localStorage.setItem("--text-color-inverted", "white");
+    color.setProperty("--owners-div-color", "#222222");
+    localStorage.setItem("--owners-div-color", "#222222");
+    color.setProperty("--donations-div-color", "#222222");
+    localStorage.setItem("--donations-div-color", "#222222");
+    color.setProperty("--drop-shadow-color", "cyan");
+    localStorage.setItem("--drop-shadow-color", "cyan");
     color.setProperty("--box-shadow-80", "#ffffff40");
-    color.setProperty("--drop-shadow-color", "cyan")
-    color.setProperty("--drop-shadow-color-inverted", "blue");
-    color.setProperty("--donations-bgcolor", "#202020")
-    color.setProperty("--donations-container-bgcolor", "#3a3a3a")
+    localStorage.setItem("--box-shadow-80", "#ffffff40");
+    color.setProperty("--contact-color", "#202020");
+    localStorage.setItem("--contact-color", "#202020");
+    color.setProperty("--contact-hover-color", "#3a3a3a");
+    localStorage.setItem("--contact-hover-color", "#3a3a3a");
+    color.setProperty("--input-color", "gray");
+    localStorage.setItem("--input-color", "gray");
 });
+
 lightMode.addEventListener("click", function () {
     lightMode.style.display = "none";
     darkMode.style.display = "block";
-    color.setProperty("--primary-color", "#ffcdcd");
-    color.setProperty("--third-color", "#ffb7b7");
-    color.setProperty("--fourth-color", "#d88787");
-    color.setProperty("--toBrown", "brown");
-    color.setProperty("--about", "#ff5f5f8a");
-    color.setProperty("--about-img", "#ffc0ca");
+
+    color.setProperty("--primary-color", "white");
+    localStorage.setItem("--primary-color", "white");
+    color.setProperty("--secondary-color", "white");
+    localStorage.setItem("--secondary-color", "white");
+    color.setProperty("--border-color", "black");
+    localStorage.setItem("--border-color", "black");
     color.setProperty("--text-color", "white");
+    localStorage.setItem("--text-color", "white");
     color.setProperty("--text-color-inverted", "black");
-    color.setProperty("--whiteGray", "white");
-    color.setProperty("--card-body-p", "#aaa");
+    localStorage.setItem("--text-color-inverted", "black");
+    color.setProperty("--owners-div-color", "#c6c6c6");
+    localStorage.setItem("--owners-div-color", "#c6c6c6");
+    color.setProperty("--donations-div-color", "#c6c6c6");
+    localStorage.setItem("--donations-div-color", "#c6c6c6");
+    color.setProperty("--drop-shadow-color", "transparent");
+    localStorage.setItem("--drop-shadow-color", "transparent");
     color.setProperty("--box-shadow-80", "#00000080");
-    color.setProperty("--drop-shadow-color", "transparent")
-    color.setProperty("--drop-shadow-color-inverted", "cyan");
-    color.setProperty("--donations-bgcolor", "#d6d6d6");
-    color.setProperty("--donations-container-bgcolor", "#b1b1b1");
+    localStorage.setItem("--box-shadow-80", "#00000080");
+    color.setProperty("--contact-color", "#d6d6d6");
+    localStorage.setItem("--contact-color", "#d6d6d6");
+    color.setProperty("--contact-hover-color", "#b1b1b1");
+    localStorage.setItem("--contact-hover-color", "#b1b1b1");
+    color.setProperty("--input-color", "white");
+    localStorage.setItem("--input-color", "white");
 });
+
+// -----------------------------------------------------------------------------------------------
 
 document
 .getElementById("donationForm")
