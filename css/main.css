@@ -236,7 +236,6 @@ html {
     padding: 30px;
     background-color: var(--primary-color);
     scroll-margin-top: 90px;
-    transition: 200ms;
 }
 .about .container {
     font-family: 'Nunito-Bold';
