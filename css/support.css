@@ -208,7 +208,7 @@
     /* padding-top: 40px; */
     width: 40%;
     min-width: 450px;
-    background:  var(--primary-color);
+    background:  var(--secondary-color);
     color: var(--text-color-inverted);
     animation: none;
 }
@@ -221,20 +221,41 @@
     display: flex;
     flex-direction: column;
 }
+form label {
+    margin-left: 10px;
+}
 form label::after {
     content: " *";
     color: red;
 }
-form input {
+form input,
+select {
     margin-bottom: 15px;
     height: 40px;
     border: 1px solid #226878;
     border-radius: 8px;
     transition: 100ms;
 }
-form input:focus {
+select {
+    width: 100%;
+    text-align: center;
+}
+form input:focus,
+select:focus {
     outline: 1px solid #226878;
     box-shadow: 0 0 0 3px #226878;
+}
+form div {
+    gap: 10px;
+}
+form div div {
+    display: flex;
+    flex-direction: column;
+}
+form div div div {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
 }
 form button {
     margin: auto;
