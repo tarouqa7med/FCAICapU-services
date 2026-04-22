@@ -28,9 +28,9 @@
 :root {
     --bg1:     #d8deff;
     --bg2:     #c3d1f5;
-    --blob1:   #5bc7ff;
-    --blob2:   #00eaff7c;
-    --blob3:   #fffc3e63;
+    --blob1:   #5bc8ffa8;
+    --blob2:   #0062ff49;
+    --blob3:   #fffc3e3d;
     
 
     --Btn-bgColor1: #1b3554;
@@ -81,23 +81,30 @@ body::after {
     z-index: -1;
 }
 body::before {
+    top: 10%;
     background: var(--blob1);
+    transform: translate(-50%, -40%);
+    opacity: 0;
+    animation: body-before 10s 0s infinite alternate ease-in-out;
 }
 body::after {
-    bottom: -80px;
-    right: -80px;
+    top: -20%;
+    right: 0%;
     background: var(--blob2);
+    transform: translate(50%, -40%);
+    opacity: 0;
+    animation: body-after 10s 0s infinite alternate-reverse ease-in-out;
 }
 .extra {
     position: fixed;
-    top: 15%;
-    right: 25%;
     width: 350px;
     height: 350px;
     border-radius: 50%;
-    filter: blur(150px);
+    filter: blur(100px);
     background: var(--blob3);
     z-index: -100;
+    opacity: 0;
+    animation: body-extra 10s 5s infinite forwards ease-in-out;
 }
 .animated-body {
     animation: index-body 1s forwards ease;

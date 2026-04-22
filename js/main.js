@@ -86,12 +86,12 @@ darkMode.forEach(
             localStorage.setItem("--bg1", "#0f172a");
             color.setProperty("--bg2", "#111827");
             localStorage.setItem("--bg2", "#111827");
-            color.setProperty("--blob1", "#0001524a");
-            localStorage.setItem("--blob1", "#2564eb4a");
-            color.setProperty("--blob2", "#00039b");
-            localStorage.setItem("--blob2", "#00039b");
-            color.setProperty("--blob3", "#ed3a9c70");
-            localStorage.setItem("--blob3", "#ed3a9c70");
+            color.setProperty("--blob1", "#5bc8ffa8");
+            localStorage.setItem("--blob1", "#5bc8ffa8");
+            color.setProperty("--blob2", "#0062ff49");
+            localStorage.setItem("--blob2", "#0062ff49");
+            color.setProperty("--blob3", "#ed3a9c8a");
+            localStorage.setItem("--blob3", "#ed3a9c8a");
 
 
             color.setProperty("--primary-color", "#000f22");
@@ -131,12 +131,12 @@ lightMode.forEach(
             localStorage.setItem("--bg1", "#d8deff");
             color.setProperty("--bg2", "#d9e4ff");
             localStorage.setItem("--bg2", "#d9e4ff");
-            color.setProperty("--blob1", "#fffc3e63");
-            localStorage.setItem("--blob1", "#fffc3e63");
-            color.setProperty("--blob2", "#00eaff7c");
-            localStorage.setItem("--blob2", "#00eaff7c");
-            color.setProperty("--blob3", "#783effd1");
-            localStorage.setItem("--blob3", "#783effd1");
+            color.setProperty("--blob1", "#5bc8ffa8");
+            localStorage.setItem("--blob1", "#5bc8ffa8");
+            color.setProperty("--blob2", "#0062ff75");
+            localStorage.setItem("--blob2", "#0062ff75");
+            color.setProperty("--blob3", "#fffc3e3d");
+            localStorage.setItem("--blob3", "#fffc3e3d");
 
 
             color.setProperty("--primary-color", "#c0e6fd");
