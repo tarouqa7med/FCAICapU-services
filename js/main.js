@@ -135,8 +135,8 @@ lightMode.forEach(
             localStorage.setItem("--blob1", "#5bc8ffa8");
             color.setProperty("--blob2", "#0062ff75");
             localStorage.setItem("--blob2", "#0062ff75");
-            color.setProperty("--blob3", "#fffc3e3d");
-            localStorage.setItem("--blob3", "#fffc3e3d");
+            color.setProperty("--blob3", "#1edc01cb");
+            localStorage.setItem("--blob3", "#1edc01cb");
 
 
             color.setProperty("--primary-color", "#c0e6fd");

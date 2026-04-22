@@ -51,6 +51,7 @@
     } to {
         top: 25%;
         left: 150%;
+        filter: blur(20px);
     }
 }
 @keyframes index-body {
