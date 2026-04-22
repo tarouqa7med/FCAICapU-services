@@ -1,184 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/main.css">
-    <title>FCAICapU-Crowdfunding</title>
-    <link rel="icon" href="attachments/logos/logo1.png">
-</head>
-<body>
-    <div class="animated-body">
-        <div class="arrow-up reveal" id="arrow-up">
-            <i class="bi bi-arrow-up"></i>
-        </div>
-        <nav class="navbar reveal">
-            <div class="container reveal">
-                <div>
-                    <img src="attachments/logos/logo1.png" alt="Logo" class="logo reveal" onclick="window.location.href='index.html'">
-                    <a class="navbar-brand text-white ps-2 reveal" href="index.html">FCAICapU-Crowdfunding</a>
-                </div>
-                <ul>
-                    <li><a href="#Home" class="text-white mx-2 reveal">Home</a></li>
-                    <li><a href="#ourVision" class="text-white mx-2 reveal">Our Vision</a></li>
-                    <li><a href="#donations" class="text-white mx-2 reveal">Donation</a></li>
-                    <li><a href="#contact" class="text-white mx-2 reveal">Contact</a></li>
-                </ul>
-                <a href="html/login.html" class="btn btn-light mx-1 loginBtn reveal">Login</a>
-                <div class="theme reveal">
-                    <i class="bi bi-sun-fill lightMode theme-icon"></i>
-                    <i class="bi bi-moon-fill darkMode theme-icon"></i>
-                </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap/bootstrap-icons.css">
+        <link rel="stylesheet" href="css/animations.css">
+        <link rel="stylesheet" href="css/main.css">
+        <title>FCAICapU-Crowdfunding</title>
+        <link rel="icon" href="attachments/logos/logo1.png">
+    </head>
+    <body>
+        <div class="extra"></div>
+        <div class="animated-body">
+            <div class="arrow-up reveal" id="arrow-up">
+                <i class="bi bi-arrow-up"></i>
             </div>
-        </nav>
-    
-        <!-- hero -->
-        <section class="hero" id="Home">
-            <h1 class="reveal">Contribute to Developing and Building Your University.</h1>
-            <p class="reveal">Every Pound Makes a Difference...</p>
-        </section>
-    
-        <!--   our vision   -->
-        <section class="about" id="ourVision">
-            <div class="container">
-                <h1 class="text-center mb-4 reveal">Our Vision</h1>
-                <p class="reveal">We are a student-led initiative at FCAI aiming to raise funds for various projects that enhance our university experience. From improving facilities to supporting student activities, we believe in the power of community and collective effort. Join us in making a positive impact on our campus!</p>
-                <button class="reveal" id="volunteers">Volunteers</button>
-                <div class="pop-up" id="volunteerdiv">
-                    <div class="mini-pop-up">
-                        <button class="closeBtn" id="closeBtn">&times;</button>
-                        <div class="container2">
-                            <div class="div1 reveal">
-                                <div class="reveal">
-                                    <img src="attachments/volunteers/Tariq_Ahmed.jpg" alt="">
-                                    <p>Tariq Ahmed</p>
-                                </div>
-                                <div class="reveal">
-                                    <img class="reveal" src="attachments/volunteers/Eslam_Saad.jpg" alt="">
-                                    <p class="reveal">Eslam Saad</p>
-                                </div>
-                            </div>
-                            <div class="div2 reveal">
-                                <div class="reveal">
-                                    <img class="reveal" src="attachments/volunteers/Anas_mohamed.jpg" alt="">
-                                    <p class="reveal">Anas Mohammed</p>
-                                </div>
-                                <div class="reveal">
-                                    <img class="reveal" src="attachments/volunteers/Ahmed_Kamal.jpg" alt="">
-                                    <p class="reveal">Ahmed Kamal</p>
-                                </div>
-                            </div>
-                            <div class="div3 reveal">
-                                <div class="reveal">
-                                    <img class="reveal" src="attachments/logos/logo1.png" alt="">
-                                    <p class="reveal">Ammar Yasser</p>
-                                </div>
-                                <div class="reveal">
-                                    <img class="reveal" src="attachments/volunteers/Hossam_Abdul-Aziz.png" alt="">
-                                    <p class="reveal">Hossam Abdul-Aziz</p>
-                                </div>
-                            </div>
-                        </div>
+            <nav class="navbar reveal">
+                <div class="container reveal">
+                    <div>
+                        <img src="attachments/logos/logo1.png" alt="Logo" class="logo reveal" onclick="window.location.href='index.html'">
+                        <a class="navbar-brand text-white ps-2 reveal" href="index.html">FCAICapU-Crowdfunding</a>
+                    </div>
+                    <ul>
+                        <li><a href="#Home" class="text-white mx-2 reveal">Home</a></li>
+                        <li><a href="#ourVision" class="text-white mx-2 reveal">Our Vision</a></li>
+                        <li><a href="#donations" class="text-white mx-2 reveal">Donation</a></li>
+                        <li><a href="#contact" class="text-white mx-2 reveal">Contact</a></li>
+                    </ul>
+                    <a href="html/login.html" class="btn btn-light mx-1 loginBtn reveal">Login</a>
+                    <div class="theme reveal">
+                        <i class="bi bi-sun-fill lightMode theme-icon"></i>
+                        <i class="bi bi-moon-fill darkMode theme-icon"></i>
                     </div>
                 </div>
-            </div>
-        </section>
+            </nav>
         
-        <!--   donations   -->
-        <section class="donations" id="donations">
-            <div class="container">
-                <h2 class="text-center mb-4 reveal">Contribution</h2>
-                <div class="card project-card reveal">
-                    <div class="card-body reveal">
-                        <h5 class="reveal">Contribute to the college</h5>
-                        <p class="reveal">Shape the future of education by strengthening our campus and programs.</p>
-                        <a href="html/support-college.html" id="support-college" class="btn btn-success mt-3 reveal">Donate</a>
-                    </div>
-                    <div class="card-body reveal">
-                        <h5 class="reveal">Contribute to the students</h5>
-                        <p class="reveal">Empower bright minds with scholarships and vital resources to succeed.</p>
-                        <a href="html/support-students.html" id="support-students" class="btn btn-success mt-3 reveal">Donate</a>
-                    </div>
-                    <div class="card-body reveal">
-                        <h5 class="reveal">Contribute to Graduation Projects</h5>
-                        <p class="reveal">Fuel groundbreaking ideas and support innovative final-year projects.</p>
-                        <a href="html/support-graduationProjects.html" id="support-graduationProjects" class="btn btn-success mt-3 reveal">Donate</a>
-                    </div>
-                    <div class="card-body reveal">
-                        <h5 class="reveal">Contribute to the Activities & Competitions</h5>
-                        <p class="reveal">Stand with those who keep our community thriving every day.</p>
-                        <a href="html/support-activities.html" id="support-activities" class="btn btn-success mt-3 reveal">Donate</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    
-        <!-- contact -->
-        <section id="contact" class="contact reveal">
-            <div class="container reveal">
-                <h2 class="text-center reveal">Contact Us</h2>
-                <div class="bootstrap-icons">
-                    <div class="icon-div reveal">
-                        <div class="circle reveal">
-                            <i class="bi bi-geo-alt-fill reveal"></i>
-                        </div>
-                        <p class="reveal">Address</p>
-                        <h4 class="reveal">FCAI - Helwan</h4>
-                    </div>
-                    <div class="icon-div reveal">
-                        <div class="circle reveal">
-                            <i class="bi bi-envelope-fill reveal"></i></div>
-                        <p class="reveal">E-mail</p>
-                        <h4 class="reveal">username@fci.capu.edu.eg</h4>
-                    </div>
-                    <div class="icon-div reveal">
-                        <div class="circle reveal">
-                            <i class="bi bi-telephone-fill reveal"></i></div>
-                        <p class="reveal">Phone</p>
-                        <h4 class="reveal">+20 10 9999 9999</h4>
-                    </div>
-                </div>
-                <form action="php/donate.php" method="POST">
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" name="name" class="form-control my-2 reveal" placeholder="Name" required>
-                        <input type="email" name="email" class="form-control my-2 reveal" inputmode="email" placeholder="Email" required>
-                    </div>
-                    <textarea name="message" class="reveal" id="message" placeholder="Message. . ."  required></textarea>
-                    <button class="btn btn-success w-100 reveal" type="submit">Submit</button>
-                </form>
-                <p id="msg" class="text-center mt-3 reveal"></p>
-            </div>
-        </section>
+            <!-- hero -->
+            <section class="hero" id="Home">
+                <h1 class="reveal">Contribute to Developing and Building Your University.</h1>
+                <p class="reveal">Every Pound Makes a Difference...</p>
+            </section>
+        
+            <!--   our vision   -->
+            <section class="about" id="ourVision">
+                <div class="container">
+                    <h1 class="text-center mb-4 reveal">Our Vision</h1>
+                    <p class="reveal">We are a student-led initiative at FCAI aiming to raise funds for various projects that enhance our university experience. From improving facilities to supporting student activities, we believe in the power of community and collective effort. Join us in making a positive impact on our campus!</p>
+                    <button class="reveal" id="volunteers">Volunteers</button>
 
-        <!-- footer -->
-        <footer>
-            <div class="icons reveal">
-                <div class="app reveal">
-                    <div class="icon reveal">
-                        <i class="bi bi-facebook reveal"></i>
+                    <!-- when click Volunteers Btn, showing pop-up div below : -->
+                    <div class="pop-up" id="volunteerdiv">
+                        <div class="mini-pop-up">
+                            <div class="mini-pop-up-extra1"></div>
+                            <div class="mini-pop-up-extra2"></div>
+                            <div class="mini-pop-up-extra3"></div>
+                            <button class="closeBtn" id="closeBtn">&times;</button>
+                            <div class="container2">
+                                <div class="div1 reveal">
+                                    <div class="reveal">
+                                        <img src="attachments/volunteers/Tariq_Ahmed.jpg" alt="">
+                                        <p>Tariq Ahmed</p>
+                                    </div>
+                                    <div class="reveal">
+                                        <img class="reveal" src="attachments/volunteers/Eslam_Saad.jpg" alt="">
+                                        <p class="reveal">Eslam Saad</p>
+                                    </div>
+                                </div>
+                                <div class="div2 reveal">
+                                    <div class="reveal">
+                                        <img class="reveal" src="attachments/volunteers/Anas_mohamed.jpg" alt="">
+                                        <p class="reveal">Anas Mohammed</p>
+                                    </div>
+                                    <div class="reveal">
+                                        <img class="reveal" src="attachments/volunteers/Ahmed_Kamal.jpg" alt="">
+                                        <p class="reveal">Ahmed Kamal</p>
+                                    </div>
+                                </div>
+                                <div class="div3 reveal">
+                                    <div class="reveal">
+                                        <img class="reveal" src="attachments/logos/logo1.png" alt="">
+                                        <p class="reveal">Ammar Yasser</p>
+                                    </div>
+                                    <div class="reveal">
+                                        <img class="reveal" src="attachments/volunteers/Hossam_Abdul-Aziz.png" alt="">
+                                        <p class="reveal">Hossam Abdul-Aziz</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <span class="reveal">Facebook</span>
                 </div>
-                <div class="app reveal">
-                    <div class="icon reveal">
-                        <i class="bi bi-instagram reveal"></i>
+            </section>
+            
+            <!--   donations   -->
+            <section class="donations" id="donations">
+                <div class="container">
+                    <h2 class="text-center mb-4 reveal">Contribution</h2>
+                    <div class="card project-card reveal">
+                        <div class="card-body reveal">
+                            <div>
+                                <h5 class="reveal">Contribute to the college</h5>
+                                <p class="reveal">Shape the future of education by strengthening our campus and programs.</p>
+                                <a href="html/support-college.html" id="support-college" class="btn mt-3 reveal">Donate</a>
+                            </div>
+                        </div>
+                        <div class="card-body reveal">
+                            <div>
+                                <h5 class="reveal">Contribute to the students</h5>
+                                <p class="reveal">Empower bright minds with scholarships and vital resources to succeed.</p>
+                                <a href="html/support-students.html" id="support-students" class="btn mt-3 reveal">Donate</a>
+                            </div>
+                        </div>
+                        <div class="card-body reveal">
+                            <div>
+                                <h5 class="reveal">Contribute to Graduation Projects</h5>
+                                <p class="reveal">Fuel groundbreaking ideas and support innovative final-year projects.</p>
+                                <a href="html/support-graduationProjects.html" id="support-graduationProjects" class="btn mt-3 reveal">Donate</a>
+                            </div>
+                        </div>
+                        <div class="card-body reveal">
+                            <div>
+                                <h5 class="reveal">Contribute to the Activities & Competitions</h5>
+                                <p class="reveal">Stand with those who keep our community thriving every day.</p>
+                                <a href="html/support-activities.html" id="support-activities" class="btn mt-3 reveal">Donate</a>
+                            </div>
+                        </div>
                     </div>
-                    <span class="reveal">Instagram</span>
                 </div>
-                <div class="app reveal">
-                    <div class="icon reveal">
-                        <i class="bi bi-linkedin reveal"></i>
+            </section>
+        
+            <!-- contact -->
+            <section id="contact" class="contact reveal">
+                <div class="container reveal">
+                    <h2 class="text-center reveal">Contact Us</h2>
+                    <div class="bootstrap-icons">
+                        <div class="icon-div reveal">
+                            <div class="circle reveal">
+                                <i class="bi bi-geo-alt-fill reveal"></i>
+                            </div>
+                            <p class="reveal">Address</p>
+                            <h4 class="reveal">FCAI - Helwan</h4>
+                        </div>
+                        <div class="icon-div reveal">
+                            <div class="circle reveal">
+                                <i class="bi bi-envelope-fill reveal"></i></div>
+                            <p class="reveal">E-mail</p>
+                            <h4 class="reveal">username@fci.capu.edu.eg</h4>
+                        </div>
+                        <div class="icon-div reveal">
+                            <div class="circle reveal">
+                                <i class="bi bi-telephone-fill reveal"></i></div>
+                            <p class="reveal">Phone</p>
+                            <h4 class="reveal">+20 10 9999 9999</h4>
+                        </div>
                     </div>
-                    <span class="reveal">LinkedIn</span>
+                    <form action="php/donate.php" method="POST">
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" name="name" class="form-control my-2 reveal" placeholder="Name" required>
+                            <input type="email" name="email" class="form-control my-2 reveal" inputmode="email" placeholder="Email" required>
+                        </div>
+                        <textarea name="message" class="reveal" id="message" placeholder="Message. . ."  required></textarea>
+                        <button class="btn btn-success w-100 reveal" type="submit">Submit</button>
+                    </form>
+                    <p id="msg" class="text-center mt-3 reveal"></p>
                 </div>
-            </div>
-            <hr>
-            <p class="reveal">© 2026 All Rights Reserved</p>
-        </footer>
-    </div>
-    <script src="js/main.js" defer></script>
-</body>
+            </section>
+
+            <!-- footer -->
+            <footer>
+                <div class="icons reveal">
+                    <div class="app">
+                        <div class="icon">
+                            <i class="bi bi-facebook"></i>
+                        </div>
+                        <span>Facebook</span>
+                    </div>
+                    <div class="app">
+                        <div class="icon">
+                            <i class="bi bi-instagram"></i>
+                        </div>
+                        <span>Instagram</span>
+                    </div>
+                    <div class="app">
+                        <div class="icon">
+                            <i class="bi bi-linkedin"></i>
+                        </div>
+                        <span>LinkedIn</span>
+                    </div>
+                </div>
+                <hr>
+                <p>© 2026 All Rights Reserved</p>
+            </footer>
+        </div>
+        <script src="js/main.js" defer></script>
+    </body>
 </html>

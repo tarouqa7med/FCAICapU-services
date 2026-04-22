@@ -6,11 +6,9 @@ let arrowUpBtn = document.getElementById("arrow-up");
 let arrowReturnBtn = document.getElementById("arrow-return");
 window.onscroll = function () {
     if (document.documentElement.scrollTop >= 350) {
-        navScroll.style.backgroundColor = "#226878";
         arrowUpBtn.style.display = "flex";
         arrowReturnBtn.style.bottom = "90px";
     } else {
-        navScroll.style.backgroundColor = "transparent";
         arrowUpBtn.style.display = "none";
         arrowReturnBtn.style.bottom = "30px";
     }
@@ -84,16 +82,28 @@ darkMode.forEach(
             darkMode.forEach(dark => dark.style.display = "none");
             lightMode.forEach(light => light.style.display = "block");
             
-            color.setProperty("--primary-color", "#000304");
-            localStorage.setItem("--primary-color", "#000304");
-            color.setProperty("--secondary-color", "#000507");
-            localStorage.setItem("--secondary-color", "#000507");
+            color.setProperty("--bg1", "#0f172a");
+            localStorage.setItem("--bg1", "#0f172a");
+            color.setProperty("--bg2", "#111827");
+            localStorage.setItem("--bg2", "#111827");
+            color.setProperty("--blob1", "#0001524a");
+            localStorage.setItem("--blob1", "#2564eb4a");
+            color.setProperty("--blob2", "#00039b");
+            localStorage.setItem("--blob2", "#00039b");
+            color.setProperty("--blob3", "#ed3a9c70");
+            localStorage.setItem("--blob3", "#ed3a9c70");
+
+
+            color.setProperty("--primary-color", "#000f22");
+            localStorage.setItem("--primary-color", "#000f22");
+            color.setProperty("--secondary-color", "#1b3554");
+            localStorage.setItem("--secondary-color", "#1b3554");
             color.setProperty("--border-color", "white");
             localStorage.setItem("--border-color", "white");
-            color.setProperty("--text-color", "black");
-            localStorage.setItem("--text-color", "black");
-            color.setProperty("--text-color-inverted", "white");
-            localStorage.setItem("--text-color-inverted", "white");
+            color.setProperty("--text-color", "#000f22");
+            localStorage.setItem("--text-color", "#000f22");
+            color.setProperty("--text-color-inverted", "#c0e6fd");
+            localStorage.setItem("--text-color-inverted", "#c0e6fd");
             color.setProperty("--owners-div-color", "#222222");
             localStorage.setItem("--owners-div-color", "#222222");
             color.setProperty("--donations-div-color", "#222222");
@@ -117,16 +127,28 @@ lightMode.forEach(
             lightMode.forEach(light => light.style.display = "none");
             darkMode.forEach(dark => dark.style.display = "block");
 
-            color.setProperty("--primary-color", "#d3f7ff");
-            localStorage.setItem("--primary-color", "#d3f7ff");
-            color.setProperty("--secondary-color", "#cbf5ff");
-            localStorage.setItem("--secondary-color", "#cbf5ff");
+            color.setProperty("--bg1", "#d8deff");
+            localStorage.setItem("--bg1", "#d8deff");
+            color.setProperty("--bg2", "#d9e4ff");
+            localStorage.setItem("--bg2", "#d9e4ff");
+            color.setProperty("--blob1", "#fffc3e63");
+            localStorage.setItem("--blob1", "#fffc3e63");
+            color.setProperty("--blob2", "#00eaff7c");
+            localStorage.setItem("--blob2", "#00eaff7c");
+            color.setProperty("--blob3", "#783effd1");
+            localStorage.setItem("--blob3", "#783effd1");
+
+
+            color.setProperty("--primary-color", "#c0e6fd");
+            localStorage.setItem("--primary-color", "#c0e6fd");
+            color.setProperty("--secondary-color", "#80aad3");
+            localStorage.setItem("--secondary-color", "#80aad3");
             color.setProperty("--border-color", "black");
             localStorage.setItem("--border-color", "black");
-            color.setProperty("--text-color", "white");
-            localStorage.setItem("--text-color", "white");
-            color.setProperty("--text-color-inverted", "black");
-            localStorage.setItem("--text-color-inverted", "black");
+            color.setProperty("--text-color", "#c0e6fd");
+            localStorage.setItem("--text-color", "#c0e6fd");
+            color.setProperty("--text-color-inverted", "#000f22");
+            localStorage.setItem("--text-color-inverted", "#000f22");
             color.setProperty("--owners-div-color", "#c6c6c6");
             localStorage.setItem("--owners-div-color", "#c6c6c6");
             color.setProperty("--donations-div-color", "#c6c6c6");
@@ -146,6 +168,11 @@ lightMode.forEach(
 )
 
 if (darkMode && lightMode) {
+    color.setProperty("--bg1", localStorage.getItem("--bg1"));
+    color.setProperty("--bg2", localStorage.getItem("--bg2"));
+    color.setProperty("--blob1", localStorage.getItem("--blob1"));
+    color.setProperty("--blob2", localStorage.getItem("--blob2"));
+    color.setProperty("--blob3", localStorage.getItem("--blob3"));
     color.setProperty("--primary-color", localStorage.getItem("--primary-color"));
     color.setProperty("--primary-color-support", localStorage.getItem("--primary-color-support"));
     color.setProperty("--secondary-color", localStorage.getItem("--secondary-color"));
