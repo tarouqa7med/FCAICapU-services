@@ -97,14 +97,13 @@ body::after {
 }
 .extra {
     position: fixed;
-    width: 350px;
-    height: 350px;
+    width: 0;
+    height: 0;
     border-radius: 50%;
-    filter: blur(100px);
+    filter: blur(50px);
     background: var(--blob3);
     z-index: -100;
-    opacity: 0;
-    animation: body-extra 10s 5s infinite forwards ease-in-out;
+    animation: body-extra 10s 5s infinite forwards linear;
 }
 .animated-body {
     animation: index-body 1s forwards ease;
