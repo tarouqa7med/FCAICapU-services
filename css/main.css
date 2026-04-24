@@ -61,7 +61,7 @@
 }
 * {
     font-family: 'Nunito-Bold';
-    transition: 1s;
+    transition: all 1s 0s ease;
 }
 html {
     scroll-behavior: smooth;
@@ -257,6 +257,7 @@ body::after {
     height: 30px;
     color: var(--text-color-inverted);
     cursor: pointer;
+    transition: 100ms;
 }
 .theme .theme-icon:hover {
     scale: 1.15;
@@ -319,9 +320,6 @@ body::after {
     animation: width-hero-p 2s steps(2500) forwards, blink 350ms infinite;
     animation-delay: 2s;
     opacity: 0;
-}
-.hero audio {
-    width: 50%;
 }
 
 /* ------------------------------------------------------------------------- about */
