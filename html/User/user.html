@@ -1,145 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../../css/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="../../css/bootstrap/bootstrap-icons.css">
-        <link rel="stylesheet" href="../../css/animations.css">
-        <link rel="stylesheet" href="../../css/main.css">
-        <link rel="stylesheet" href="../../css/User/user.css">
-        <link rel="icon" href="../../attachments/logos/logo1.png">
-        <title>My Personal Page</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/bootstrap/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../css/animations.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/User/user.css">
+    <link rel="icon" href="../../attachments/logos/logo1.png">
+    <title>My Personal Page</title>
+</head>
 
-    <body data-page="dashboard">
-        <div class="extra"></div>
-        <div class="animated-body">
-            <div class="arrow-up reveal" id="arrow-up">
-                <i class="bi bi-arrow-up"></i>
-            </div>
-            <nav class="navbar">
-                <div class="container">
-                    <div>
-                        <img src="../../attachments/logos/logo1.png" alt="Logo" class="logo reveal"
-                            onclick="window.location.href='../../index.html'">
-                        <a class="navbar-brand text-white ps-2 reveal" href="../../index.html">FCAICapU-Crowdfunding</a>
-                    </div>
-                    <ul class="reveal">
-                        <li><a href="../../index.html#Home" class="text-white mx-2 reveal">Home</a></li>
-                        <li><a href="../../index.html#ourVision" class="text-white mx-2 reveal">Our Vision</a></li>
-                        <li><a href="../../index.html#donations" class="text-white mx-2 reveal">Donation</a></li>
-                        <li><a href="../../index.html#contact" class="text-white mx-2 reveal">Contact</a></li>
-                    </ul>
+<body data-page="dashboard">
+    <div class="extra"></div>
+    <div class="animated-body">
+        <!-- Arrow up -->
+        <div class="arrow-up reveal" id="arrow-up">
+            <i class="bi bi-arrow-up"></i>
+        </div>
 
-                    <div>
-                        <a href="#userLink" id="userLink">
-                            <img id="userImage" src="../../attachments/logos/default_user.jpg" alt="" width="40" height="40"
-                                style="border-radius:50%; cursor:pointer;">
-                        </a>
-                        <a href="../login.html" id="loginLink" class="btn btn-light mx-1 loginBtn">Login</a>
-                    </div>
+        <!-- Navbar مع الـ script المحسن -->
+        <!-- ... navbar code ... -->
 
-                    <script>
-                        window.addEventListener("load", function () {
-
-                                let loginLink = document.getElementById("loginLink");
-                                let userLink = document.getElementById("userLink");
-                                let userImage = document.getElementById("userImage");
-
-                                let isLoggedIn = false;
-
-                                // =========================
-                                // CHECK USER FROM SERVER
-                                // =========================
-                                fetch("php/get_user.php")
-                                    .then(res => res.json())
-                                    .then(data => {
-
-                                        if (data.loggedIn) {
-
-                                            isLoggedIn = true;
-
-                                            loginLink.innerText = "Logout";
-
-                                            // تغيير الصورة لو موجودة
-                                            if (data.image) {
-                                                userImage.src = data.image;
-                                            }
-
-                                            // نخلي الصورة تفتح profile
-                                            userLink.href = "user.html";
-
-                                        } else {
-
-                                            isLoggedIn = false;
-
-                                            loginLink.innerText = "Login";
-
-                                            // لو مش logged in نخليها تفتح login أو تعمل alert
-                                            userLink.href = "#";
-
-                                        }
-
-                                    });
-
-                                // =========================
-                                // CLICK LOGIN / LOGOUT
-                                // =========================
-                                loginLink.addEventListener("click", function (e) {
-
-                                    fetch("php/get_user.php")
-                                        .then(res => res.json())
-                                        .then(data => {
-
-                                            if (data.loggedIn) {
-
-                                                e.preventDefault();
-
-                                                fetch("php/logout.php")
-                                                    .then(() => {
-
-                                                        loginLink.innerText = "Login";
-
-                                                        // رجّع الصورة الافتراضية
-                                                        userImage.src = "../../attachments/logos/default_user.jpg";
-
-                                                        location.reload();
-                                                    });
-
-                                            }
-
-                                        });
-
-                                });
-
-                                // =========================
-                                // CLICK IMAGE
-                                // =========================
-                                userLink.addEventListener("click", function (e) {
-
-                                    if (!isLoggedIn) {
-                                        e.preventDefault();
-                                        // ممكن تعمل redirect للـ login
-                                        window.location.href = "../login.html";
-                                    }
-
-                                });
-
-                            });
-                    </script>
-
-                    <div class="theme reveal">
-                        <i class="bi bi-sun-fill lightMode theme-icon"></i>
-                        <i class="bi bi-moon-fill darkMode theme-icon"></i>
+        <!-- 🔥 المحتوى الجديد لصفحة المستخدم -->
+        <section class="user-dashboard container my-5">
+            <div class="row">
+                <!-- Profile Card -->
+                <div class="col-md-4">
+                    <div class="card profile-card">
+                        <div class="card-body text-center">
+                            <img id="profileImg" src="../../attachments/logos/default_user.jpg"
+                                class="profile-img img-fluid rounded-circle mb-3" alt="Profile">
+                            <h3 id="userName">Loading...</h3>
+                            <p id="userEmail">user@example.com</p>
+                            <button class="btn btn-primary" onclick="editProfile()">
+                                Edit Profile
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </nav>
-        </div>
-        <script src="../../js/main.js" defer></script>
-        <script src="../../js/auth.js" defer></script>
-        <script src="../../js/reveal.js" defer></script>
-    </body>
+
+                <!-- User Stats -->
+                <div class="col-md-8">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="card stat-card text-center">
+                                <div class="card-body">
+                                    <h1 id="totalDonations">0</h1>
+                                    <p>EGP Donated</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card stat-card text-center">
+                                <div class="card-body">
+                                    <h1 id="totalProjects">0</h1>
+                                    <p>Projects Backed</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card stat-card text-center">
+                                <div class="card-body">
+                                    <h1 id="userRank">Bronze</h1>
+                                    <p>Supporter Rank</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Donations -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5>Recent Donations</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="recentDonations">
+                                <!-- Loading donations... -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../js/main.js" defer></script>
+    <script src="../../js/auth.js" defer></script>
+    <script src="../../js/reveal.js" defer></script>
+    <script src="../../js/User/user.js" defer></script> <!-- JS جديد -->
+</body>
 
 </html>
