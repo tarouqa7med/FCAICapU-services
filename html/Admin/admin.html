@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/bootstrap/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../css/animations.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/Admin/admin.css">
+    <title>Admin Dashboard Page</title>
+</head>
+<body>
+    <div class="animated-body">
+
+        <nav class="navbar">
+            <div class="container">
+                <div>
+                    <img src="../../attachments/logos/logo1.png" alt="Logo" class="logo"
+                        onclick="window.location.href='../index.html'">
+                    <a class="navbar-brand text-white ps-2" href="../../index.html">FCAICapU-Crowdfunding</a>
+                </div>
+                <ul>
+                    <li><a href="../../index.html#Home" class="text-white mx-2">Home</a></li>
+                    <li><a href="#ourVision" class="text-white mx-2">Our Vision</a></li>
+                    <li><a href="#donations" class="text-white mx-2">Donation</a></li>
+                    <li><a href="#contact" class="text-white mx-2">Contact</a></li>
+                </ul>
+                
+                <div>
+                    <a href="../User/user.html" id="userLink">
+                        <img id="userImage" src="attachments/logos/default_user.jpg" alt="" width="40" height="40"
+                            style="border-radius:50%; cursor:pointer;">
+                    </a>
+                    <a href="html/login.html" id="loginLink" class="btn btn-light mx-1 loginBtn">Login</a>
+                </div>
+
+                <div class="theme">
+                    <i class="bi bi-sun-fill lightMode theme-icon"></i>
+                    <i class="bi bi-moon-fill darkMode theme-icon"></i>
+                </div>
+            </div>
+        </nav>
+
+
+        <section class="dashboard">
+            <div class="container">
+                <div class="layout">
+                    <div class="sidebar">
+                        <h2>Admin Panel</h2>
+                
+                        <button onclick="showSection('dashboard')">Dashboard</button>
+                        <button onclick="showSection('users')">Users</button>
+                        <button onclick="showSection('products')">Products</button>
+                        <button onclick="showSection('orders')">Orders</button>
+                        <button onclick="showSection('settings')">Settings</button>
+                        <div>
+                            <button class="signoutBtn">Sign out</button>
+                        </div>
+                    </div>
+                
+                    <div class="content">
+                
+                        <div id="dashboard" class="section active">
+                            <h1>Dashboard</h1>
+                            <p>Users: <span id="userCount">0</span></p>
+                            <p>Products: <span id="productCount">0</span></p>
+                            <p>Orders: <span id="orderCount">0</span></p>
+                        </div>
+                
+                        <div id="users" class="section">
+                            <h1>Users</h1>
+                            <input id="userName" placeholder="Name">
+                            <input id="userEmail" placeholder="Email">
+                            
+                            <button onclick="addUser()">Add User</button>
+                            <button onclick="updateUser()">Update User</button>
+                            
+                            <table>
+                                <tbody id="usersTable"></tbody>
+                            </table>
+                
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersTable"></tbody>
+                            </table>
+                        </div>
+                
+                        <div id="products" class="section">
+                            <h1>Products</h1>
+                            <input id="productName" placeholder="Product Name">
+                            <input id="productPrice" placeholder="Price">
+                            <button onclick="addProduct()">Add Product</button>
+                
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productsTable"></tbody>
+                            </table>
+                        </div>
+                
+                        <div id="orders" class="section">
+                            <h1>Orders</h1>
+                            <input id="orderName" placeholder="Order Name">
+                            <input id="orderStatus" placeholder="Status">
+                            <button onclick="addOrder()">Add Order</button>
+                
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ordersTable"></tbody>
+                            </table>
+                        </div>
+                
+                        <div id="settings" class="section">
+                            <h1>Settings</h1>
+                            <input placeholder="Site Name">
+                            <input placeholder="Admin Email">
+                            <button>Save Settings</button>
+                        </div>
+                
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div id="logoutModal" class="modal-overlay">
+            <div class="modal-box">
+                <h3>Confirm Sign Out</h3>
+                <p>Are you sure you want to sign out?</p>
+        
+                <div class="modal-actions">
+                    <button id="confirmLogout">Yes, Sign out</button>
+                    <button id="cancelLogout">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <script src="../../js/main.js" defer></script>
+    <script src="../../js/auth.js" defer></script>
+    <script src="../../js/Admin/admin.js" defer></script>
+</body>
+</html>

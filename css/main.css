@@ -26,36 +26,17 @@
 /* ------------------------------------------------------------------------- Basics */
 
 :root {
-    --bg1:     #d8deff;
-    --bg2:     #c3d1f5;
-    --blob1:   #5bc8ffa8;
-    --blob2:   #0062ff49;
-    --blob3:   #1edc01cb;
-    
-
-    --Btn-bgColor1: #1b3554;
-    --Btn-bgColor2: #000f22;
-    --Btn-bgColor-Hover: #3f6593;
-    --Btn-boxShadow: #5b86b6;
-    --Btn-textColor: #c0e6fd;
-
-
-    --primary-color:   #c0e6fd;
-    --secondary-color: #80aad3;
-
-    --primary-color-inverted:   #000f22;
-    --secondary-color-inverted: #1b3554;
-
-    --border-color: black;
-
-    --text-color: #000f22;
-    --text-color-inverted: #c0e6fd;
-
-    --donations-div-color: #c6c6c6;
-    --box-shadow-80: #00000080;
-    --contact-color: #d6d6d6;
-    --contact-hover-color: #c1c1c1;
-    --input-color: white;
+    --bg1:            #d8deff;
+    --bg2:            #c3d1f5;
+    --blob1:          #5bc8ffa8;
+    --blob2:          #0062ff49;
+    --blob3:          #1edc01cb;
+    --primary-color1: #c0e6fd;
+    --primary-color2: #80aad3;
+    --primary-color3: #5b86b8;
+    --primary-color4: #3f6593;
+    --primary-color5: #1b3554;
+    --primary-color6: #000f22;
     --width-hero-h1: 1135px;
     --width-hero-p: 415px; 
 }
@@ -121,9 +102,9 @@ body::after {
     font-size: 25px;
     line-height: 0;
     vertical-align: 0;
-    background-color: var(--Btn-bgColor1);
-    color: var(--Btn-textColor);
-    border: 1px solid var(--Btn-bgColor2);
+    background: var(--primary-color5);
+    color: var(--primary-color1);
+    border: 1px solid var(--primary-color6);
     border-radius: 50%;
     animation: arrow-up 300ms forwards ease;
     cursor: pointer;
@@ -131,12 +112,12 @@ body::after {
     z-index: 999;
 }
 .arrow-up:hover {
-    background-color: var(--Btn-bgColor-Hover);
-    box-shadow: 0 0 0 5px var(--Btn-boxShadow);
+    background: var(--primary-color4);
+    box-shadow: 0 0 0 5px var(--primary-color3);
     transition: 150ms;
 }
 .arrow-up:active {
-    background-color: var(--Btn-bgColor2);
+    background: var(--primary-color6);
     transform: scale(0.85);
 }
 
@@ -153,9 +134,10 @@ body::after {
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(35px);
+    overflow: hidden;
     transition: 300ms;
     z-index: 1000;
-    background: color-mix(in srgb, var(--primary-color) 25%, transparent);
+    background: color-mix(in srgb, var(--primary-color1) 25%, transparent);
 }
 .navbar .container {
     padding: 0;
@@ -164,6 +146,7 @@ body::after {
 .navbar .container div:nth-child(1) {
     padding: 0;
     margin-top: -15px;
+    margin-left: -30px;
     display: flex;
     align-items: center;
 }
@@ -175,7 +158,7 @@ body::after {
 }
 .navbar .navbar-brand.text-white.ps-2 {
     font-size: 25px;
-    color: var(--text-color-inverted) !important;
+    color: var(--primary-color6) !important;
     transition: 200ms !important;
 }
 .navbar .logo:hover,
@@ -187,7 +170,6 @@ body::after {
     scale: 0.90;
 }
 .navbar ul {
-    margin-right: -100px;
     list-style: none;
     display: flex;
     padding: 22px;
@@ -203,41 +185,57 @@ body::after {
     padding: 8px;
     width: 100%;
     border: 2px solid transparent;
-    border-bottom: 2px solid var(--text-color-inverted);
+    border-bottom: 2px solid var(--primary-color6);
     border-radius: 10px 10px 0 0;
-    color: var(--text-color-inverted) !important;
+    color: var(--primary-color6) !important;
     text-decoration: none;
-    transition: 200ms;
+    transition: all 200ms 100ms linear;
 }
 .navbar ul li a:hover {
-    border: 2px solid cyan;
+    border: 2px solid var(--primary-color4);
     border-bottom: 2px solid blue;
     font-weight: bold;
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px 0 #00ffff52;
+    box-shadow: 0 5px 10px 0 cyan;
+    transition: 100ms;
 }
 .navbar ul li a:active {
     scale: 0.75;
 }
-.navbar .loginBtn {
-    margin-top: -15px;
-    background: var(--Btn-bgColor1);
-    color: var(--Btn-textColor);
+.navbar .container > div:nth-child(3) {
+    margin: auto;
+    margin-top: 0;
+    transform: translateX(-50px);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 20%;
+    height: 100%;
+}
+.navbar .container > div:nth-child(3) span {
+    margin-top: -8px;
+    color: var(--primary-color6);
+    font-size: 20px;
+}
+.navbar .container > div:nth-child(3) .loginBtn {
+    background: var(--primary-color5);
+    color: var(--primary-color1);
     border: 1px solid transparent;
-    box-shadow: 0 0 0 2px var(--Btn-boxShadow);
+    box-shadow: 0 0 0 2px var(--primary-color3);
     padding: 10px 20px;
     border-radius: 35px;
     width: 100px;
+    height: 45px;
     transition: 200ms;
 }
-.navbar .loginBtn:hover {
-    background: var(--Btn-bgColor-Hover);
-    transform: translateY(-5px);
+.navbar .container > div:nth-child(3) .loginBtn:hover {
+    background: var(--primary-color4);
+    transform: translateY(-2px);
 }
-.navbar .loginBtn:active {
+.navbar .container > div:nth-child(3) .loginBtn:active {
     scale: 0.75;
-    background: var(--Btn-bgColor2);
-    color: var(--Btn-textColor);
+    background: var(--primary-color6);
+    color: var(--primary-color1);
 }
 .navbar .theme {
     margin-top: -15px;
@@ -255,7 +253,7 @@ body::after {
     font-size: 26px;
     width: 30px;
     height: 30px;
-    color: var(--text-color-inverted);
+    color: var(--primary-color6);
     cursor: pointer;
     transition: 100ms;
 }
@@ -331,7 +329,7 @@ body::after {
 }
 .about .container {
     font-family: 'Nunito-Bold';
-    color: var(--text-color-inverted);
+    color: var(--primary-color6);
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -344,21 +342,21 @@ body::after {
     width: 80%;
 }
 .container #volunteers {
-    background: var(--Btn-bgColor1);
-    color: var(--Btn-textColor);
+    background: var(--primary-color5);
+    color: var(--primary-color1);
     border: 1px solid transparent;
-    box-shadow: 0 0 0 2px var(--Btn-boxShadow);
+    box-shadow: 0 0 0 2px var(--primary-color3);
     padding: 10px 20px;
     border-radius: 35px;
     width: 150px;
     transition: 200ms;
 }
 .container #volunteers:hover {
-    background: var(--Btn-bgColor-Hover);
+    background: var(--primary-color4);
     transform: translateY(-3px);
 }
 .container #volunteers:active {
-    background: var(--Btn-bgColor2);
+    background: var(--primary-color6);
     scale: 0.75;
 }
 .pop-up {
@@ -382,7 +380,7 @@ body::after {
     right: 50%;
     transform: translate(50%, -50%);
     background: linear-gradient(120deg, var(--bg1), var(--bg2));
-    box-shadow: 0 0 0 3px #5b86b6;
+    box-shadow: 0 0 0 2px var(--primary-color4);
     padding: 20px;
     border-radius: 35px 0 35px 35px;
     width: 80%;
@@ -400,21 +398,21 @@ body::after {
     width: 320px;
     height: 320px;
     border-radius: 50%;
-    filter: blur(120px);
-    background-color: red;
+    filter: blur(50px);
+    background: red;
 }
 .mini-pop-up-extra1 {
-    background-color: var(--blob1);
+    background: var(--blob1);
     left: 0%;
     opacity: 0.5;
 }
 .mini-pop-up-extra2 {
-    background-color: var(--blob2);
+    background: var(--blob2);
     right: 0%;
     opacity: 0.5;
 }
 .mini-pop-up-extra3 {
-    background-color: var(--blob3);
+    background: var(--blob3);
     bottom: 0%;
     left: 40%;
     opacity: 0.5;
@@ -423,8 +421,8 @@ body::after {
     position: absolute;
     top: 0;
     right: 0;
-    background-color: #5b86b6;
-    color: var(--text-color-inverted);
+    background: var(--primary-color3);
+    color: var(--primary-color6);
     width: 55px;
     height: 40px;
     border: none;
@@ -433,11 +431,11 @@ body::after {
     transition: 200ms;
 }
 .pop-up .closeBtn:hover {
-    background-color: red;
+    background: red;
     color: white;
 }
 .pop-up .closeBtn:active {
-    background-color: #b40000;
+    background: #b40000;
 }
 .mini-pop-up .container2 {
     display: flex;
@@ -460,8 +458,8 @@ body::after {
 .mini-pop-up .container2 .div3 div {
     width: 90%;
     height: 50%;
-    background: color-mix(in srgb, var(--secondary-color) 15%, transparent);
-    box-shadow: 0 0 15px 0 var(--box-shadow-80) inset;
+    background: color-mix(in srgb, var(--primary-color2) 15%, transparent);
+    box-shadow: 0 0 15px 0 color-mix(in srgb, var(--primary-color6) 100%, transparent) inset;
     margin: 10px;
     display: flex;
     flex-direction: column;
@@ -476,7 +474,7 @@ body::after {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    box-shadow: 0 0 5px 2px #424242;
+    box-shadow: 0 0 0 2px var(--primary-color6);
 }
 .mini-pop-up .container2 .div1 div:hover,
 .mini-pop-up .container2 .div2 div:hover,
@@ -491,7 +489,7 @@ body::after {
 }
 .mini-pop-up .container2 p {
     font-size: 18px;
-    color: var(--text-color-inverted);
+    color: var(--primary-color6);
 }
 
 /* ------------------------------------------------------------------------- projects */
@@ -515,7 +513,7 @@ body::after {
 .donations .container h2 {
     font-size: 40px;
     text-align: center;
-    color: var(--text-color-inverted);
+    color: var(--primary-color6);
 }
 .container .project-card {
     padding: 20px;
@@ -523,7 +521,7 @@ body::after {
     flex-wrap: wrap;
     flex-direction: row;
     gap: 35px;
-    background-color: transparent;
+    background: transparent;
     border: none;
 }
 .project-card .card-body {
@@ -532,7 +530,7 @@ body::after {
     padding: 0;
     height: 320px;
     background: color-mix(in srgb, #c0e6fd 20%, #1b3554 100%);
-    border: 1px solid #1b3554;
+    border: 1px solid var(--primary-color5);
     border-radius: 30px;
     box-shadow: 0 0 20px 0 #00000080;
     display: flex;
@@ -573,40 +571,42 @@ body::after {
     margin-top: auto;
     width: 100%;
     height: fit-content;
-    background: color-mix(in srgb, var(--secondary-color) 80%, transparent);
+    background: color-mix(in srgb, var(--primary-color2) 80%, transparent);
 }
 .card-body div h5 {
     margin: 0;
     margin-top: 10px;
     margin-bottom: 5px;
-    color: var(--text-color-inverted);
+    color: var(--primary-color6);
 }
 .card-body div p {
     margin: 0;
     margin-bottom: 10px;
     font-size: small;
-    color: var(--text-color-inverted);
+    color: var(--primary-color6);
 }
 .card-body div a {
     scroll-margin-top: 550px;
     margin-top: 5px !important;
     padding-left: 50px;
     font-size: 25px;
-    background: linear-gradient(to right, #000f22, transparent);
-    color: #c0e6fd !important;
+    background: linear-gradient(to right, var(--primary-color6), transparent);
+    color: var(--primary-color1) !important;
     border: none;
     border-radius: 0;
     width: 100%;
-    height: 50px;
+    height: 60px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
     text-align: left;
     transition: 250ms;
 }
 .card-body a:hover {
-    background: linear-gradient(#1b3554);
-    color: #b4f1ff;
+    background: linear-gradient(var(--primary-color6));
 }
 .card-body a:active {
-    background: linear-gradient(135deg, #2c8ea4,#074e5f 35% 65%, #2c8ea4);
+    background: linear-gradient(135deg, var(--primary-color6),var(--primary-color5) 35% 65%, var(--primary-color6));
 }
 .card-body:hover::before {
     transform: scale(1.1);
@@ -635,7 +635,7 @@ body::after {
     font-size: 40px;
     width: 100%;
     text-align: center;
-    color: var(--text-color-inverted);
+    color: var(--primary-color6);
 }
 .contact .bootstrap-icons {
     display: flex;
@@ -643,7 +643,7 @@ body::after {
     align-items: center;
     gap: 30px;
     font-size: 30px;
-    color: var(--text-color-inverted);
+    color: var(--primary-color6);
 }
 .bootstrap-icons .icon-div {
     width: 30%;
@@ -656,8 +656,8 @@ body::after {
     margin-bottom: 15px;
     width: 75px;
     height: 75px;
-    color: var(--text-color-inverted);
-    border: 2px solid var(--text-color-inverted);
+    color: var(--primary-color6);
+    border: 2px solid var(--primary-color6);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -686,41 +686,41 @@ body::after {
     width: 100%;
 }
 .contact form div input {
-    outline: 1px solid #1b3554;
-    background-color: var(--input-color);
+    outline: 1px solid var(--primary-color6);
+    background: var(--primary-color1);
     transition: 250ms;
 }
 .contact form div input:focus {
     outline: 2px solid blue;
-    box-shadow: 0 0 0 5px #c0e6fd;
+    box-shadow: 0 0 0 5px var(--primary-color5);
 }
 .contact form textarea {
     width: 100%;
     border-radius: 8px;
-    background-color: var(--input-color);
-    outline: 1px solid #1b3554;
+    background: var(--primary-color1);
+    outline: 1px solid var(--primary-color6);
     transition: 250ms;
 }
 .contact form div input::placeholder,
 .contact form textarea::placeholder {
-    color: #484848;
+    color: #5b5b5b;
 }
 .contact form textarea:focus {
-    background-color: white;
+    background: white;
     outline: 2px solid blue;
-    box-shadow: 0 0 0 5px #c0e6fd;
+    box-shadow: 0 0 0 5px var(--primary-color5);
 }
 .contact form button {
     padding: 10px 20px;
-    background: var(--Btn-bgColor1) !important;
-    color: var(--Btn-textColor);
-    box-shadow: 0 0 0 2px var(--Btn-boxShadow);
+    background: var(--primary-color5) !important;
+    color: var(--primary-color1);
+    box-shadow: 0 0 0 2px var(--primary-color3);
     border-radius: 30px;
     height: 45px;
     transition: 200ms;
 }
 .contact form button:hover {
-    background: var(--Btn-bgColor-Hover) !important;
+    background: var(--primary-color4) !important;
 }
 
 /* ------------------------------------------------------------------------- footer */
@@ -730,21 +730,11 @@ footer {
     padding: 50px 0;
     display: grid;
     height: 220px;
-    color: white;
+    background: var(--primary-color3);
+    color: var(--primary-color1);
     text-align: center;
 }
-footer::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 50%;
-    transform: translate(50%, -50%);
-    width: 100%;
-    height: 100%;
-    background: #161616c3;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
+
 footer .icons {
     padding: 0 20%;
     display: flex;
@@ -761,8 +751,8 @@ footer .icons {
 .app .icon {
     width: 60px;
     height: 60px;
-    background-color: white;
-    border: 1px solid rgb(115, 115, 115);
+    background: white;
+    border: 1px solid var(--primary-color6);
     border-radius: 50%;
     display: flex;
     justify-content: center;

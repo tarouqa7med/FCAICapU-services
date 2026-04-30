@@ -16,14 +16,16 @@
 }
 
 body {
-    background: linear-gradient(135deg,#0f2027,#498199);
     display: flex;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(135deg,#0f2027,#498199);
+    width: 100%;
     height: 100vh;
     animation: blur 350ms forwards ease;
 }
 .form-box {
+    padding: 20px;
     font-family: 'Nunito-Bold';
     width: 500px;
     height: 500px;
@@ -32,18 +34,40 @@ body {
     justify-content: space-around;
     align-items: center;
     background: #9ccbdf;
-    padding: 20px;
+    position: relative;
     text-align: center;
     border-radius: 10px;
+    overflow-y: auto;
+    scrollbar-color: #5d889b transparent;
+}
+.form-box::before {
+    content: "";
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    width: 500px;
+    height: 500px;
+    background-color: #9ccbdf;
+    border-radius: 10px;
+    z-index: -1;
+}
+.form-box form {
+    display: grid;
 }
 h2 {
+    margin: 30px 0;
     text-decoration: underline;
     letter-spacing: 3px;
     font-size: 30px;
 }
+label {
+    width: 100%;
+    text-align: left;
+}
 input {
     width: 350px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     padding: 10px;
     border: 2px solid black;
     border-radius: 10px;
@@ -54,8 +78,9 @@ input:focus {
     border:2px solid transparent;
 }
 button {
+    margin: auto;
     width: 150px;
-    padding: 10px;
+    padding: 5px 15px;
     background: linear-gradient(135deg,#0f2027,#498199);
     color: white;
     border: none;
@@ -79,10 +104,10 @@ a:hover {
 
 .change-password {
     padding: 30px 0;
-    height: 100%;
+    height: 100hv;
 }
 .change-password .form-box {
-    height: 100%;
+    height: 500px;
 }
 .change-password button {
     width: auto;

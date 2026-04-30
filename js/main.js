@@ -47,28 +47,6 @@ if (volunteerBtn) {
     });
 }
 
-// button for pay & close Button animations
-
-let payBtns = document.querySelectorAll(".backBtn");
-let closeBtns = document.querySelectorAll(".payCloseBtn");
-
-payBtns.forEach(
-    function (btn) {
-        btn.addEventListener("click", function () {
-            document.getElementById("payDiv").style.display = "flex";
-        }
-    );
-});
-
-closeBtns.forEach(
-    function (btn) {
-        btn.addEventListener("click", function () {
-            document.getElementById("payDiv").style.display = "none";
-        }
-    );
-});
-
-
 // change theme and save it with its colours
 
 let darkMode = document.querySelectorAll(".darkMode");
@@ -79,90 +57,66 @@ let color = document.documentElement.style;
 darkMode.forEach(
     btn => {
         btn.addEventListener("click", function () {
-            darkMode.forEach(dark => dark.style.display = "none");
-            lightMode.forEach(light => light.style.display = "block");
             
+            darkMode.forEach((dark) => (dark.style.display = "none"));
+            lightMode.forEach((light) => (light.style.display = "block"));
+
             color.setProperty("--bg1", "#0f172a");
-            localStorage.setItem("--bg1", "#0f172a");
             color.setProperty("--bg2", "#111827");
-            localStorage.setItem("--bg2", "#111827");
             color.setProperty("--blob1", "#5bc8ffa8");
-            localStorage.setItem("--blob1", "#5bc8ffa8");
             color.setProperty("--blob2", "#0062ff49");
-            localStorage.setItem("--blob2", "#0062ff49");
             color.setProperty("--blob3", "#ed3a9c8a");
+            localStorage.setItem("--bg1", "#0f172a");
+            localStorage.setItem("--bg2", "#111827");
+            localStorage.setItem("--blob1", "#5bc8ffa8");
+            localStorage.setItem("--blob2", "#0062ff49");
             localStorage.setItem("--blob3", "#ed3a9c8a");
 
-
-            color.setProperty("--primary-color", "#000f22");
-            localStorage.setItem("--primary-color", "#000f22");
-            color.setProperty("--secondary-color", "#1b3554");
-            localStorage.setItem("--secondary-color", "#1b3554");
-            color.setProperty("--border-color", "white");
-            localStorage.setItem("--border-color", "white");
-            color.setProperty("--text-color", "#000f22");
-            localStorage.setItem("--text-color", "#000f22");
-            color.setProperty("--text-color-inverted", "#c0e6fd");
-            localStorage.setItem("--text-color-inverted", "#c0e6fd");
-            color.setProperty("--owners-div-color", "#222222");
-            localStorage.setItem("--owners-div-color", "#222222");
-            color.setProperty("--donations-div-color", "#222222");
-            localStorage.setItem("--donations-div-color", "#222222");
-            color.setProperty("--drop-shadow-color", "cyan");
-            localStorage.setItem("--drop-shadow-color", "cyan");
-            color.setProperty("--box-shadow-80", "#ffffff40");
-            localStorage.setItem("--box-shadow-80", "#ffffff40");
-            color.setProperty("--contact-color", "#202020");
-            localStorage.setItem("--contact-color", "#202020");
-            color.setProperty("--contact-hover-color", "#3a3a3a");
-            localStorage.setItem("--contact-hover-color", "#3a3a3a");
-            color.setProperty("--input-color", "gray");
-            localStorage.setItem("--input-color", "gray");
+            color.setProperty("--primary-color1", "#000f22");
+            color.setProperty("--primary-color2", "#1b3554");
+            color.setProperty("--primary-color3", "#3f6593");
+            color.setProperty("--primary-color4", "#5b86b8");
+            color.setProperty("--primary-color5", "#80aad3");
+            color.setProperty("--primary-color6", "#c0e6fd");
+            localStorage.setItem("--primary-color1", "#000f22");
+            localStorage.setItem("--primary-color2", "#1b3554");
+            localStorage.setItem("--primary-color3", "#3f6593");
+            localStorage.setItem("--primary-color4", "#5b86b8");
+            localStorage.setItem("--primary-color5", "#80aad3");
+            localStorage.setItem("--primary-color6", "#c0e6fd");
         });
     }
 )
 lightMode.forEach(
     btn => {
         btn.addEventListener("click", function () {
-            lightMode.forEach(light => light.style.display = "none");
-            darkMode.forEach(dark => dark.style.display = "block");
+
+            lightMode.forEach((light) => (light.style.display = "none"));
+            darkMode.forEach((dark) => (dark.style.display = "block"));
 
             color.setProperty("--bg1", "#d8deff");
-            localStorage.setItem("--bg1", "#d8deff");
             color.setProperty("--bg2", "#d9e4ff");
-            localStorage.setItem("--bg2", "#d9e4ff");
             color.setProperty("--blob1", "#5bc8ffa8");
-            localStorage.setItem("--blob1", "#5bc8ffa8");
             color.setProperty("--blob2", "#0062ff75");
-            localStorage.setItem("--blob2", "#0062ff75");
             color.setProperty("--blob3", "#1edc01cb");
+            localStorage.setItem("--bg1", "#d8deff");
+            localStorage.setItem("--bg2", "#d9e4ff");
+            localStorage.setItem("--blob1", "#5bc8ffa8");
+            localStorage.setItem("--blob2", "#0062ff75");
             localStorage.setItem("--blob3", "#1edc01cb");
 
-
-            color.setProperty("--primary-color", "#c0e6fd");
-            localStorage.setItem("--primary-color", "#c0e6fd");
-            color.setProperty("--secondary-color", "#80aad3");
-            localStorage.setItem("--secondary-color", "#80aad3");
-            color.setProperty("--border-color", "black");
-            localStorage.setItem("--border-color", "black");
-            color.setProperty("--text-color", "#c0e6fd");
-            localStorage.setItem("--text-color", "#c0e6fd");
-            color.setProperty("--text-color-inverted", "#000f22");
-            localStorage.setItem("--text-color-inverted", "#000f22");
-            color.setProperty("--owners-div-color", "#c6c6c6");
-            localStorage.setItem("--owners-div-color", "#c6c6c6");
-            color.setProperty("--donations-div-color", "#c6c6c6");
-            localStorage.setItem("--donations-div-color", "#c6c6c6");
-            color.setProperty("--drop-shadow-color", "transparent");
-            localStorage.setItem("--drop-shadow-color", "transparent");
-            color.setProperty("--box-shadow-80", "#00000080");
-            localStorage.setItem("--box-shadow-80", "#00000080");
-            color.setProperty("--contact-color", "#d6d6d6");
-            localStorage.setItem("--contact-color", "#d6d6d6");
-            color.setProperty("--contact-hover-color", "#b1b1b1");
-            localStorage.setItem("--contact-hover-color", "#b1b1b1");
-            color.setProperty("--input-color", "white");
-            localStorage.setItem("--input-color", "white");
+            color.setProperty("--primary-color1", "#c0e6fd");
+            color.setProperty("--primary-color2", "#80aad3");
+            color.setProperty("--primary-color3", "#5b86b8");
+            color.setProperty("--primary-color4", "#3f6593");
+            color.setProperty("--primary-color5", "#1b3554");
+            color.setProperty("--primary-color6", "#000f22");
+            localStorage.setItem("--primary-color1", "#c0e6fd");
+            localStorage.setItem("--primary-color2", "#80aad3");
+            localStorage.setItem("--primary-color3", "#5b86b8");
+            localStorage.setItem("--primary-color4", "#3f6593");
+            localStorage.setItem("--primary-color5", "#1b3554");
+            localStorage.setItem("--primary-color6", "#000f22");
         });
     }
 )
@@ -173,21 +127,14 @@ if (darkMode && lightMode) {
     color.setProperty("--blob1", localStorage.getItem("--blob1"));
     color.setProperty("--blob2", localStorage.getItem("--blob2"));
     color.setProperty("--blob3", localStorage.getItem("--blob3"));
-    color.setProperty("--primary-color", localStorage.getItem("--primary-color"));
-    color.setProperty("--primary-color-support", localStorage.getItem("--primary-color-support"));
-    color.setProperty("--secondary-color", localStorage.getItem("--secondary-color"));
-    color.setProperty("--border-color", localStorage.getItem("--border-color"));
-    color.setProperty("--text-color", localStorage.getItem("--text-color"));
-    color.setProperty("--text-color-inverted", localStorage.getItem("--text-color-inverted"));
-    color.setProperty("--owners-div-color", localStorage.getItem("--owners-div-color"));
-    color.setProperty("--donations-div-color", localStorage.getItem("--donations-div-color"));
-    color.setProperty("--drop-shadow-color", localStorage.getItem("--drop-shadow-color"));
-    color.setProperty("--box-shadow-80", localStorage.getItem("--box-shadow-80"));
-    color.setProperty("--contact-color", localStorage.getItem("--contact-color"));
-    color.setProperty("--contact-hover-color", localStorage.getItem("--contact-hover-color"));
-    color.setProperty("--input-color", localStorage.getItem("--input-color"));
+    color.setProperty("--primary-color1", localStorage.getItem("--primary-color1"));
+    color.setProperty("--primary-color2", localStorage.getItem("--primary-color2"));
+    color.setProperty("--primary-color3", localStorage.getItem("--primary-color3"));
+    color.setProperty("--primary-color4", localStorage.getItem("--primary-color4"));
+    color.setProperty("--primary-color5", localStorage.getItem("--primary-color5"));
+    color.setProperty("--primary-color6", localStorage.getItem("--primary-color6"));
 
-    if (localStorage.getItem("--primary-color") === "black") {
+    if (localStorage.getItem("--primary-color1") === "#000f22") {
         darkMode.forEach((dark) => (dark.style.display = "none"));
         lightMode.forEach((light) => (light.style.display = "block"));
     } else {
@@ -195,95 +142,3 @@ if (darkMode && lightMode) {
         lightMode.forEach((light) => (light.style.display = "none"));
     }
 }
-
-// ------------------------------------------------------------------------------------- for (html/filesname.html)
-
-let payFormByJS = `
-    <div class="pop-up" id="payDiv">
-        <div class="mini-pop-up">
-            <button class="closeBtn payCloseBtn">&times;</button>
-            <p>Please enter your info for paying</p>
-            <form action="" method="get">
-                <label for="">Card Number :</label>
-                <input type="text" id="" inputmode="numeric" maxlength="19" required>
-                <div>
-                    <div>
-                        <label for="">Expiry Date MM/YY</label>
-                        <div>
-                            <select name="month" id="">
-                                <option value="1">01</option>
-                                <option value="2">02</option>
-                                <option value="3">03</option>
-                                <option value="4">04</option>
-                                <option value="5">05</option>
-                                <option value="6">06</option>
-                                <option value="7">07</option>
-                                <option value="8">08</option>
-                                <option value="9">09</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                            </select>
-                            <select name="year" id="">
-                                <option value="26">26</option>
-                                <option value="27">27</option>
-                                <option value="28">28</option>
-                                <option value="29">29</option>
-                                <option value="30">30</option>
-                                <option value="31">31</option>
-                                <option value="32">32</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="">CVV</label>
-                        <input type="text" id=""  maxlength="3">
-                    </div>
-                </div>
-                <label for="">Enter amount of money (at least 25 EGP) :</label>
-                <input type="text" inputmode="numeric">
-                <label for="">Your name :</label>
-                <input type="text" name="" id="" required>
-                <button type="submit">Pay $</button>
-            </form>
-            <div>
-                <img src="../attachments/mastercard-7c511229.png" alt="">
-                <img src="../attachments/miza.dfc41445.svg" alt="">
-            </div>
-        </div>
-    </div>
-`
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("payFormByJS").innerHTML = payFormByJS;
-});
-window.onload = function () {
-    document.getElementById("payFormByJS").innerHTML = payFormByJS;
-};
-
-document.addEventListener("click", function (e) {
-    if (e.target.classList.contains("payCloseBtn")) {
-        document.getElementById("payDiv").style.display = "none";
-    }
-});
-
-// reveal code for all project
-
-document.addEventListener("DOMContentLoaded", function () {
-    const elements = document.querySelectorAll(".reveal");
-
-    const observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add("active");
-                }, 150);
-            } // else {
-            //     entry.target.classList.remove("active");
-            // }
-        });
-    });
-
-    elements.forEach(function (el) {
-        observer.observe(el);
-    });
-});

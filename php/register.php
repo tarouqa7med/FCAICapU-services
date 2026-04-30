@@ -1,30 +1,77 @@
 <?php
-include "config.php";
+                $conn = new mysqli("localhost", "root", "", "users");
 
-// تأكد إن البيانات جاية
-if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password'])) {
-    die("من فضلك املأ كل الحقول ❌");
-}
+                header('Content-Type: application/json');
 
-$name = $conn->real_escape_string($_POST['name']);
-$email = $conn->real_escape_string($_POST['email']);
-$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                if ($conn->connect_error) {
+                    echo json_encode(["status" => "error", "message" => "DB connection failed"]);
+                    exit;
+                }
 
-// 🔍 تحقق هل الإيميل موجود
-$check = $conn->query("SELECT * FROM users WHERE email='$email'");
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-if ($check->num_rows > 0) {
-    die("الإيميل مستخدم بالفعل ❌");
-}
+                    $first_name = trim($_POST['first_name']);
+                    $last_name  = trim($_POST['last_name']);
+                    $email      = trim($_POST['email']);
+                    $password   = $_POST['password'];
 
-// ✅ تسجيل المستخدم
-$sql = "INSERT INTO users (name, email, password)
-        VALUES ('$name', '$email', '$password')";
+                    // validation
+                    if (empty($first_name) || empty($last_name) || empty($email) || empty($password)) {
+                        echo json_encode(["status" => "error", "message" => "All fields are required"]);
+                        exit;
+                    }
 
-if ($conn->query($sql) === TRUE) {
-    header("Location: login.html");
-    exit();
-} else {
-    echo "حصل خطأ: " . $conn->error;
-}
-?>
+                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                        echo json_encode(["status" => "error", "message" => "Invalid email format"]);
+                        exit;
+                    }
+
+                    if (
+                        strlen($password) < 8 ||
+                        !preg_match('/[A-Z]/', $password) ||
+                        !preg_match('/[a-z]/', $password) ||
+                        !preg_match('/[0-9]/', $password) ||
+                        !preg_match('/[\W]/', $password)
+                    ) {
+                        echo json_encode(["status" => "error", "message" => "Weak password"]);
+                        exit;
+                    }
+
+                    // check email exists
+                    $check = $conn->prepare("SELECT id FROM users WHERE email = ?");
+                    $check->bind_param("s", $email);
+                    $check->execute();
+                    $check->store_result();
+
+                    if ($check->num_rows > 0) {
+                        echo json_encode(["status" => "error", "message" => "Email already exists"]);
+                        exit;
+                    }
+
+                    $check->close();
+
+                    // insert user
+                    $hashed = password_hash($password, PASSWORD_DEFAULT);
+
+                    $stmt = $conn->prepare(
+                        "INSERT INTO users (first_name, last_name, email, password)
+                        VALUES (?, ?, ?, ?)"
+                    );
+
+                    $stmt->bind_param("ssss", $first_name, $last_name, $email, $hashed);
+
+                    if ($stmt->execute()) {
+                        echo json_encode([
+                            "status" => "success",
+                            "message" => "Registration successful"
+                        ]);
+                    } else {
+                        echo json_encode([
+                            "status" => "error",
+                            "message" => "Something went wrong"
+                        ]);
+                    }
+
+                    $stmt->close();
+                }
+                ?>

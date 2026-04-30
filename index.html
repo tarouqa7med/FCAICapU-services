@@ -7,8 +7,8 @@
         <link rel="stylesheet" href="css/bootstrap/bootstrap-icons.css">
         <link rel="stylesheet" href="css/animations.css">
         <link rel="stylesheet" href="css/main.css">
-        <title>FCAICapU-Crowdfunding</title>
         <link rel="icon" href="attachments/logos/logo1.png">
+        <title>FCAICapU-Crowdfunding</title>
     </head>
     <body>
         <div class="extra"></div>
@@ -16,8 +16,8 @@
             <div class="arrow-up reveal" id="arrow-up">
                 <i class="bi bi-arrow-up"></i>
             </div>
-            <nav class="navbar reveal">
-                <div class="container reveal">
+            <nav class="navbar">
+                <div class="container">
                     <div>
                         <img src="attachments/logos/logo1.png" alt="Logo" class="logo reveal" onclick="window.location.href='index.html'">
                         <a class="navbar-brand text-white ps-2 reveal" href="index.html">FCAICapU-Crowdfunding</a>
@@ -28,7 +28,15 @@
                         <li><a href="#donations" class="text-white mx-2 reveal">Donation</a></li>
                         <li><a href="#contact" class="text-white mx-2 reveal">Contact</a></li>
                     </ul>
-                    <a href="html/login.html" class="btn btn-light mx-1 loginBtn reveal">Login</a>
+
+                    <div>
+                        <a href="html/User/user.html" id="userLink">
+                            <img id="userImage" src="attachments/logos/default_user.jpg" alt="" width="40" height="40"
+                                style="border-radius:50%; cursor:pointer;">
+                        </a>
+                        <a href="html/login.html" id="loginLink" class="btn btn-light mx-1 loginBtn">Login</a>
+                    </div>
+
                     <div class="theme reveal">
                         <i class="bi bi-sun-fill lightMode theme-icon"></i>
                         <i class="bi bi-moon-fill darkMode theme-icon"></i>
@@ -40,6 +48,8 @@
             <section class="hero" id="Home">
                 <h1 class="reveal">Contribute to Developing and Building Your University.</h1>
                 <p class="reveal">Every Pound Makes a Difference...</p>
+                <p><a href="html/Admin/admin.html"
+                    style="background-color: white; color: black; animation: none;">Admin</a></p>
             </section>
         
             <!--   our vision   -->
@@ -194,5 +204,7 @@
             </footer>
         </div>
         <script src="js/main.js" defer></script>
+        <script src="js/auth.js" defer></script>
+        <script src="js/reveal.js" defer></script>
     </body>
 </html>
