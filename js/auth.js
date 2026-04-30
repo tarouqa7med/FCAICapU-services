@@ -1,94 +1,118 @@
 window.addEventListener("load", function () {
-    let loginLink = document.getElementById("loginLink");
-    let userLink = document.getElementById("userLink");
-    let userImage = document.getElementById("userImage");
-    let helloText = document.getElementById("helloText");
-
-    if (!loginLink) return;
-
-    let originalHref = loginLink.getAttribute("href");
-
     // =========================
-    // 1) LOAD FROM LOCALSTORAGE (سريع)
+    // 🔹 COMMON (لكل الصفحات)
     // =========================
-    let isLoggedIn = localStorage.getItem("isLoggedIn");
-    let name = localStorage.getItem("name");
+    function handleNavbar() {
+        let loginLink = document.getElementById("loginLink");
+        let userLink = document.getElementById("userLink");
+        let userImage = document.getElementById("userImage");
+        let helloText = document.getElementById("helloText");
 
-    if (isLoggedIn === "true") {
-        loginLink.innerText = "Logout";
-        loginLink.removeAttribute("href");
+        if (!loginLink) return;
 
-        if (helloText) {
-            helloText.innerText = "Hello " + name;
-        }
+        fetch(getBasePath() + "php/get_user.php")
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.loggedIn) {
+                    loginLink.innerText = "Logout";
+                    loginLink.removeAttribute("href");
+
+                    if (helloText) {
+                        helloText.innerText = "Hello " + data.first_name;
+                    }
+
+                    userLink.href = getBasePath() + "html/User/user.html";
+                } else {
+                    loginLink.innerText = "Login";
+                    loginLink.setAttribute(
+                        "href",
+                        getBasePath() + "html/login.html",
+                    );
+
+                    if (helloText) {
+                        helloText.innerText = "";
+                    }
+
+                    userLink.href = getBasePath() + "html/login.html";
+                }
+            });
+
+        // logout
+        loginLink.addEventListener("click", function (e) {
+            fetch(getBasePath() + "php/get_user.php")
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.loggedIn) {
+                        e.preventDefault();
+
+                        fetch(getBasePath() + "php/logout.php").then(() => {
+                            window.location.href = getBasePath() + "index.html";
+                        });
+                    }
+                });
+        });
     }
 
     // =========================
-    // 2) VERIFY FROM SERVER (SESSION)
+    // 🔹 INDEX
     // =========================
-    fetch("php/get_user.php")
-        .then((res) => res.json())
-        .then((data) => {
-            if (data.loggedIn) {
-                // ✅ sync مع localStorage
-                localStorage.setItem("isLoggedIn", "true");
-                localStorage.setItem("name", data.first_name);
-                localStorage.setItem("role", data.role);
-
-                loginLink.innerText = "Logout";
-                loginLink.removeAttribute("href");
-
-                if (helloText) {
-                    helloText.innerText = "Hello " + data.first_name;
-                }
-
-                if (data.image) {
-                    userImage.src = data.image;
-                }
-
-                userLink.href = "html/User/user.html";
-            } else {
-                // ❌ session انتهت
-                localStorage.clear();
-
-                loginLink.innerText = "Login";
-                loginLink.setAttribute("href", originalHref);
-
-                if (helloText) {
-                    helloText.innerText = "";
-                }
-
-                userImage.src = "attachments/logos/default_user.jpg";
-                userLink.href = "html/login.html";
-            }
-        });
+    function initIndex() {
+        console.log("Index Page Loaded");
+        handleNavbar();
+    }
 
     // =========================
-    // LOGOUT
+    // 🔹 SUPPORT PAGES
     // =========================
-    loginLink.addEventListener("click", function (e) {
-        let isLoggedIn = localStorage.getItem("isLoggedIn");
+    function initSupportPages() {
+        console.log("Support Pages Loaded");
+        handleNavbar();
 
-        if (isLoggedIn === "true") {
-            e.preventDefault();
+        // أي كود خاص بالـ support
+    }
 
-            fetch("php/logout.php").then(() => {
-                // مسح كل حاجة
-                localStorage.clear();
+    // =========================
+    // 🔹 ADMIN + USER
+    // =========================
+    function initDashboard() {
+        console.log("Admin/User Page Loaded");
+        handleNavbar();
 
-                loginLink.innerText = "Login";
-                loginLink.setAttribute("href", "html/login.html");
+        // ممكن تضيف check role هنا
+    }
 
-                if (helloText) {
-                    helloText.innerText = "";
-                }
+    // =========================
+    // 🔥 تحديد الصفحة تلقائي
+    // =========================
+    let page = document.body.getAttribute("data-page");
 
-                userImage.src = "attachments/logos/default_user.jpg";
-                userLink.href = "html/login.html";
+    switch (page) {
+        case "index":
+            initIndex();
+            break;
 
-                // رجوع للـ index
-                window.location.href = "/index.html";
-            });
-        }
-    });
+        case "support":
+            initSupportPages();
+            break;
+
+        case "dashboard":
+            initDashboard();
+            break;
+
+        default:
+            handleNavbar();
+    }
 });
+
+// =========================
+// 🔥 حل مشكلة المسارات مرة واحدة
+// =========================
+function getBasePath() {
+    let path = window.location.pathname;
+
+    if (path.includes("/html/")) {
+        return "../";
+    }
+
+    return "";
+}
