@@ -2,20 +2,45 @@ window.addEventListener("load", function () {
     let loginLink = document.getElementById("loginLink");
     let userLink = document.getElementById("userLink");
     let userImage = document.getElementById("userImage");
+    let helloText = document.getElementById("helloText");
+
+    if (!loginLink) return;
 
     let originalHref = loginLink.getAttribute("href");
 
     // =========================
-    // CHECK LOGIN FROM SERVER
+    // 1) LOAD FROM LOCALSTORAGE (سريع)
+    // =========================
+    let isLoggedIn = localStorage.getItem("isLoggedIn");
+    let name = localStorage.getItem("name");
+
+    if (isLoggedIn === "true") {
+        loginLink.innerText = "Logout";
+        loginLink.removeAttribute("href");
+
+        if (helloText) {
+            helloText.innerText = "Hello " + name;
+        }
+    }
+
+    // =========================
+    // 2) VERIFY FROM SERVER (SESSION)
     // =========================
     fetch("php/get_user.php")
         .then((res) => res.json())
         .then((data) => {
             if (data.loggedIn) {
-                loginLink.innerText = "Logout";
+                // ✅ sync مع localStorage
+                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("name", data.first_name);
+                localStorage.setItem("role", data.role);
 
-                // ❗ مهم: نشيل الـ href وقت logout
+                loginLink.innerText = "Logout";
                 loginLink.removeAttribute("href");
+
+                if (helloText) {
+                    helloText.innerText = "Hello " + data.first_name;
+                }
 
                 if (data.image) {
                     userImage.src = data.image;
@@ -23,13 +48,17 @@ window.addEventListener("load", function () {
 
                 userLink.href = "html/User/user.html";
             } else {
-                loginLink.innerText = "Login";
+                // ❌ session انتهت
+                localStorage.clear();
 
-                // نرجّع href بتاع login
+                loginLink.innerText = "Login";
                 loginLink.setAttribute("href", originalHref);
 
-                userImage.src = "attachments/logos/default_user.jpg";
+                if (helloText) {
+                    helloText.innerText = "";
+                }
 
+                userImage.src = "attachments/logos/default_user.jpg";
                 userLink.href = "html/login.html";
             }
         });
@@ -38,23 +67,28 @@ window.addEventListener("load", function () {
     // LOGOUT
     // =========================
     loginLink.addEventListener("click", function (e) {
-        fetch("php/get_user.php")
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.loggedIn) {
-                    e.preventDefault();
+        let isLoggedIn = localStorage.getItem("isLoggedIn");
 
-                    fetch("php/logout.php").then(() => {
-                        loginLink.innerText = "Login";
+        if (isLoggedIn === "true") {
+            e.preventDefault();
 
-                        userImage.src = "attachments/logos/default_user.jpg";
+            fetch("php/logout.php").then(() => {
+                // مسح كل حاجة
+                localStorage.clear();
 
-                        // ❗ رجّع الـ href بعد logout
-                        loginLink.setAttribute("href", "html/login.html");
+                loginLink.innerText = "Login";
+                loginLink.setAttribute("href", "html/login.html");
 
-                        location.reload();
-                    });
+                if (helloText) {
+                    helloText.innerText = "";
                 }
+
+                userImage.src = "attachments/logos/default_user.jpg";
+                userLink.href = "html/login.html";
+
+                // رجوع للـ index
+                window.location.href = "/index.html";
             });
+        }
     });
 });

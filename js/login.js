@@ -22,16 +22,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (data.status === "success") {
                         msg.style.color = "green";
 
+                        // ✅ تخزين البيانات (مهم للـ navbar)
+                        localStorage.setItem("isLoggedIn", "true");
+                        localStorage.setItem("name", data.user.name);
+                        localStorage.setItem("role", data.user.role);
+
                         setTimeout(() => {
-                            // =========================
-                            // 🔥 NEW: ROLE REDIRECT
-                            // =========================
-                            if (data.role === "admin") {
-                                window.location.href = "../html/Admin/admin.html";
-                            } else {
-                                window.location.href = "../index.html";
-                            }
-                        }, 1500);
+                            // ✅ استخدام redirect من الـ PHP مباشرة
+                            window.location.href = data.redirect;
+                        }, 1000);
                     } else {
                         msg.style.color = "red";
                     }
@@ -41,46 +40,77 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // =========================
-    // INDEX PAGE LOGIC (PHP SESSION VERSION)
+    // NAVBAR LOGIC (كل الصفحات)
     // =========================
     let loginLink = document.getElementById("loginLink");
     let helloText = document.getElementById("helloText");
 
     if (loginLink) {
-        // جلب بيانات المستخدم من السيرفر
+        let isLoggedIn = localStorage.getItem("isLoggedIn");
+        let name = localStorage.getItem("name");
+
+        // =========================
+        // عرض الحالة من localStorage
+        // =========================
+        if (isLoggedIn === "true") {
+            if (helloText) {
+                helloText.innerText = "Hello " + name;
+            }
+            loginLink.innerText = "Logout";
+        }
+
+        // =========================
+        // تأكيد من السيرفر (Session)
+        // =========================
         fetch("php/get_user.php")
             .then((res) => res.json())
             .then((data) => {
                 if (data.loggedIn) {
-                    helloText.innerText = "Hello " + data.first_name;
+                    // تحديث localStorage لو مش موجود
+                    localStorage.setItem("isLoggedIn", "true");
+                    localStorage.setItem("name", data.first_name);
+                    localStorage.setItem("role", data.role);
+
+                    if (helloText) {
+                        helloText.innerText = "Hello " + data.first_name;
+                    }
+
                     loginLink.innerText = "Logout";
+                } else {
+                    // لو السيشن انتهت
+                    localStorage.clear();
+
+                    if (helloText) {
+                        helloText.innerText = "";
+                    }
+
+                    loginLink.innerText = "Login";
                 }
             });
 
         // =========================
-        // LOGOUT HANDLER (MODIFIED)
+        // LOGOUT
         // =========================
         loginLink.addEventListener("click", function (e) {
-            fetch("php/get_user.php")
-                .then((res) => res.json())
-                .then((data) => {
-                    if (data.loggedIn) {
-                        e.preventDefault();
+            let isLoggedIn = localStorage.getItem("isLoggedIn");
 
-                        // logout من السيرفر
-                        fetch("php/logout.php").then(() => {
-                            // مسح الواجهة
-                            if (helloText) {
-                                helloText.innerText = "";
-                            }
+            if (isLoggedIn === "true") {
+                e.preventDefault();
 
-                            loginLink.innerText = "Login";
+                fetch("php/logout.php").then(() => {
+                    // مسح كل حاجة
+                    localStorage.clear();
 
-                            // 🔥 Refresh نفس الصفحة فقط
-                            location.reload();
-                        });
+                    if (helloText) {
+                        helloText.innerText = "";
                     }
+
+                    loginLink.innerText = "Login";
+
+                    // رجوع للـ index
+                    window.location.href = "/index.html";
                 });
+            }
         });
     }
 });

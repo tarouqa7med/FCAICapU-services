@@ -62,34 +62,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
+    // 🔐 مهم للأمان
+    session_regenerate_id(true);
+
     // Save session
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['first_name'] = $user['first_name'];
     $_SESSION['role'] = $user['role'];
 
-    // =========================
-    // 🔥 FINAL RESPONSE (UPDATED)
-    // =========================
+    // تحديد الصفحة
+    $redirect = ($user['role'] === 'admin')
+        ? "../html/Admin/admin.html"
+        : "../index.html";
 
-    if ($user['role'] === 'admin') {
-        echo json_encode([
-            "status" => "success",
-            "message" => "Login successful",
-            "first_name" => $user['first_name'],
-            "role" => $user['role'],
-            "redirect" => "../html/Admin/admin.html"
-        ]);
-    } else {
-        echo json_encode([
-            "status" => "success",
-            "message" => "Login successful",
-            "first_name" => $user['first_name'],
-            "role" => $user['role'],
-            "redirect" => "../index.html"
-        ]);
-    }
+    // ✅ Final Response (موحد)
+    echo json_encode([
+        "status" => "success",
+        "message" => "Login successful",
+        "user" => [
+            "id" => $user['id'],
+            "name" => $user['first_name'],
+            "role" => $user['role']
+        ],
+        "redirect" => $redirect
+    ]);
 
     $stmt->close();
     $conn->close();
 }
 ?>
+
+
+
+
