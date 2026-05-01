@@ -47,7 +47,7 @@
                         <button onclick="showSection('orders')">Orders</button>
                         <button onclick="showSection('settings')">Settings</button>
                         <div>
-                            <button class="signoutBtn">Sign out</button>
+<button class="signoutBtn" onclick="showLogoutModal()">Sign out</button>
                         </div>
                     </div>
                 
@@ -147,8 +147,34 @@
 
 
     </div>
-    <script src="../../js/main.js" defer></script>
+<script src="../../js/main.js" defer></script>
     <script src="../../js/auth.js"></script>
     <script src="../../js/Admin/admin.js" defer></script>
+    <script>
+        // Sign out modal handlers
+        function showLogoutModal() {
+            document.getElementById('logoutModal').style.display = 'flex';
+        }
+        
+        function hideLogoutModal() {
+            document.getElementById('logoutModal').style.display = 'none';
+        }
+        
+        function handleSignOut() {
+            if (window.authManager) {
+                hideLogoutModal();
+                window.authManager.logout();
+            } else {
+                // Fallback: redirect directly to logout.php
+                window.location.href = '../php/logout.php';
+            }
+        }
+        
+        // Set up modal button handlers
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('confirmLogout').addEventListener('click', handleSignOut);
+            document.getElementById('cancelLogout').addEventListener('click', hideLogoutModal);
+        });
+    </script>
 </body>
 </html>

@@ -63,17 +63,26 @@ class AuthManager {
         return "./php/auth.php";
     }
 
-    getLogoutUrl() {
+getLogoutUrl() {
         const path = window.location.pathname.toLowerCase().trim();
 
+        console.log("📍 Logout URL path analysis:", path);
+
+        // Root pages (index.html, /)
         if (
             path === "/" ||
             path === "/index.html" ||
             path.endsWith("index.html")
         ) {
-            return "./php/logout.php"; // 👈 ROOT FIXED
+            return "./php/logout.php";
         }
 
+        // Nested HTML subfolders like html/User/user.html or html/Admin/admin.html
+        if (path.includes("/html/user/") || path.includes("/html/admin/") || path.includes("/html/support/")) {
+            return "../../php/logout.php";
+        }
+
+        // Single level HTML subfolder like html/login.html
         if (path.includes("/html/")) {
             return "../php/logout.php";
         }
@@ -221,4 +230,4 @@ class AuthManager {
     }
 }
 
-new AuthManager();
+window.authManager = new AuthManager();
