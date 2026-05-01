@@ -218,6 +218,8 @@ getLogoutUrl() {
                     location.reload();
                 } else if (path.includes("/html/")) {
                     window.location.href = "../index.html";
+                } else if (path.includes("/html/Admin/") || path.includes("/html/User/") || path.includes("/html/Support/")) {
+                    window.location.href = "../../index.html";
                 } else {
                     window.location.href = "./index.html";
                 }

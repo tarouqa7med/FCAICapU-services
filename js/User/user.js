@@ -107,13 +107,39 @@ class UserProfile {
         }
     }
 
-    // Show edit profile modal
+// Check login status first, then edit profile
     editProfile() {
-        if (!this.currentUser) {
-            this.showError("Please login to edit your profile");
-            return;
-        }
+        // Check if logged in first
+        const authUrl = this.getPhpUrl() + "?check=1";
+        
+        fetch(authUrl)
+            .then(res => res.json())
+            .then(data => {
+                if (!data.loggedIn || !data.user) {
+                    // Not logged in - show error and redirect
+                    this.showError("Please login first to edit your profile");
+                    setTimeout(() => {
+                        const loginUrl = window.location.pathname.includes("/html/") 
+                            ? "login.html" 
+                            : "html/login.html";
+                        window.location.href = loginUrl;
+                    }, 2000);
+                    return;
+                }
+                
+                // Logged in - proceed with edit
+                this.currentUser = data.user;
+                this.displayUserData(data.user);
+                this.openEditModal();
+            })
+            .catch(err => {
+                console.error("❌ Error checking login:", err);
+                this.showError("Please login first to edit your profile");
+            });
+    }
 
+    // Open edit modal (called after login check)
+    openEditModal() {
         // Create modal if it doesn't exist
         let modal = document.getElementById("editProfileModal");
         if (!modal) {
@@ -125,6 +151,11 @@ class UserProfile {
         document.getElementById("editUsername").value = this.currentUser.username || "";
         document.getElementById("editFullName").value = this.currentUser.full_name || "";
         document.getElementById("editImageUrl").value = this.currentUser.image || "";
+
+        // Enable auto-save when modal is opened
+        setTimeout(() => {
+            this.autoSaveProfile();
+        }, 100);
 
         // Show modal
         const bsModal = new bootstrap.Modal(modal);
@@ -175,7 +206,7 @@ class UserProfile {
         }
     }
 
-    // Save profile changes
+// Save profile changes
     saveProfile() {
         const username = document.getElementById("editUsername").value.trim();
         const full_name = document.getElementById("editFullName").value.trim();
@@ -186,9 +217,6 @@ class UserProfile {
             this.showEditMessage("Please fill in all required fields", "danger");
             return;
         }
-
-        // Show loading
-        this.showEditMessage("Saving...", "info");
 
         // Send update request
         const formData = new FormData();
@@ -205,13 +233,13 @@ class UserProfile {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                this.showEditMessage(data.message, "success");
+                this.showEditMessage("Saved!", "success");
                 
                 // Update current user data
                 this.currentUser = data.user;
                 this.displayUserData(data.user);
 
-                // Close modal after 1.5 seconds
+                // Close modal after 1 second
                 setTimeout(() => {
                     const modal = document.getElementById("editProfileModal");
                     if (modal) {
@@ -220,7 +248,7 @@ class UserProfile {
                             bsModal.hide();
                         }
                     }
-                }, 1500);
+                }, 1000);
             } else {
                 this.showEditMessage(data.message, "danger");
             }
@@ -229,6 +257,71 @@ class UserProfile {
             console.error("❌ Error saving profile:", err);
             this.showEditMessage("Failed to save profile. Please try again.", "danger");
         });
+    }
+
+    // Auto-save profile on input change (real-time)
+    autoSaveProfile() {
+        const usernameInput = document.getElementById("editUsername");
+        const fullNameInput = document.getElementById("editFullName");
+        const imageInput = document.getElementById("editImageUrl");
+        
+        if (!usernameInput || !fullNameInput) return;
+
+        // Debounce timer
+        let saveTimeout = null;
+
+        const performAutoSave = () => {
+            const username = usernameInput.value.trim();
+            const full_name = fullNameInput.value.trim();
+            const image = imageInput?.value.trim() || "";
+
+            // Validate
+            if (!username || !full_name) {
+                return;
+            }
+
+            // Show saving indicator
+            this.showEditMessage("Auto-saving...", "info");
+
+            // Send update request
+            const formData = new FormData();
+            formData.append("username", username);
+            formData.append("full_name", full_name);
+            if (image) {
+                formData.append("image", image);
+            }
+
+            fetch(this.getUpdateProfileUrl(), {
+                method: "POST",
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    this.showEditMessage("Updated!", "success");
+                    this.currentUser = data.user;
+                    this.displayUserData(data.user);
+                } else {
+                    this.showEditMessage(data.message, "warning");
+                }
+            })
+            .catch(err => {
+                console.error("❌ Auto-save error:", err);
+            });
+        };
+
+        // Add input listeners with debounce
+        const addAutoSaveListener = (input) => {
+            if (!input) return;
+            input.addEventListener("input", () => {
+                clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(performAutoSave, 1000); // Auto-save after 1 second of typing
+            });
+        };
+
+        addAutoSaveListener(usernameInput);
+        addAutoSaveListener(fullNameInput);
+        addAutoSaveListener(imageInput);
     }
 
     // Show message in edit modal
@@ -268,9 +361,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.handleSignOut = () => {
         if (window.authManager) {
             window.authManager.logout();
-        } else {
-            // Fallback: redirect directly to logout.php
-            window.location.href = "../php/logout.php";
+            window.location.href = "../../index.html";
         }
     };
 });

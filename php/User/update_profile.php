@@ -5,20 +5,50 @@
  */
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Methods: POST, GET');
 header('Access-Control-Allow-Headers: Content-Type');
 
 require_once '../config.php';
 
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
+// Check if user is logged in (session check)
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Check login status - return loggedIn status
+if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
     echo json_encode([
         'success' => false,
+        'loggedIn' => false,
         'message' => 'Please login to update your profile'
     ]);
     exit();
 }
 
+// If GET request, return current user data
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $user_id = $_SESSION['user_id'];
+    try {
+        $stmt = $pdo->prepare("SELECT id, username, full_name, email, COALESCE(image, 'attachments/logos/default_user.jpg') as image, role FROM users WHERE id = ?");
+        $stmt->execute([$user_id]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        echo json_encode([
+            'success' => true,
+            'loggedIn' => true,
+            'user' => $user
+        ]);
+    } catch (Exception $e) {
+        echo json_encode([
+            'success' => false,
+            'loggedIn' => false,
+            'message' => 'Error loading user data'
+        ]);
+    }
+    exit();
+}
+
+// POST request - update profile
 // Validate request method
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode([
@@ -85,6 +115,7 @@ try {
 
     echo json_encode([
         'success' => true,
+        'loggedIn' => true,
         'message' => 'Profile updated successfully!',
         'user' => $user
     ]);
