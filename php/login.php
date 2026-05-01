@@ -2,55 +2,55 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Content-Type');
 
 require_once 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'message' => 'يجب استخدام POST']);
+    echo json_encode(['success' => false, 'message' => 'POST method required']);
     exit();
 }
 
-// التحقق من البيانات
-if (empty(trim($_POST['email'] ?? ''))) {
-    echo json_encode(['success' => false, 'message' => 'Please enter your email.']);
+// Validate input data
+$email = trim($_POST['email'] ?? '');
+$password = $_POST['password'] ?? '';
+
+if (empty($email)) {
+    echo json_encode(['success' => false, 'message' => 'Please enter your email']);
     exit();
 }
 
-if (empty(trim($_POST['password'] ?? ''))) {
-    echo json_encode(['success' => false, 'message' => 'Please enter your password.']);
+if (empty($password)) {
+    echo json_encode(['success' => false, 'message' => 'Please enter your password']);
     exit();
 }
-
-$email = trim($_POST['email']);
-$password = $_POST['password'];
 
 try {
-    // 1️⃣ التحقق من وجود الإيميل
+    // 1️⃣ Check if email exists
     $stmt = $pdo->prepare("SELECT id, username, email, password, full_name, image, role FROM users WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$user) {
-        // الإيميل مش موجود
-        sleep(1); // حماية من Brute Force
+        sleep(1); // Brute force protection
         echo json_encode([
             'success' => false, 
-            'message' => 'The email is not registered. Please check the email.'
+            'message' => 'Email not registered. Please check your email address.'
         ]);
         exit();
     }
     
-    // 2️⃣ التحقق من الباسورد
+    // 2️⃣ Verify password
     if (!password_verify($password, $user['password'])) {
-        sleep(1); // حماية من Brute Force
+        sleep(1); // Brute force protection
         echo json_encode([
             'success' => false, 
-            'message' => 'Wrong password. Please check your password.'
+            'message' => 'Incorrect password'
         ]);
         exit();
     }
     
-    // 3️⃣ Login ناجح ✅
+    // 3️⃣ Login successful ✅
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['user_name'] = $user['username'];
     $_SESSION['user_email'] = $user['email'];
@@ -62,11 +62,13 @@ try {
         'user' => [
             'username' => $user['username'],
             'full_name' => $user['full_name'],
-            'role' => $user['role']
+            'role' => $user['role'],
+            'image' => $user['image'] ?: 'attachments/logos/default_user.jpg'
         ]
     ]);
     
 } catch (Exception $e) {
-    echo json_encode(['success' => false, 'message' => 'خطأ في الخادم']);
+    error_log('Login error: ' . $e->getMessage());
+    echo json_encode(['success' => false, 'message' => 'Server error. Please try again.']);
 }
 ?>

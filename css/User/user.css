@@ -4,8 +4,23 @@
     /* transition: all 1s 0s linear; */
 }
 .navbar {
-    position: sticky !important;
-    background: color-mix(in srgb, var(--primary-color2) 90%, transparent);
+    position: sticky;
+    box-shadow: 0 0 20px 0 var(--primary-color6);
+}
+.navbar .container {
+    display: flex;
+    justify-content: space-around;
+}
+.navbar .container div:nth-child(1) {
+    margin: 0 !important;
+}
+.navbar ul {
+    margin: 0 0 !important;
+}
+.navbar .container > div:nth-child(3) {
+    margin: 0 !important;
+    margin-left: 100px !important;
+    width: auto;
 }
 
 /* ------------------------------------------------------------ */
@@ -26,10 +41,16 @@
     top: 25%;
     left: 50px;
     width: 25%;
+    backdrop-filter: blur(35px);
     background: color-mix(in srgb, var(--primary-color2) 20%, transparent);
+    color: var(--primary-color6);
     box-shadow: 0 0 20px var(--primary-color6) inset;
     border-radius: 10px;
     transition: all 2000ms linear;
+}
+.profile-card:hover {
+    scale: 1.15;
+    transition: all 75ms linear;
 }
 .card-body::before {
     content: none;
@@ -38,15 +59,39 @@
     width: 120px;
     height: 120px;
     object-fit: cover;
-    border-radius: 50%;
     border: 2px solid white;    
+    border-radius: 50%;
     margin-bottom: 15px;
 }
+.col-md-8 {
+    padding: 20px;
+    transform: translateY(-50px);
+    background: color-mix(in srgb, var(--primary-color3) 20%, transparent);
+    backdrop-filter: blur(50px);
+    border-radius: 10px;
+}
+.row .g-3 .col-md-4:hover {
+    scale: 1.05;
+    transition: all 100ms linear;
+}
 .stat-card {
-    background: linear-gradient(135deg, var(--primary-color1) 0%,  var(--primary-color2) 100%);
-    color: white;
+    backdrop-filter: blur(35px);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--primary-color1) 20%, transparent) 0%,  var(--primary-color2) 100%);
+    color: var(--primary-color6);
+    box-shadow: 0 0 20px var(--primary-color6) inset;
 }
 .stat-card h1 {
     font-size: 2.5rem;
     font-weight: bold;
+}
+.mt-4 {
+    padding: 20px;
+    backdrop-filter: blur(35px);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--primary-color1) 20%, transparent) 0%,  var(--primary-color2) 100%);
+    color: var(--primary-color6);
+    box-shadow: 0 0 20px var(--primary-color6) inset;
+}
+.mt-4:hover {
+    scale: 1.05;
+    transition: all 100ms linear;
 }

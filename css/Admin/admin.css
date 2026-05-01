@@ -12,8 +12,20 @@ body::after {
     position: fixed;
     box-shadow: 0 0 20px 0 var(--primary-color6);
 }
-.navbar .loginBtn {
-    margin-right: 10px !important;
+.navbar .container {
+    display: flex;
+    justify-content: space-around;
+}
+.navbar .container div:nth-child(1) {
+    margin: 0 !important;
+}
+.navbar ul {
+    margin: 0 0 !important;
+}
+.navbar .container > div:nth-child(3) {
+    margin: 0 !important;
+    margin-left: 100px !important;
+    width: auto;
 }
 
 /* ------------------------------------------------------------------------------------- */
