@@ -2,33 +2,58 @@
 session_start();
 header('Content-Type: application/json');
 
-// مسار ملف الـ contacts
-$contactsFile = '../contact/contacts.txt';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// معالجة نموذج الاتصال
-if ($_POST) {
-    $name = htmlspecialchars(trim($_POST['name']));
-    $email = htmlspecialchars(trim($_POST['email']));
-    $message_text = htmlspecialchars(trim($_POST['message']));
-    
-    // حفظ في ملف نصي
-    $data = date('Y-m-d H:i:s') . " | Name: $name | Email: $email | Message: $message_text\n";
-    file_put_contents($contactsFile, $data, FILE_APPEND | LOCK_EX);
-    
+$contactsDir = '../contact/';
+$contactsFile = $contactsDir . 'contacts.txt';
+
+if (!is_dir($contactsDir)) {
+    mkdir($contactsDir, 0755, true);
+}
+
+if (!isset($_SESSION['user_id'])) {
     echo json_encode([
         'success' => true,
-        'message' => 'تم إرسال رسالتك بنجاح! شكراً لك 😊'
+        'message' => 'Please sign in, First!❌',
+        'loginRequired' => true
     ]);
     exit();
 }
 
-// التحقق من حالة المستخدم
-if (isset($_SESSION['user_id'])) {
-    echo json_encode([
-        'loggedIn' => true,
-        'userImage' => $_SESSION['user_image'] ?? 'attachments/logos/default_user.jpg'
-    ]);
-} else {
-    echo json_encode(['loggedIn' => false]);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = htmlspecialchars(trim($_POST['name'] ?? ''));
+    $email = htmlspecialchars(trim($_POST['email'] ?? ''));
+    $message = htmlspecialchars(trim($_POST['message'] ?? ''));
+    
+    if (empty($name) || empty($email) || empty($message)) {
+        echo json_encode([
+            'success' => true,
+            'message' => 'Please fill in all fields❌'
+        ]);
+        exit();
+    }
+    
+    $user_name = $_SESSION['user_name'] ?? 'user_' . $_SESSION['user_id'];
+    $data = date('Y-m-d H:i:s') . " | $user_name | $name | $email | $message\n";
+    
+    if (file_put_contents($contactsFile, $data, FILE_APPEND | LOCK_EX) !== false) {
+        echo json_encode([
+            'success' => true,
+            'message' => '✅ Your feedback has been submitted successfully! Thank you 😊'
+        ]);
+    } else {
+        echo json_encode([
+            'success' => true,
+            'message' => 'Error saving data - please check permissions❌'
+        ]);
+    }
+    exit();
 }
+
+// حالة المستخدم
+echo json_encode([
+    'loggedIn' => true,
+    'userImage' => $_SESSION['user_image'] ?? 'attachments/logos/default_user.jpg'
+]);
 ?>

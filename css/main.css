@@ -58,33 +58,30 @@ body::after {
     width: 400px;
     height: 400px;
     border-radius: 50%;
-    filter: blur(150px);
+    background: #ffff0040;
+    /* filter: blur(120px); */
     z-index: -1;
 }
 body::before {
-    top: 10%;
-    background: var(--blob1);
     transform: translate(-50%, -40%);
+    animation: body-before 5s 2.5s infinite alternate ease-in-out;
     opacity: 0;
-    animation: body-before 10s 0s infinite alternate ease-in-out;
 }
 body::after {
     top: -20%;
     right: 0%;
-    background: var(--blob2);
     transform: translate(50%, -40%);
-    opacity: 0;
-    animation: body-after 10s 0s infinite alternate-reverse ease-in-out;
+    animation: body-after 5s 0s infinite alternate-reverse ease-in-out;
 }
 .extra {
     position: fixed;
     width: 0;
     height: 0;
     border-radius: 50%;
-    filter: blur(50px);
+    filter: blur(0px);
     background: var(--blob3);
     z-index: -100;
-    animation: body-extra 10s 5s infinite forwards linear;
+    animation: body-extra 10s 5s infinite alternate linear;
 }
 .animated-body {
     animation: index-body 1s forwards ease;

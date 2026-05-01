@@ -19,12 +19,12 @@ document.querySelector('form').addEventListener('submit', function(e) {
                 msgDiv.innerHTML = '';
             }, 5000);
         } else {
-            msgDiv.innerHTML = `<div class="alert alert-danger">حدث خطأ، حاول مرة أخرى</div>`;
+            msgDiv.innerHTML = `<div class="alert alert-danger">Please sign in, First.</div>`;
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        msgDiv.innerHTML = `<div class="alert alert-danger">خطأ في الاتصال، تأكد من الإنترنت</div>`;
+        msgDiv.innerHTML = `<div class="alert alert-danger">Please sure you are connected to the internet.</div>`;
     });
 });
 

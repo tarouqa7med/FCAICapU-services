@@ -79,8 +79,8 @@ input:focus {
 }
 button {
     margin: auto;
-    width: 150px;
-    padding: 5px 15px;
+    max-width: max-content;
+    padding: 8px 25px;
     background: linear-gradient(135deg,#0f2027,#498199);
     color: white;
     border: none;
