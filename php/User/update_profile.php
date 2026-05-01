@@ -15,12 +15,13 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Check login status - return loggedIn status
+// Check login status - return loggedIn status and redirect flag
 if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
     echo json_encode([
         'success' => false,
         'loggedIn' => false,
-        'message' => 'Please login to update your profile'
+        'redirect' => true,
+        'message' => 'You must login first to edit your profile'
     ]);
     exit();
 }

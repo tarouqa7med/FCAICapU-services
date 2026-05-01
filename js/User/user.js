@@ -35,6 +35,21 @@ class UserProfile {
         return "./php/User/update_profile.php";
     }
 
+// Get login page URL based on current path
+    getLoginUrl() {
+        const path = window.location.pathname.toLowerCase().trim();
+        
+        if (path.includes("/html/user/") || path.includes("/html/admin/") || path.includes("/html/support/")) {
+            return "../../html/login.html";
+        }
+        
+        if (path.includes("/html/")) {
+            return "login.html";
+        }
+        
+        return "./html/login.html";
+    }
+
     // Load user data from auth.php
     loadUserData() {
         fetch(this.getPhpUrl() + "?check=1")
@@ -45,20 +60,37 @@ class UserProfile {
                     this.displayUserData(data.user);
                     this.loadUserStats();
                 } else {
-                    this.showError("Please login to view your profile");
-                    // Redirect to login after 2 seconds
-                    setTimeout(() => {
-                        const loginUrl = window.location.pathname.includes("/html/") 
-                            ? "login.html" 
-                            : "html/login.html";
-                        window.location.href = loginUrl;
-                    }, 2000);
+                    // Not logged in - redirect to login page
+                    console.log("🚫 User not logged in, redirecting to login...");
+                    this.redirectToLogin();
                 }
             })
             .catch(err => {
                 console.error("❌ Error loading user data:", err);
                 this.showError("Failed to load user data");
             });
+    }
+
+    // Redirect to login page
+    redirectToLogin() {
+        const loginUrl = this.getLoginUrl();
+        console.log("➡️ Redirecting to:", loginUrl);
+        
+        // Show message before redirect
+        const userName = document.getElementById("userName");
+        const userEmail = document.getElementById("userEmail");
+        
+        if (userName) {
+            userName.textContent = "Please login first";
+        }
+        if (userEmail) {
+            userEmail.textContent = "Redirecting to login page...";
+        }
+        
+        // Delay redirect slightly to show message
+        setTimeout(() => {
+            window.location.href = loginUrl;
+        }, 1000);
     }
 
     // Display user data in the UI
@@ -109,21 +141,16 @@ class UserProfile {
 
 // Check login status first, then edit profile
     editProfile() {
-        // Check if logged in first
-        const authUrl = this.getPhpUrl() + "?check=1";
-        
-        fetch(authUrl)
+        // Use update_profile.php to check login status and get user data
+        fetch(this.getUpdateProfileUrl())
             .then(res => res.json())
             .then(data => {
-                if (!data.loggedIn || !data.user) {
-                    // Not logged in - show error and redirect
-                    this.showError("Please login first to edit your profile");
-                    setTimeout(() => {
-                        const loginUrl = window.location.pathname.includes("/html/") 
-                            ? "login.html" 
-                            : "html/login.html";
-                        window.location.href = loginUrl;
-                    }, 2000);
+                if (!data.loggedIn) {
+                    // Not logged in - show alert and redirect
+                    alert(data.message || "You must login first to edit your profile. Redirecting to login page...");
+                    
+                    // Redirect to login page using consistent method
+                    window.location.href = this.getLoginUrl();
                     return;
                 }
                 
@@ -134,7 +161,7 @@ class UserProfile {
             })
             .catch(err => {
                 console.error("❌ Error checking login:", err);
-                this.showError("Please login first to edit your profile");
+                alert("Error checking login status. Please try again.");
             });
     }
 
