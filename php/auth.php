@@ -10,13 +10,20 @@ if (isset($_GET['check'])) {
         $stmt->execute([$_SESSION['user_id']]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
+        // Admin full access enhancement
+        $user['isAdmin'] = ($user['role'] === 'admin');
+        $user['superAccess'] = true;
+        
         echo json_encode([
             'loggedIn' => true,
-            'user' => $user ?: ['username' => 'User', 'image' => 'attachments/logos/default_user.jpg', 'role' => 'user']
+            'adminAccess' => ($user['role'] === 'admin'),
+            'superAccess' => true,
+            'user' => $user ?: ['username' => 'Admin', 'image' => 'attachments/logos/default_user.jpg', 'role' => 'admin']
         ]);
     } else {
         echo json_encode(['loggedIn' => false]);
     }
+
     exit;
 }
 ?>

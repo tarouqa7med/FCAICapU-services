@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once '../config.php';
+require_once '../../config.php';
 
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'Please login first.', 'loggedIn' => false]);

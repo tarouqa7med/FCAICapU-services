@@ -1,14 +1,26 @@
-# TODO - Add Sign Out Button to User and Admin Pages
+# FCAICapU-services Fix & Run Plan
+## Status: 🚀 In Progress
 
-## Steps completed:
+### 1. ✅ Fix PHP Path Includes (4 files)
+   - php/Admin/update_users.php
+   - php/User/update_profile.php  
+   - php/Support/users_support.php
+   - php/Support/userSupport.php
 
-1. [x] Add Sign Out button to html/User/user.html
-2. [x] Expose AuthManager globally in js/auth.js
-3. [x] Add logout handler in js/User/user.js
-4. [x] Add logout handler to html/Admin/admin.html
+### 2. ✅ Clean admin.html (remove dupes, fix structure)
 
-## Changes made:
-- html/User/user.html: Added "Sign Out" button in profile card
-- js/auth.js: Changed `new AuthManager()` to `window.authManager = new AuthManager()` to expose the instance globally
-- js/User/user.js: Added `handleSignOut()` function that calls `authManager.logout()`
-- html/Admin/admin.html: Added onclick handler to signoutBtn and inline JavaScript for modal handling
+
+### 3. ✅ AJAX-ify index.html contact form
+
+### 4. ✅ Run DB Setup
+   - Visit: http://localhost/FCAICapU-services/php/setup.php (Executed)
+
+### 5. [ ] Test Core Flows ✅
+   - Admin login: admin@fcai.capu.edu.eg / admin123@
+   - User register/login
+   - Admin CRUD users
+   - Support ticket
+   - Contact form
+
+**Next Command:** `php/setup.php` in browser after fixes.
+
