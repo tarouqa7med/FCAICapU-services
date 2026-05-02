@@ -1,74 +1,31 @@
 <?php
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type');
-
 require_once 'config.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'message' => 'POST method required']);
-    exit();
-}
+if (isset($_POST['email']) && isset($_POST['password'])) {
+    $stmt = $pdo->prepare("SELECT id, email, password, role, username, full_name, image FROM users WHERE email = ?");
+    $stmt->execute([$_POST['email']]);
+    $user = $stmt->fetch();
 
-// Validate input data
-$email = trim($_POST['email'] ?? '');
-$password = $_POST['password'] ?? '';
-
-if (empty($email)) {
-    echo json_encode(['success' => false, 'message' => 'Please enter your email']);
-    exit();
-}
-
-if (empty($password)) {
-    echo json_encode(['success' => false, 'message' => 'Please enter your password']);
-    exit();
-}
-
-try {
-    // 1️⃣ Check if email exists
-    $stmt = $pdo->prepare("SELECT id, username, email, password, full_name, image, role FROM users WHERE email = ?");
-    $stmt->execute([$email]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if (!$user) {
-        sleep(1); // Brute force protection
+    if ($user && password_verify($_POST['password'], $user['password'])) {
+        $_SESSION['user_id'] = $user['id'];
         echo json_encode([
-            'success' => false, 
-            'message' => 'Email not registered. Please check your email address.'
+            'success' => true, 
+            'message' => 'Login successful!',
+            'user' => [
+                'id' => $user['id'],
+                'username' => $user['username'],
+                'full_name' => $user['full_name'],
+                'email' => $user['email'],
+                'role' => $user['role'],
+                'image' => $user['image'] ?: 'attachments/logos/default_user.jpg'
+            ]
         ]);
-        exit();
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Invalid email or password.']);
     }
-    
-    // 2️⃣ Verify password
-    if (!password_verify($password, $user['password'])) {
-        sleep(1); // Brute force protection
-        echo json_encode([
-            'success' => false, 
-            'message' => 'Incorrect password'
-        ]);
-        exit();
-    }
-    
-    // 3️⃣ Login successful ✅
-    $_SESSION['user_id'] = $user['id'];
-    $_SESSION['user_name'] = $user['username'];
-    $_SESSION['user_email'] = $user['email'];
-    $_SESSION['user_role'] = $user['role'];
-    
-    echo json_encode([
-        'success' => true,
-        'message' => 'Login successful! 🎉',
-        'user' => [
-            'username' => $user['username'],
-            'full_name' => $user['full_name'],
-            'role' => $user['role'],
-            'image' => $user['image'] ?: 'attachments/logos/default_user.jpg'
-        ]
-    ]);
-    
-} catch (Exception $e) {
-    error_log('Login error: ' . $e->getMessage());
-    echo json_encode(['success' => false, 'message' => 'Server error. Please try again.']);
+} else {
+    echo json_encode(['success' => false, 'message' => 'Email and password required.']);
 }
 ?>
+
