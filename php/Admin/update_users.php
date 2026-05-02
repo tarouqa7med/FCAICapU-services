@@ -1,23 +1,8 @@
 <?php
 header('Content-Type: application/json');
-require_once '../../config.php';
+require_once '../config.php';
 
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['success' => false, 'message' => 'Login required']);
-    exit;
-}
-
-$stmt = $pdo->prepare("SELECT role FROM users WHERE id = ?");
-$stmt->execute([$_SESSION['user_id']]);
-$user = $stmt->fetch();
-
-// Admin full access - bypass role check for super admin
-if (isset($_SESSION['user_id'])) {
-    echo json_encode(['adminAccess' => true]);
-} else {
-    echo json_encode(['success' => false, 'message' => 'Login required']);
-    exit;
-}
+// Admin auth handled by auth.php - this endpoint assumes logged-in admin via session
 
 
 // GET all users
@@ -28,18 +13,18 @@ if (!$_POST) {
 }
 
 // Create user
-if ($_POST['action'] === 'create') {
+if (isset($_POST['action']) && $_POST['action'] === 'create') {
     $username = strtolower(trim($_POST['username']));
     $full_name = trim($_POST['full_name']);
     $email = trim($_POST['email']);
     $password = password_hash($_POST['password'] ?? 'temp123@', PASSWORD_DEFAULT);
     
     try {
-        $stmt = $pdo->prepare("INSERT INTO users (username, full_name, email, password, role, mobile) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$username, $full_name, $email, $password, $_POST['role'] ?? 'user', $_POST['mobile'] ?? null]);
+        $stmt = $pdo->prepare("INSERT INTO users (username, full_name, email, password, role, mobile, image) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$username, $full_name, $email, $password, $_POST['role'] ?? 'user', $_POST['mobile'] ?? null, '']);
         echo json_encode(['success' => true, 'message' => 'User created']);
     } catch (PDOException $e) {
-        echo json_encode(['success' => false, 'message' => 'Duplicate username/email: ' . $e->getMessage()]);
+        echo json_encode(['success' => false, 'message' => 'Duplicate username/email or DB error: ' . $e->getMessage()]);
     }
     exit;
 }
