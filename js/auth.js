@@ -7,7 +7,6 @@ class AuthManager {
     }
 
     init() {
-        console.log('🚀 AuthManager -', window.location.pathname);
         this.checkAuth();
         this.listenBroadcast();
         window.handleLoginSuccess = () => this.checkAuth();
@@ -31,7 +30,6 @@ async checkAuth() {
                 this.channel.postMessage({type: 'logout'});
             }
         } catch (err) {
-            console.error('❌ Auth fail:', err);
             this.loggedIn = false;
             this.showGuest();
         }
@@ -64,8 +62,8 @@ async checkAuth() {
         const btn = document.getElementById('loginLink');
 
         if (img) {
-            img.src = user.image || 'attachments/logos/default_user.jpg';
-            img.onerror = () => { img.src = 'attachments/logos/default_user.jpg'; };
+            img.src = user.image || 'FCAICapU-servicesattachments/logos/default_user.jpg';
+            img.onerror = () => { img.src = 'FCAICapU-servicesattachments/logos/default_user.jpg'; };
             img.alt = user.username || 'User';
         }
 
@@ -113,13 +111,13 @@ async checkAuth() {
         const pathSegments = window.location.pathname.split('/').filter(Boolean);
         const depth = pathSegments.length;
         const base = '../'.repeat(Math.max(0, depth - 1));
-        return base + (role === 'admin' ? 'html/Admin/admin.html' : 'html/User/user.html');
+        return base + (role === 'admin' ? 'FCAICapU-services/html/Admin/admin.html' : 'FCAICapU-services/html/User/user.html');
     }
 
     getLoginUrl() {
         const pathSegments = window.location.pathname.split('/').filter(Boolean);
         const depth = pathSegments.length;
-        return '../'.repeat(Math.max(0, depth - 1)) + 'html/login.html';
+        return '../'.repeat(Math.max(0, depth - 1)) + 'FCAICapU-services/html/login.html';
     }
 
     async logout() {
