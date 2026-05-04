@@ -1,7 +1,7 @@
 <?php
 /**
  * Database Configuration - FCAICapU Crowdfunding
- */
+*/
 $host = 'localhost';
 $dbname = 'fcaicrowdfund'; // Fixed to match setup.php
 $username = 'root';
@@ -16,5 +16,6 @@ try {
 } catch(PDOException $e) {
     die(json_encode(['success' => false, 'message' => 'DB Error: ' . $e->getMessage()]));
 }
+
 ?>
 

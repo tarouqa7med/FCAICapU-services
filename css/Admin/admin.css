@@ -107,8 +107,9 @@ body::after {
 .section {
     padding-left: 50px;
     display: none;
+    height: 100%;
     color: var(--primary-color6);
-    width: 70%;
+    overflow: auto;
 }
 .section h1 {
     text-align: center;

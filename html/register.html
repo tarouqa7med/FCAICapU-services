@@ -1,33 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/animations.css">
-    <link rel="stylesheet" href="../css/login-register.css">
-    <title>Register</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/animations.css">
+        <link rel="stylesheet" href="../css/login-register.css">
+        <title>Register</title>
     </head>
     <body>
         <div class="extra"></div>
         <div class="form-box">
             <h2>Create Account</h2>
-            <form id="registerForm" action="" method="POST">
-                <label for="">First Name:</label>
-                <input type="text" name="first_name" required>
-                <label for="">Last Name:</label>
-                <input type="text" name="last_name" required>
-                <label for="">Email:</label>
-                <input type="email" name="email" placeholder="Email" required>
-                <label for="">Password:</label>
-                <input type="password" name="password" placeholder="Enter strong password" required>
-                <button type="submit">Sign Up</button>
+            <form id="registerForm">
+                <label>Username:</label>
+                <input type="text" id="username" name="username" required>
+                
+                <label>Full Name:</label>
+                <input type="text" id="full_name" name="full_name" placeholder="First Last" required>
+                
+                <label>Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label>Password:</label>
+                <input type="password" id="password" name="password" required minlength="6">
+                
+                <p id="msg"></p>
+                
+                <button type="submit" id="submitBtn">
+                    <span class="btn-text">Sign Up</span>
+                    <span class="loading" style="display:none;">Creating...</span>
+                </button>
             </form>
-
-            <p id="msg"></p>
             
-            <p>Already have an account? <a href="login.html">Log in</a></p>
-            <a href="../index.html">Home Page</a>
+            <p>Already have account? <a href="login.html">Login</a></p>
+            <button onclick="window.location.href='../index.html'" style="margin-top:10px;">← Home</button>
         </div>
+
+        <style>
+            .message { margin:10px 0; padding:12px; border-radius:8px; text-align:center; }
+            .message.success { background:#d4edda; color:#155724; }
+            .message.error { background:#f8d7da; color:#721c24; }
+        </style>
+
         <script src="../js/register.js" defer></script>
     </body>
 </html>
+

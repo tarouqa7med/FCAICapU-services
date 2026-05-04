@@ -8,25 +8,21 @@
     <link rel="stylesheet" href="../../css/animations.css">
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/Admin/admin.css">
-    <title>Admin Dashboard Page</title>
+    <title>Admin Dashboard</title>
 </head>
 <body data-page="dashboard">
+    <?php require_once '../../php/Admin/protect.php'; ?>
     <div class="animated-body">
-
         <nav class="navbar">
             <div class="container">
                 <div>
-                    <img src="../../attachments/logos/logo1.png" alt="Logo" class="logo"
-                        onclick="window.location.href='../index.html'">
+                    <img src="../../attachments/logos/logo1.png" alt="Logo" class="logo" onclick="window.location.href='../../index.html'">
                     <a class="navbar-brand text-white ps-2" href="../../index.html">FCAICapU-Crowdfunding</a>
                 </div>
                 <ul>
                     <li><a href="../../index.html#Home" class="text-white mx-2">Home</a></li>
-                    <li><a href="#ourVision" class="text-white mx-2">Our Vision</a></li>
-                    <li><a href="#donations" class="text-white mx-2">Donation</a></li>
-                    <li><a href="#contact" class="text-white mx-2">Contact</a></li>
+                    <li><a href="../../index.html#donations" class="text-white mx-2">Donations</a></li>
                 </ul>
-
                 <div class="theme">
                     <i class="bi bi-sun-fill lightMode theme-icon"></i>
                     <i class="bi bi-moon-fill darkMode theme-icon"></i>
@@ -34,147 +30,136 @@
             </div>
         </nav>
 
-
         <section class="dashboard">
             <div class="container">
                 <div class="layout">
                     <div class="sidebar">
-                        <h2>Admin Panel</h2>
-                
-                        <button onclick="showSection('dashboard')">Dashboard</button>
-                        <button onclick="showSection('users')">Users</button>
-                        <button onclick="showSection('products')">Products</button>
-                        <button onclick="showSection('orders')">Orders</button>
-                        <button onclick="showSection('settings')">Settings</button>
-                        <div>
-<button class="signoutBtn" onclick="showLogoutModal()">Sign out</button>
-                        </div>
+                        <h2>Admin Control Panel</h2>
+                        <button onclick="showSection('dashboard')">📊 Dashboard</button>
+                        <button onclick="showSection('users')">👥 Users</button>
+                        <button onclick="showLogoutModal()">🚪 Sign Out</button>
                     </div>
-                
+
                     <div class="content">
-                
+                        <!-- Dashboard -->
                         <div id="dashboard" class="section active">
-                            <h1>Dashboard</h1>
-                            <p>Users: <span id="userCount">0</span></p>
-                            <p>Products: <span id="productCount">0</span></p>
-                            <p>Orders: <span id="orderCount">0</span></p>
+                            <h1>Dashboard Overview</h1>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <h3 id="userCount">Loading...</h3>
+                                    <p>Total Users</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3 id="projectCount">Loading...</h3>
+                                    <p>Projects</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3 id="donationCount">$0</h3>
+                                    <p>Total Donations</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3 id="contactCount">Loading...</h3>
+                                    <p>Contacts</p>
+                                </div>
+                            </div>
                         </div>
-                
+
+                        <!-- Users -->
                         <div id="users" class="section">
-                            <h1>Users</h1>
-                            <input id="userName" placeholder="Name">
-                            <input id="userEmail" placeholder="Email">
-                            
-                            <button onclick="addUser()">Add User</button>
-                            <button onclick="updateUser()">Update User</button>
-                            
-                            <table>
-                                <tbody id="usersTable"></tbody>
-                            </table>
-                
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="usersTable"></tbody>
-                            </table>
+                            <h1>Users Management</h1>
+                            <div class="add-form row g-2 mb-3">
+                                <div class="col-md-2">
+                                    <input id="newUsername" class="form-control form-control-sm" placeholder="Username">
+                                </div>
+                                <div class="col-md-2">
+                                    <input id="newFullName" class="form-control form-control-sm" placeholder="Full Name">
+                                </div>
+                                <div class="col-md-2">
+                                    <input id="newEmail" class="form-control form-control-sm" type="email" placeholder="Email">
+                                </div>
+                                <div class="col-md-2">
+                                    <input id="newPassword" class="form-control form-control-sm" type="password" placeholder="Password">
+                                </div>
+                                <div class="col-md-1">
+                                    <select id="newRole" class="form-select form-select-sm">
+                                        <option value="user">User</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button id="addUserBtn" class="btn btn-success">Add</button>
+                                </div>
+                            </div>
+                            <div id="usersLoading" class="alert alert-info">Loading users...</div>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Username</th>
+                                            <th>Full Name</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Mobile</th>
+                                            <th>Image</th>
+                                            <th>Created</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="usersTable"></tbody>
+                                </table>
+                            </div>
                         </div>
-                
-                        <div id="products" class="section">
-                            <h1>Products</h1>
-                            <input id="productName" placeholder="Product Name">
-                            <input id="productPrice" placeholder="Price">
-                            <button onclick="addProduct()">Add Product</button>
-                
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Price</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="productsTable"></tbody>
-                            </table>
-                        </div>
-                
-                        <div id="orders" class="section">
-                            <h1>Orders</h1>
-                            <input id="orderName" placeholder="Order Name">
-                            <input id="orderStatus" placeholder="Status">
-                            <button onclick="addOrder()">Add Order</button>
-                
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="ordersTable"></tbody>
-                            </table>
-                        </div>
-                
-                        <div id="settings" class="section">
-                            <h1>Settings</h1>
-                            <input placeholder="Site Name">
-                            <input placeholder="Admin Email">
-                            <button>Save Settings</button>
-                        </div>
-                
                     </div>
                 </div>
             </div>
         </section>
-        
+
+        <!-- Logout Modal -->
         <div id="logoutModal" class="modal-overlay">
             <div class="modal-box">
-                <h3>Confirm Sign Out</h3>
-                <p>Are you sure you want to sign out?</p>
-        
+                <h3>Sign Out?</h3>
+                <p>Are you sure?</p>
                 <div class="modal-actions">
-                    <button id="confirmLogout">Yes, Sign out</button>
+                    <button id="confirmLogout">Yes</button>
                     <button id="cancelLogout">Cancel</button>
                 </div>
             </div>
         </div>
-
-
-
     </div>
-<script src="../../js/main.js" defer></script>
-    <script src="../../js/auth.js"></script>
+
+    <script src="../../js/main.js" defer></script>
+    <script src="../../js/auth.js" defer></script>
     <script src="../../js/Admin/admin.js" defer></script>
     <script>
-        // Sign out modal handlers
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('confirmLogout').onclick = () => window.authManager?.logout() || fetch('../../php/logout.php', {method: 'POST'}).then(() => location.href = '../../index.html');
+            document.getElementById('cancelLogout').onclick = () => document.getElementById('logoutModal').style.display = 'none';
+        });
+        
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+        
         function showLogoutModal() {
             document.getElementById('logoutModal').style.display = 'flex';
         }
-        
-        function hideLogoutModal() {
-            document.getElementById('logoutModal').style.display = 'none';
-        }
-        
-        function handleSignOut() {
-            if (window.authManager) {
-                hideLogoutModal();
-                window.authManager.logout();
-            } else {
-                // Fallback: redirect directly to logout.php
-                window.location.href = '../php/logout.php';
-            }
-        }
-        
-        // Set up modal button handlers
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('confirmLogout').addEventListener('click', handleSignOut);
-            document.getElementById('cancelLogout').addEventListener('click', hideLogoutModal);
-        });
     </script>
+
+    <style>
+        .is-saving { opacity: 0.6; }
+        .saved { background: #d4edda !important; }
+        .table input, .table select { margin: 0; width: 100%; }
+        .stat-card { background: var(--card-bg); padding: 20px; border-radius: 10px; text-align: center; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal-box { background: white; padding: 30px; border-radius: 10px; max-width: 400px; text-align: center; }
+        .modal-actions { margin-top: 20px; display: flex; gap: 10px; justify-content: center; }
+        .modal-actions button { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+        #confirmLogout { background: #dc3545; color: white; }
+        #cancelLogout { background: #6c757d; color: white; }
+    </style>
 </body>
 </html>
+

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'config.php';
 
 // Destroy all session data
@@ -7,7 +8,7 @@ session_destroy();
 
 // Clear session cookie
 if (isset($_COOKIE[session_name()])) {
-    setcookie(session_name(), '', time()-42000, '/');
+    setcookie(session_name(), '', time(), '/');
 }
 
 // Smart redirect based on referrer/current path
@@ -36,4 +37,7 @@ echo json_encode([
     'redirect' => $redirectUrl,
     'currentPath' => $currentPath
 ]);
+session_destroy();
+echo json_encode(['success' => true, 'message' => 'Logged out']);
 ?>
+
