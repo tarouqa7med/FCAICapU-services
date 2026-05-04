@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     $user_name = $_SESSION['user_name'] ?? 'user_' . $_SESSION['user_id'];
-    $data = date('Y-m-d H:i:s') . " | $user_name | $name | $email | $message\n";
+    $data = date('Y-m-d H:i:s') . "\n\tUsername : $user_name\n\tName     : $name\n\tEmail    : $email\n\tMessage  : $message\n---------------------------------------------------------------------------------------\n\n";
     
     if (file_put_contents($contactsFile, $data, FILE_APPEND | LOCK_EX) !== false) {
         echo json_encode([
