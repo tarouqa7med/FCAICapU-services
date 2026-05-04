@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("Sign InForm");
+    const form = document.getElementById("loginForm");
     const msg = document.getElementById("msg");
     const submitBtn = document.getElementById("submitBtn");
     const btnText = submitBtn.querySelector(".btn-text");

@@ -182,7 +182,6 @@ getLogoutUrl() {
         }
 
         if (loginBtn) {
-            loginBtn.textContent = "Login";
             loginBtn.href = this.getLoginUrl();
             loginBtn.className = "btn btn-light mx-1 loginBtn";
             loginBtn.onclick = null;
