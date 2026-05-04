@@ -1,144 +1,235 @@
-// FIXED AuthManager - Sync Perfect with PHP - Admin/Admin Pages Work
 class AuthManager {
     constructor() {
-        this.loggedIn = false;
-        this.channel = new BroadcastChannel('auth-channel');
+        this.channel = new BroadcastChannel("auth-channel");
         this.init();
     }
 
     init() {
+        console.log(
+            "🚀 AuthManager starting - Path:",
+            window.location.pathname,
+        );
         this.checkAuth();
-        this.listenBroadcast();
-        window.handleLoginSuccess = () => this.checkAuth();
+        this.bindEvents();
+        this.listenForBroadcast();
     }
 
-async checkAuth() {
-        const url = this.getApiUrl();
-        try {
-            const res = await fetch(`${url}?check=1`, { credentials: 'same-origin' });
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            
-            const data = await res.json();
-            console.log('🚀 Auth check:', data);
+    checkAuth() {
+        const phpUrl = this.getPhpUrl();
+        console.log("🔍 Using PHP URL:", phpUrl);
 
-            this.loggedIn = data.loggedIn;
-            if (data.loggedIn && data.user) {
-                this.showUser(data.user);
-                this.channel.postMessage({type: 'login', user: data.user});
-            } else {
-                this.showGuest();
-                this.channel.postMessage({type: 'logout'});
+        fetch(phpUrl + "?check=1")
+            .then((res) => {
+                console.log("📡 Auth response status:", res.status);
+                return res.json();
+            })
+            .then((data) => {
+                console.log("✅ Auth data received:", data);
+                if (data.loggedIn && data.user) {
+                    this.showLoggedIn(data.user);
+                    this.broadcastStatus("login", data.user);
+                } else {
+                    this.showLoggedOut();
+                    this.broadcastStatus("logout");
+                }
+            })
+            .catch((err) => {
+                console.error("❌ Auth check failed:", err, "URL:", phpUrl);
+                this.showLoggedOut();
+            });
+    }
+
+    // 👇 PERFECT path detection
+    getPhpUrl() {
+        const path = window.location.pathname.toLowerCase().trim();
+
+        console.log("📍 Full path analysis:", path);
+
+        // Root pages (index.html, /)
+        if (
+            path === "/" ||
+            path === "/index.html" ||
+            path.endsWith("index.html")
+        ) {
+            return "./php/auth.php"; // 👈 ROOT FIXED
+        }
+
+        // HTML subfolder
+        if (path.includes("/html/")) {
+            return "../php/auth.php";
+        }
+
+        // Default fallback
+        return "./php/auth.php";
+    }
+
+getLogoutUrl() {
+        const path = window.location.pathname.toLowerCase().trim();
+
+        console.log("📍 Logout URL path analysis:", path);
+
+        // Root pages (index.html, /)
+        if (
+            path === "/" ||
+            path === "/index.html" ||
+            path.endsWith("index.html")
+        ) {
+            return "./php/logout.php";
+        }
+
+        // Nested HTML subfolders like html/User/user.html or html/Admin/admin.html
+        if (path.includes("/html/user/") || path.includes("/html/admin/") || path.includes("/html/support/")) {
+            return "../../php/logout.php";
+        }
+
+        // Single level HTML subfolder like html/login.html
+        if (path.includes("/html/")) {
+            return "../php/logout.php";
+        }
+
+        return "./php/logout.php";
+    }
+
+    listenForBroadcast() {
+        this.channel.addEventListener("message", (event) => {
+            console.log("📡 Broadcast received:", event.data);
+            if (event.data.type === "login") {
+                this.showLoggedIn(event.data.user);
+            } else if (event.data.type === "logout") {
+                this.showLoggedOut();
             }
-        } catch (err) {
-            this.loggedIn = false;
-            this.showGuest();
-        }
+        });
     }
 
-    getApiUrl() {
-        const pathSegments = window.location.pathname.split('/').filter(Boolean);
-        const depth = pathSegments.length;
-        const phpPath = '../'.repeat(depth) + 'php/auth.php';
-        console.log('📍 API path:', phpPath, 'depth:', depth);
-        return phpPath;
+    broadcastStatus(type, user = null) {
+        console.log("📢 Broadcasting:", type);
+        this.channel.postMessage({
+            type: type,
+            user: user,
+            timestamp: Date.now(),
+            fromPath: window.location.pathname,
+        });
     }
 
-    getLogoutUrl() {
-        const pathSegments = window.location.pathname.split('/').filter(Boolean);
-        const depth = pathSegments.length;
-        return '../'.repeat(depth) + 'php/logout.php';
+    getImagePath() {
+        const path = window.location.pathname.toLowerCase();
+        if (path.includes("/html/")) {
+            return "../attachments/logos/default_user.jpg";
+        }
+        return "./attachments/logos/default_user.jpg";
     }
-
-    listenBroadcast() {
-        this.channel.onmessage = (e) => {
-            if (e.data.type === 'login') this.showUser(e.data.user);
-            if (e.data.type === 'logout') this.showGuest();
-        };
-    }
-
-    showUser(user) {
-        const link = document.getElementById('userLink');
-        const img = document.getElementById('userImage');
-        const btn = document.getElementById('loginLink');
-
-        if (img) {
-            img.src = user.image || 'FCAICapU-servicesattachments/logos/default_user.jpg';
-            img.onerror = () => { img.src = 'FCAICapU-servicesattachments/logos/default_user.jpg'; };
-            img.alt = user.username || 'User';
-        }
-
-        if (link) {
-            link.style.display = 'block';
-            link.style.opacity = '1';
-            link.style.pointerEvents = 'auto';
-            link.title = `Profile: ${user.username || user.full_name}`;
-        }
-
-        if (btn) {
-            const isAdmin = user.role === 'admin';
-            btn.textContent = isAdmin ? '👑 Admin' : 'Logout';
-            btn.className = isAdmin ? 'btn btn-warning logoutBtn' : 'btn btn-danger logoutBtn';
-            btn.href = '#';
-            btn.onclick = (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                this.logout();
-            };
-        }
-    }
-
-    showGuest() {
-        const link = document.getElementById('userLink');
-        const btn = document.getElementById('loginLink');
-
-        if (link) {
-            link.style.display = 'block';
-            link.style.opacity = '0.5';
-            link.style.pointerEvents = 'none';
-        }
-
-        if (btn) {
-            btn.textContent = 'Login';
-            btn.className = 'btn btn-light loginBtn';
-            btn.href = this.getLoginUrl();
-            btn.onclick = null;
-        }
-    }
-
-    // getImagePath removed - use PHP relative path directly
 
     getProfileUrl(role) {
-        const pathSegments = window.location.pathname.split('/').filter(Boolean);
-        const depth = pathSegments.length;
-        const base = '../'.repeat(Math.max(0, depth - 1));
-        return base + (role === 'admin' ? 'FCAICapU-services/html/Admin/admin.html' : 'FCAICapU-services/html/User/user.html');
+        const base = window.location.pathname.includes("/html/") ? "" : "html/";
+        return `${base}${role === "admin" ? "Admin/admin.html" : "User/user.html"}`;
     }
 
     getLoginUrl() {
-        const pathSegments = window.location.pathname.split('/').filter(Boolean);
-        const depth = pathSegments.length;
-        return '../'.repeat(Math.max(0, depth - 1)) + 'FCAICapU-services/html/login.html';
+        return window.location.pathname.includes("/html/")
+            ? "login.html"
+            : "html/login.html";
     }
 
-    async logout() {
-        try {
-            await fetch(this.getLogoutUrl(), { 
-                method: 'POST',
-                credentials: 'same-origin'
-            });
-            this.channel.postMessage({type: 'logout'});
-            // Smart redirect to root index.html
-            const pathSegments = window.location.pathname.split('/').filter(Boolean);
-            const depth = pathSegments.length;
-            const rootPath = '../'.repeat(depth) + 'index.html';
-            window.location.href = rootPath;
-        } catch (err) {
-            console.error('Logout error:', err);
-            location.reload();
+    showLoggedIn(user) {
+        console.log("👤 Showing logged in state for:", user.username);
+
+        const userLink = document.getElementById("userLink");
+        const userImage = document.getElementById("userImage");
+        const loginBtn = document.getElementById("loginLink");
+
+        if (userImage) {
+            const imgPath = this.getImagePath();
+            console.log("🖼️ Setting image:", user.image || imgPath);
+            userImage.src = user.image || imgPath;
+            userImage.onerror = () => {
+                console.log("🖼️ Image fallback");
+                userImage.src = this.getImagePath();
+            };
         }
+
+        if (userLink) {
+            userLink.style.display = "block";
+            userLink.style.opacity = "1";
+            userLink.style.pointerEvents = "auto";
+            userLink.href = this.getProfileUrl(user.role || "user");
+            console.log("🔗 Profile link:", userLink.href);
+        }
+
+        if (loginBtn) {
+            loginBtn.textContent = "Sign Out";
+            loginBtn.href = "#";
+            loginBtn.className = "btn btn-danger mx-1 logoutBtn";
+            loginBtn.onclick = (e) => {
+                e.preventDefault();
+                console.log("🚪 Sign Out clicked");
+                this.logout();
+            };
+            console.log("✅ Sign Out button activated");
+        }
+    }
+
+    showLoggedOut() {
+        console.log("🚪 Showing logged out state");
+
+        const userLink = document.getElementById("userLink");
+        const loginBtn = document.getElementById("loginLink");
+
+        if (userLink) {
+            userLink.style.display = "block";
+            userLink.href = "javascript:void(0)";
+            userLink.style.opacity = "0.5";
+            userLink.style.pointerEvents = "none";
+        }
+
+        if (loginBtn) {
+            loginBtn.textContent = "Login";
+            loginBtn.href = this.getLoginUrl();
+            loginBtn.className = "btn btn-light mx-1 loginBtn";
+            loginBtn.onclick = null;
+            console.log("✅ Login button restored");
+        }
+    }
+
+    bindEvents() {
+        window.handleLoginSuccess = () => {
+            console.log("🎉 Login success callback");
+            this.checkAuth();
+        };
+    }
+
+    logout() {
+        console.log("🚪 Starting logout - URL:", this.getLogoutUrl());
+
+        fetch(this.getLogoutUrl(), {
+            method: "POST",
+            credentials: "same-origin",
+        })
+            .then((res) => {
+                console.log("📡 Logout response:", res.status);
+                return res.json();
+            })
+            .then((data) => {
+                console.log("✅ Logout complete:", data);
+                this.broadcastStatus("logout");
+
+                // Smart redirect
+                const path = window.location.pathname.toLowerCase();
+                if (path === "/" || path.includes("index")) {
+                    location.reload();
+                } else if (path.includes("/html/")) {
+                    window.location.href = "../index.html";
+                } else if (path.includes("/html/Admin/") || path.includes("/html/User/") || path.includes("/html/Support/")) {
+                    window.location.href = "../../index.html";
+                } else {
+                    window.location.href = "./index.html";
+                }
+            })
+            .catch((err) => {
+                console.error("💥 Logout error:", err);
+                this.broadcastStatus("logout");
+                location.reload();
+            });
     }
 }
 
-console.log('AuthManager loaded');
 window.authManager = new AuthManager();
-

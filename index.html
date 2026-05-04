@@ -163,13 +163,13 @@
                             <h4 class="reveal">+20 10 9999 9999</h4>
                         </div>
                     </div>
-<form id="contactForm">
+                    <form action="php/contact.php" method="POST">
                         <div style="display: flex; gap: 10px;">
-                            <input type="text" name="name" class="form-control my-2 reveal" placeholder="Name" required>
-                            <input type="email" name="email" class="form-control my-2 reveal" inputmode="email" placeholder="Email" required>
+                            <input type="text" name="name" class="form-control my-2 reveal" placeholder="Name">
+                            <input type="email" name="email" class="form-control my-2 reveal" inputmode="email" placeholder="Email">
                         </div>
-                        <textarea name="message" class="reveal" id="message" placeholder="Message..." required></textarea>
-                        <button id="submitContact" class="btn btn-success w-100 reveal" type="button">Submit</button>
+                        <textarea name="message" class="reveal" id="message" placeholder="Message..."></textarea>
+                        <button class="btn btn-success w-100 reveal" type="submit">Submit</button>
                     </form>
                     <p id="msg" class="text-center mt-3 reveal"></p>
                 </div>
@@ -205,57 +205,5 @@
         <script src="js/contact_us.js" defer></script>
         <script src="js/auth.js" defer></script>
         <script src="js/reveal.js" defer></script>
-        
-        <script>
-            // AJAX Contact Form Handler
-            document.addEventListener('DOMContentLoaded', function() {
-                const contactForm = document.getElementById('contactForm');
-                const submitBtn = document.getElementById('submitContact');
-                const msg = document.getElementById('msg');
-                
-                submitBtn.addEventListener('click', async function(e) {
-                    e.preventDefault();
-                    
-                    const formData = new FormData(contactForm);
-                    
-                    // Login check first
-                    if (window.authManager && !window.authManager.loggedIn) {
-                        msg.textContent = 'Please login to contact us.';
-                        msg.className = 'text-center mt-3 text-danger reveal';
-                        msg.style.display = 'block';
-                        return;
-                    }
-                    
-                    try {
-                        submitBtn.textContent = 'Sending...';
-                        submitBtn.disabled = true;
-                        
-                        const response = await fetch('php/contact.php', {
-                            method: 'POST',
-                            body: formData
-                        });
-                        
-                        const data = await response.json();
-                        
-                        if (data.success) {
-                            msg.textContent = data.message || 'Message sent successfully! ✅';
-                            msg.className = 'text-center mt-3 text-success reveal';
-                            contactForm.reset();
-                        } else {
-                            msg.textContent = data.message || 'Failed to send message.';
-                            msg.className = 'text-center mt-3 text-danger reveal';
-                        }
-                    } catch (error) {
-                        msg.textContent = 'Network error. Please try again.';
-                        msg.className = 'text-center mt-3 text-danger reveal';
-                        console.error('Contact error:', error);
-                    } finally {
-                        submitBtn.textContent = 'Submit';
-                        submitBtn.disabled = false;
-                        msg.style.display = 'block';
-                    }
-                });
-            });
-        </script>
     </body>
 </html>

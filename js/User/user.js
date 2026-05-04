@@ -29,7 +29,7 @@ class UserProfile {
         const path = window.location.pathname.toLowerCase().trim();
         
         if (path.includes("/html/")) {
-return "../php/User/update_profile.php";
+            return "../php/User/update_profile.php";
         }
         
         return "./php/User/update_profile.php";

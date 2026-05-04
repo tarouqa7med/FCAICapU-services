@@ -71,16 +71,13 @@ body::after {
     cursor: pointer;
 }
 .sidebar .signoutBtn {
-    margin-right: auto;
-    margin-left: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 0 auto;
+    margin-top: 50px;
     width: 50%;
 }
 .sidebar button:hover {
     background: var(--primary-color6);
-    transform: translateY(-5px);
+    transform: translateY(-2px);
     transition: 100ms;
 }
 .sidebar button:active {
