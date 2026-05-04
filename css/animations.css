@@ -7,14 +7,14 @@
         left: -10%;
         width: 300px;
         height: 300px;
-    } 45% {
+    } 50% {
         top: 50%;
         left: 20%;
         width: 300px;
         height: 300px;
         opacity: 1;
         background: var(--blob1);
-    } 55% {
+    } 50% {
         top: 50%;
         left: 20%;
         width: 300px;
@@ -34,14 +34,14 @@
         right: -10%;
         width: 300px;
         height: 300px;
-    } 45% {
+    } 50% {
         top: 50%;
         right: 20%;
         width: 300px;
         height: 300px;
         opacity: 1;
         background: var(--blob1);
-    } 55% {
+    } 50% {
         top: 50%;
         right: 20%;
         width: 300px;

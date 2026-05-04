@@ -64,14 +64,14 @@ body::after {
 }
 body::before {
     transform: translate(-50%, -40%);
-    animation: body-before 5s 2.5s infinite alternate ease-in-out;
+    animation: body-before 3s 1.5s infinite alternate linear;
     opacity: 0;
 }
 body::after {
     top: -20%;
     right: 0%;
     transform: translate(50%, -40%);
-    animation: body-after 5s 0s infinite alternate-reverse ease-in-out;
+    animation: body-after 3s 0s infinite alternate-reverse linear;
 }
 .extra {
     position: fixed;
@@ -81,7 +81,7 @@ body::after {
     filter: blur(0px);
     background: var(--blob3);
     z-index: -100;
-    animation: body-extra 10s 5s infinite alternate linear;
+    animation: body-extra 20s 0s infinite alternate linear;
 }
 .animated-body {
     animation: index-body 1s forwards ease;

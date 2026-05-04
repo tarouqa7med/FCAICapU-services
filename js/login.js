@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("loginForm");
+    const form = document.getElementById("Sign InForm");
     const msg = document.getElementById("msg");
     const submitBtn = document.getElementById("submitBtn");
     const btnText = submitBtn.querySelector(".btn-text");
     const loading = submitBtn.querySelector(".loading");
 
     if (!form || !msg || !submitBtn) {
-        console.error("Login elements not found!");
+        console.error("Sign In elements not found!");
         return;
     }
 
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch((error) => {
                 showMessage("Connection Error: " + error.message, "error");
-                console.error("Login Error:", error);
+                console.error("Sign In Error:", error);
                 // 👇 إعادة تفعيل بعد خطأ
                 isSubmitting = false;
                 setLoading(false);

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/User/user.css">
     <link rel="icon" href="../../attachments/logos/logo1.png">
-    <title>My Personal Page</title>
+    <title>My Profile</title>
 </head>
 
 <body data-page="dashboard">
@@ -55,7 +55,7 @@
                             <h3 id="userName">Loading...</h3>
                             <p id="userEmail">user@example.com</p>
                             <button class="btn btn-primary" onclick="editProfile()">Edit Profile</button>
-                            <button class="btn btn-danger" id="signOutBtn" onclick="handleSignOut()">Sign Out</button>
+                            <button class="btn btn-danger" id="signOutBtn" onclick="confirmSignOut()">Sign Out</button>
                         </div>
                     </div>
                 </div>
@@ -108,28 +108,42 @@
     <!-- Edit Profile Modal -->
     <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content" style="background: var(--primary-color2); color: var(--primary-color6);">
+            <div class="modal-content" style="background: var(--primary-color2); color: var(--primary-color6); padding: 0 20px;">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Profile</h5>
+                    <h5 class="modal-title" style="font-size: 30px;">Edit Profile</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editProfileForm">
-                        <div class="mb-3">
-                            <label for="editUsername" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="editUsername" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editFullName" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="editFullName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editImageUrl" class="form-label">Profile Image URL</label>
-                            <input type="url" class="form-control" id="editImageUrl" placeholder="https://example.com/image.jpg">
-                            <small class="text-muted">Leave empty to keep current image</small>
-                        </div>
-                        <div id="editProfileMessage"></div>
-                    </form>
+                <form id="editProfileForm" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="editUsername" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="editUsername" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editFullName" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="editFullName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="editEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editPhone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="editPhone">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editPassword" class="form-label">New Password (leave empty to keep current)</label>
+                        <input type="password" class="form-control" id="editPassword" placeholder="new password" style="margin-bottom: 5px;">
+                        <input type="password" class="form-control" id="editPasswordConfirm" placeholder="Confirm new password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editProfilePic" class="form-label">Profile Picture</label>
+                        <input type="file" class="form-control" id="editProfilePic" accept="image/*">
+                        <small class="text-muted">Or use URL below (file preferred)</small>
+                        <input type="url" class="form-control mt-1" id="editImageUrl" placeholder="https://example.com/image.jpg">
+                    </div>
+                    <div id="editProfileMessage"></div>
+                </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -139,11 +153,136 @@
         </div>
     </div>
 
+    <!-- Sign Out Confirmation Modal -->
+    <div class="modal fade" id="signOutModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background: var(--primary-color1); color: var(--primary-color6); border: 2px solid var(--primary-color5);">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Sign Out</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" style="background-color: var(--primary-color2);"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to sign out?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="handleSignOut()">Yes, Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
+    <script src="../../js/bootstrap-js/bootstrap.min.js"></script>
     <script src="../../js/main.js" defer></script>
     <script src="../../js/auth.js" defer></script>
     <script src="../../js/reveal.js" defer></script>
     <script src="../../js/User/user.js" defer></script> <!-- JS جديد -->
+    
+    <!-- Complete standalone Edit Profile fix -->
+    <script>
+        function editProfile() {
+            console.log('🔧 Standalone editProfile called');
+            
+            // Absolute path + credentials for session/cookies
+            fetch('/FCAICapU-services/php/User/update_profile.php', {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json'
+            }
+            })
+            .then(res => {
+                console.log('Response status:', res.status, res.statusText);
+                if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                return res.json();
+            })
+            .then(data => {
+                console.log('Profile data:', data);
+                
+                if (!data.loggedIn) {
+                    alert(data.message || 'Please Sign In first');
+                    window.location.href = '/FCAICapU-services/html/login.html';
+                    return;
+                }
+                
+                // Populate modal
+                document.getElementById('editUsername').value = data.user.username || '';
+                document.getElementById('editFullName').value = data.user.full_name || '';
+                document.getElementById('editEmail').value = data.user.email || '';
+                document.getElementById('editPhone').value = data.user.mobile || '';
+                document.getElementById('editImageUrl').value = data.user.image || '';
+                
+                // Show modal
+                const modal = new bootstrap.Modal(document.getElementById('editProfileModal'));
+                modal.show();
+                
+            })
+            .catch(err => {
+                console.error('Edit profile fetch error:', err);
+                alert('Server connection error. Check if XAMPP is running and refresh.');
+            });
+        }
+
+        // Add Save Profile function (missing onclick handler)
+        function saveProfile() {
+            console.log('Save profile clicked');
+            
+            const formData = new FormData();
+            formData.append('username', document.getElementById('editUsername').value.trim());
+            formData.append('full_name', document.getElementById('editFullName').value.trim());
+            formData.append('email', document.getElementById('editEmail').value.trim());
+            formData.append('phone', document.getElementById('editPhone').value.trim());
+            
+            const password = document.getElementById('editPassword').value;
+            const imageUrl = document.getElementById('editImageUrl').value.trim();
+            const profilePic = document.getElementById('editProfilePic').files[0];
+            
+            if (password) formData.append('password', password);
+            if (imageUrl) formData.append('image_url', imageUrl);
+            if (profilePic) formData.append('profile_pic', profilePic);
+            
+            fetch('/FCAICapU-services/php/User/update_profile.php', {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+            })
+            .then(res => res.json())
+            .then(data => {
+            console.log('Save result:', data);
+            if (data.success) {
+                alert('Profile updated!');
+                document.getElementById('profileImg').src = data.user.image;
+                document.getElementById('userName').textContent = data.user.username;
+                document.getElementById('userEmail').textContent = data.user.email;
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editProfileModal'));
+                modal.hide();
+            } else {
+                alert(data.message || 'Update failed');
+            }
+            })
+            .catch(err => {
+            console.error('Save error:', err);
+            alert('Save failed. Check console.');
+            });
+        }
+
+        window.saveProfile = saveProfile;
+        window.userProfile = { saveProfile };
+
+        // Global fallbacks (for compatibility)
+        window.editProfile = window.editProfile || editProfile;
+        window.confirmSignOut = window.confirmSignOut || function() {
+            console.log('Sign out modal');
+            const modal = new bootstrap.Modal(document.getElementById('signOutModal'));
+            modal.show();
+        };
+        window.handleSignOut = window.handleSignOut || function() {
+            console.log('Sign out');
+            fetch('../../php/logout.php', {method: 'POST'}).then(() => {
+            window.location.href = '../../index.html';
+            });
+        };
+    </script>
 </body>
 
 </html>

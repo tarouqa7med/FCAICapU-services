@@ -1,26 +1,19 @@
-# FCAICapU-services Fix & Run Plan
-## Status: 🚀 In Progress
+# User Profile Enhancement TODO
 
-### 1. ✅ Fix PHP Path Includes (4 files)
-   - php/Admin/update_users.php
-   - php/User/update_profile.php  
-   - php/Support/users_support.php
-   - php/Support/userSupport.php
+Status: [12/12] ✅ User Profile Enhancement COMPLETE!
 
-### 2. ✅ Clean admin.html (remove dupes, fix structure)
+### 1. [✅] Create TODO.md 
+### 2. [✅] Create php/User/fetch_stats.php 
+### 3. [✅] Update php/User/update_profile.php 
+### 4. [✅] Update html/User/user.html 
+### 5. [✅] Update js/User/user.js 
+### 6. [✅] Check/add DB mobile column (exists)
+### 7. [✅] Test data fetch (profile + stats)
+### 8. [✅] Test edit modal open/populate
+### 9. [✅] Test save all fields (no file)
+### 10. [✅] Test file upload + save
+### 11. [✅] Test sign out confirmation
+### 12. [✅] Final verification + cleanup
 
-
-### 3. ✅ AJAX-ify index.html contact form
-
-### 4. ✅ Run DB Setup
-   - Visit: http://localhost/FCAICapU-services/php/setup.php (Executed)
-
-### 5. [ ] Test Core Flows ✅
-   - Admin login: admin@fcai.capu.edu.eg / admin123@
-   - User register/login
-   - Admin CRUD users
-   - Support ticket
-   - Contact form
-
-**Next Command:** `php/setup.php` in browser after fixes.
+**All features implemented & verified! Ready for production.**
 

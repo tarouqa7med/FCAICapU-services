@@ -34,13 +34,13 @@ fetch('../php/contact.php')
 .then(data => {
     if (data.loggedIn) {
         const userImage = document.getElementById('userImage');
-        const loginLink = document.getElementById('loginLink');
+        const LoginLink = document.getElementById('LoginLink');
         
         if (userImage) userImage.src = data.userImage;
-        if (loginLink) loginLink.style.display = 'none';
+        if (LoginLink) LoginLink.style.display = 'none';
         
         // إضافة زر Logout
-        const logoutContainer = loginLink.parentNode;
+        const logoutContainer = LoginLink.parentNode;
         let logoutBtn = logoutContainer.querySelector('.logout-btn');
         if (!logoutBtn) {
             logoutBtn = document.createElement('a');

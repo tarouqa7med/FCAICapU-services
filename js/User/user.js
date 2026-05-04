@@ -19,7 +19,7 @@ class UserProfile {
         const path = window.location.pathname.toLowerCase().trim();
         
         if (path.includes("/html/")) {
-            return "../php/auth.php";
+            return '../../php/auth.php';
         }
         
         return "./php/auth.php";
@@ -29,13 +29,13 @@ class UserProfile {
         const path = window.location.pathname.toLowerCase().trim();
         
         if (path.includes("/html/")) {
-            return "../php/User/update_profile.php";
+            return '../../php/User/update_profile.php';
         }
         
         return "./php/User/update_profile.php";
     }
 
-// Get login page URL based on current path
+// Get Sign In page URL based on current path
     getLoginUrl() {
         const path = window.location.pathname.toLowerCase().trim();
         
@@ -51,45 +51,54 @@ class UserProfile {
     }
 
     // Load user data from auth.php
+
     loadUserData() {
-        fetch(this.getPhpUrl() + "?check=1")
-            .then(res => res.json())
-            .then(data => {
-                if (data.loggedIn && data.user) {
-                    this.currentUser = data.user;
-                    this.displayUserData(data.user);
-                    this.loadUserStats();
-                } else {
-                    // Not logged in - redirect to login page
-                    console.log("🚫 User not logged in, redirecting to login...");
-                    this.redirectToLogin();
-                }
-            })
-            .catch(err => {
-                console.error("❌ Error loading user data:", err);
-                this.showError("Failed to load user data");
-            });
+        console.log('Loading user data from:', this.getPhpUrl() + '?check=1');
+        fetch(this.getPhpUrl() + "?check=1", { 
+            credentials: 'include',
+            headers: {'Accept': 'application/json'}
+        })
+        .then(res => {
+            console.log('Auth check status:', res.status);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return res.json();
+        })
+        .then(data => {
+            console.log('Auth data:', data);
+            if (data.loggedIn && data.user) {
+                this.currentUser = data.user;
+                this.displayUserData(data.user);
+                this.loadUserStats();
+            } else {
+                console.log("Not logged in, redirecting...");
+                this.redirectToLogin();
+            }
+        })
+        .catch(err => {
+            console.error("LoadUserData error:", err);
+            this.showError("Failed to load profile - " + err.message);
+        });
     }
 
-    // Redirect to login page
+    // Redirect to Sign In page
     redirectToLogin() {
-        const loginUrl = this.getLoginUrl();
-        console.log("➡️ Redirecting to:", loginUrl);
+        const LoginUrl = this.getLoginUrl();
+        console.log("➡️ Redirecting to:", LoginUrl);
         
         // Show message before redirect
         const userName = document.getElementById("userName");
         const userEmail = document.getElementById("userEmail");
         
         if (userName) {
-            userName.textContent = "Please login first";
+            userName.textContent = "Please Sign In first";
         }
         if (userEmail) {
-            userEmail.textContent = "Redirecting to login page...";
+            userEmail.textContent = "Redirecting to Sign In page...";
         }
         
         // Delay redirect slightly to show message
         setTimeout(() => {
-            window.location.href = loginUrl;
+            window.location.href = LoginUrl;
         }, 1000);
     }
 
@@ -102,7 +111,7 @@ class UserProfile {
         if (profileImg && user.image) {
             profileImg.src = user.image;
             profileImg.onerror = () => {
-                profileImg.src = "../attachments/logos/default_user.jpg";
+                profileImg.src = "../../attachments/logos/default_user.jpg";
             };
         }
 
@@ -121,51 +130,64 @@ class UserProfile {
 
     // Load user stats (donations, projects, rank)
     loadUserStats() {
-        // For now, set default values
-        // In a real implementation, you'd fetch from a donations table
-        const totalDonations = document.getElementById("totalDonations");
-        if (totalDonations) {
-            totalDonations.textContent = "0";
-        }
-
-        const totalProjects = document.getElementById("totalProjects");
-        if (totalProjects) {
-            totalProjects.textContent = "0";
-        }
-
-        const userRank = document.getElementById("userRank");
-        if (userRank) {
-            userRank.textContent = "Bronze";
-        }
-    }
-
-// Check login status first, then edit profile
-    editProfile() {
-        // Use update_profile.php to check login status and get user data
-        fetch(this.getUpdateProfileUrl())
+        fetch(this.getStatsUrl(), { credentials: 'same-origin' })
             .then(res => res.json())
             .then(data => {
-                if (!data.loggedIn) {
-                    // Not logged in - show alert and redirect
-                    alert(data.message || "You must login first to edit your profile. Redirecting to login page...");
-                    
-                    // Redirect to login page using consistent method
-                    window.location.href = this.getLoginUrl();
-                    return;
+                if (data.success) {
+                    const totalDonationsEl = document.getElementById("totalDonations");
+                    if (totalDonationsEl) totalDonationsEl.textContent = data.total_donations.toLocaleString();
+
+                    const totalProjectsEl = document.getElementById("totalProjects");
+                    if (totalProjectsEl) totalProjectsEl.textContent = data.total_projects;
+
+                    const userRankEl = document.getElementById("userRank");
+                    if (userRankEl) userRankEl.textContent = data.user_rank;
                 }
-                
-                // Logged in - proceed with edit
-                this.currentUser = data.user;
-                this.displayUserData(data.user);
-                this.openEditModal();
             })
-            .catch(err => {
-                console.error("❌ Error checking login:", err);
-                alert("Error checking login status. Please try again.");
-            });
+            .catch(err => console.error('Stats load error:', err));
     }
 
-    // Open edit modal (called after login check)
+    getStatsUrl() {
+        const path = window.location.pathname.toLowerCase().trim();
+        if (path.includes("/html/")) {
+            return '../../php/User/fetch_stats.php';
+        }
+        return "./php/User/fetch_stats.php";
+    }
+
+// Check Sign In status first, then edit profile
+    editProfile() {
+        console.log('userProfile.editProfile() called');
+        
+        fetch(this.getUpdateProfileUrl(), { 
+            credentials: 'include',
+            headers: {'Accept': 'application/json'}
+        })
+        .then(res => {
+            console.log('Edit fetch status:', res.status);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return res.json();
+        })
+        .then(data => {
+            console.log('Edit data:', data);
+            
+            if (!data.loggedIn) {
+                alert(data.message || "Please Sign In first");
+                window.location.href = this.getLoginUrl();
+                return;
+            }
+            
+            this.currentUser = data.user;
+            this.displayUserData(data.user);
+            this.openEditModal();
+        })
+        .catch(err => {
+            console.error("EditProfile fetch error:", err);
+            alert(`Fetch failed: ${err.message}. Try Sign In first.`);
+        });
+    }
+
+    // Open edit modal (called after Sign In check)
     openEditModal() {
         // Create modal if it doesn't exist
         let modal = document.getElementById("editProfileModal");
@@ -177,6 +199,8 @@ class UserProfile {
         // Populate form with current user data
         document.getElementById("editUsername").value = this.currentUser.username || "";
         document.getElementById("editFullName").value = this.currentUser.full_name || "";
+        document.getElementById("editEmail").value = this.currentUser.email || "";
+        document.getElementById("editPhone").value = this.currentUser.mobile || "";
         document.getElementById("editImageUrl").value = this.currentUser.image || "";
 
         // Enable auto-save when modal is opened
@@ -237,11 +261,24 @@ class UserProfile {
     saveProfile() {
         const username = document.getElementById("editUsername").value.trim();
         const full_name = document.getElementById("editFullName").value.trim();
-        const image = document.getElementById("editImageUrl").value.trim();
+        const email = document.getElementById("editEmail").value.trim();
+        const phone = document.getElementById("editPhone").value.trim();
+        const password = document.getElementById("editPassword").value;
+        const passwordConfirm = document.getElementById("editPasswordConfirm").value;
+        const imageUrl = document.getElementById("editImageUrl").value.trim();
+        const profilePic = document.getElementById("editProfilePic").files[0];
 
         // Validate
-        if (!username || !full_name) {
-            this.showEditMessage("Please fill in all required fields", "danger");
+        if (!username || !full_name || !email) {
+            this.showEditMessage("Please fill all required fields", "danger");
+            return;
+        }
+        if (password && password !== passwordConfirm) {
+            this.showEditMessage("Passwords do not match", "danger");
+            return;
+        }
+        if (password && password.length < 6) {
+            this.showEditMessage("Password must be at least 6 characters", "danger");
             return;
         }
 
@@ -249,18 +286,27 @@ class UserProfile {
         const formData = new FormData();
         formData.append("username", username);
         formData.append("full_name", full_name);
-        if (image) {
-            formData.append("image", image);
+        formData.append("email", email);
+        formData.append("phone", phone);
+        if (password) {
+            formData.append("password", password);
+        }
+        if (profilePic) {
+            formData.append("profile_pic", profilePic);
+        } else if (imageUrl) {
+            formData.append("image_url", imageUrl);
         }
 
-        fetch(this.getUpdateProfileUrl(), {
-            method: "POST",
-            body: formData
-        })
+            fetch(this.getUpdateProfileUrl(), {
+                method: "POST",
+                body: formData,
+                credentials: 'same-origin'
+            })
+
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                this.showEditMessage("Saved!", "success");
+                this.showEditMessage("Profile saved successfully!", "success");
                 
                 // Update current user data
                 this.currentUser = data.user;
@@ -393,7 +439,14 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 });
 
+// Sign out confirmation
+window.confirmSignOut = () => {
+    const modal = new bootstrap.Modal(document.getElementById('signOutModal'));
+    modal.show();
+};
+
 // Listen for auth updates from other pages
 window.addEventListener("message", (event) => {
     // Handle broadcast messages if needed
 });
+
