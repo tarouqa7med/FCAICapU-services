@@ -29,15 +29,15 @@ $tables = [
 
     "CREATE TABLE IF NOT EXISTS projects (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(100) NOT NULL,
+        project_name VARCHAR(100) NOT NULL,
         category VARCHAR(50) NOT NULL,
-        goal DECIMAL(10,2) NOT NULL,
-        pledged DECIMAL(10,2) DEFAULT 0,
+        collected_money DECIMAL(10,2) DEFAULT 0,
+        pledged_goal DECIMAL(10,2) NOT NULL,
         backers INT DEFAULT 0,
         days_left INT DEFAULT 30
     )",
 
-    "CREATE TABLE IF NOT EXISTS donations (
+    "CREATE TABLE donations (
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT,
         project_id INT,
@@ -49,7 +49,6 @@ $tables = [
 
     "CREATE TABLE IF NOT EXISTS contacts (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        username VARCHAR(50),
         name VARCHAR(100),
         email VARCHAR(100),
         message TEXT,
