@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const section = document.querySelector('.support');
+const section = document.querySelector('.support');
     const category = section.dataset.category || 'activities';
     
-    const analysisBox = document.querySelector('.analysis-box');
+    const analysisContainer = document.querySelector('.analysis');
+    const analysisBox = analysisContainer ? analysisContainer.querySelector('.analysis-box') : document.querySelector('.analysis-box');
     const projectsContainer = document.querySelector('.box');
     
     // Show loading
