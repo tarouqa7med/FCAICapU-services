@@ -1,7 +1,9 @@
 <?php
 require_once 'config.php';
 
-// Create database if not exists
+echo "Final DB setup - no user_id...\n";
+
+// Create DB
 try {
     $pdo_create = new PDO("mysql:host=localhost", 'root', '');
     $pdo_create->exec("CREATE DATABASE IF NOT EXISTS fcaicrowdfund CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
@@ -10,10 +12,11 @@ try {
     die("DB creation failed: " . $e->getMessage());
 }
 
-// Now connect to our DB
 require_once 'config.php';
 
-// Create tables
+// Drop and recreate
+$pdo->exec("DROP TABLE IF EXISTS donations, projects, contacts, users");
+
 $tables = [
     "CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -34,7 +37,7 @@ $tables = [
         collected_money DECIMAL(10,2) DEFAULT 0,
         pledged_goal DECIMAL(10,2) NOT NULL,
         backers INT DEFAULT 0,
-        days_left INT DEFAULT 30
+        days_to_go INT DEFAULT 30
     )",
 
     "CREATE TABLE donations (
@@ -58,18 +61,42 @@ $tables = [
 
 foreach ($tables as $sql) {
     $pdo->exec($sql);
+    echo "✅ Table: " . trim(explode(' ', $sql)[2]) . "\n";
 }
 
 // Insert default admin if not exists (admin@admin.admin / admin123@)
 $admin_email = 'admin@fcai.capu.edu.eg';
-$stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-$stmt->execute([$admin_email]);
-if (!$stmt->fetch()) {
-    $password = password_hash('admin123@', PASSWORD_DEFAULT);
-    $stmt = $pdo->prepare("INSERT INTO users (username, full_name, email, password, role) VALUES (?, ?, ?, ?, 'admin')");
-    $stmt->execute(['admin', 'Admin User', $admin_email, $password]);
+
+$stmt = $pdo->prepare("INSERT IGNORE INTO users (username, full_name, email, password, role) VALUES (?, ?, ?, ?, ?)");
+foreach ($users as $user) {
+    $stmt->execute($user);
 }
 
-echo "✅ Database setup complete! Tables created. Admin: admin@fcai.capu.edu.eg / admin123@";
+// Projects - match exact task fields
+$projects = [
+    ['Labs', 'activities', 40530, 90000, 172, 17],
+    ['Halls', 'activities', 51380, 40000, 208, 8],
+    ['Projectors', 'activities', 56814, 70000, 304, 20],
+    ['Equipments', 'activities', 84293, 65000, 243, 6],
+    ['College Labs', 'college', 54000, 120000, 189, 25],
+    ['Lecture Halls', 'college', 92380, 80000, 312, 12],
+    ['Smart Projectors', 'college', 61234, 85000, 267, 18],
+    ['AV Equipments', 'college', 102937, 75000, 289, 9],
+    ['AI Research', 'graduationProjects', 28500, 50000, 145, 22],
+    ['Web Dev Project', 'graduationProjects', 41250, 35000, 198, 15],
+    ['ML Model', 'graduationProjects', 48720, 60000, 234, 28],
+    ['App Development', 'graduationProjects', 58964, 45000, 176, 11],
+    ["Subject's Notes", 'students', 11250, 25000, 89, 30],
+    ['Paid Courses', 'students', 49200, 40000, 156, 14],
+    ['Study Materials', 'students', 21600, 30000, 123, 19],
+    ['Laptop Fund', 'students', 75425, 55000, 201, 7]
+];
+
+$stmt = $pdo->prepare("INSERT INTO projects (project_name, category, collected_money, pledged_goal, backers, days_to_go) VALUES (?, ?, ?, ?, ?, ?)");
+foreach ($projects as $proj) {
+    $stmt->execute($proj);
+}
+
+echo "✅ Database ready with exact fields: project_name, collected_money, pledged_goal, backers, days_to_go\n";
 ?>
 
