@@ -64,32 +64,39 @@ foreach ($tables as $sql) {
     echo "✅ Table: " . trim(explode(' ', $sql)[2]) . "\n";
 }
 
-// Insert default admin if not exists (admin@admin.admin / admin123@)
-$admin_email = 'admin@fcai.capu.edu.eg';
+// Insert default accounts if not exists
+// NOTE: task requirements (seed default accounts)
+// Admin:  admin@admin.admin / password   (role=admin)
+// User :  user@user.user   / password   (role=user)
+$defaultUsers = [
+    ['AdminAdmin', 'Admin Admin', 'admin@admin.admin', '$2y$10$e7NCeguXe3zRlEt/eVpqzOEPL3sk80qPN2.6jRoZjH9q0N11xOJqC', '', 'admin'],
+    ['UserUser', 'User User', 'user@user.user', '$2y$10$e7NCeguXe3zRlEt/eVpqzOEPL3sk80qPN2.6jRoZjH9q0N11xOJqC', 'attachments/logos/default_user.jpg', 'user'],
+];
 
-$stmt = $pdo->prepare("INSERT IGNORE INTO users (username, full_name, email, password, role) VALUES (?, ?, ?, ?, ?)");
-foreach ($users as $user) {
+
+$stmt = $pdo->prepare("INSERT IGNORE INTO users (username, full_name, email, password, image, role) VALUES (?, ?, ?, ?, ?, ?)");
+foreach ($defaultUsers as $user) {
     $stmt->execute($user);
 }
 
 // Projects - match exact task fields
 $projects = [
-    ['Labs', 'activities', 40530, 90000, 172, 17],
-    ['Halls', 'activities', 51380, 40000, 208, 8],
-    ['Projectors', 'activities', 56814, 70000, 304, 20],
-    ['Equipments', 'activities', 84293, 65000, 243, 6],
-    ['College Labs', 'college', 54000, 120000, 189, 25],
-    ['Lecture Halls', 'college', 92380, 80000, 312, 12],
-    ['Smart Projectors', 'college', 61234, 85000, 267, 18],
-    ['AV Equipments', 'college', 102937, 75000, 289, 9],
-    ['AI Research', 'graduationProjects', 28500, 50000, 145, 22],
-    ['Web Dev Project', 'graduationProjects', 41250, 35000, 198, 15],
-    ['ML Model', 'graduationProjects', 48720, 60000, 234, 28],
-    ['App Development', 'graduationProjects', 58964, 45000, 176, 11],
-    ["Subject's Notes", 'students', 11250, 25000, 89, 30],
-    ['Paid Courses', 'students', 49200, 40000, 156, 14],
-    ['Study Materials', 'students', 21600, 30000, 123, 19],
-    ['Laptop Fund', 'students', 75425, 55000, 201, 7]
+    ['Labs', 'activities', 0, 90000, 0, 0],
+    ['Halls', 'activities', 0, 40000, 0, 0],
+    ['Projectors', 'activities', 0, 70000, 0, 0],
+    ['Equipments', 'activities', 0, 65000, 0, 0],
+    ['College Labs', 'college', 0, 120000, 0, 0],
+    ['Lecture Halls', 'college', 0, 80000, 0, 0],
+    ['Smart Projectors', 'college', 0, 85000, 0, 0],
+    ['AV Equipments', 'college', 0, 75000, 0, 0],
+    ['AI Research', 'graduationProjects', 0, 50000, 0, 0],
+    ['Web Dev Project', 'graduationProjects', 0, 35000, 0, 0],
+    ['ML Model', 'graduationProjects', 0, 60000, 0, 0],
+    ['App Development', 'graduationProjects', 0, 45000, 0, 0],
+    ["Subject's Notes", 'students', 0, 25000, 0, 0],
+    ['Paid Courses', 'students', 0, 40000, 0, 0],
+    ['Study Materials', 'students', 0, 30000, 0, 0],
+    ['Laptop Fund', 'students', 0, 55000, 0, 0]
 ];
 
 $stmt = $pdo->prepare("INSERT INTO projects (project_name, category, collected_money, pledged_goal, backers, days_to_go) VALUES (?, ?, ?, ?, ?, ?)");
