@@ -132,75 +132,85 @@
     gap: 25px;
 }
 .s-box > p:nth-child(1) {
-    margin: 0;
+    margin-bottom: -25px;
     font-size: 30px;
     text-align: center;
 }
 .s-box > p:nth-child(2) {
+    margin-bottom: -10px;
     font-family: 'Nunito-Light';
     font-size: 20px;
     text-align: center;
 }
-.s-box .div1 {
+.s-box > div {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    height: 320px;
+}
+.s-box > div > .div1 {
+    width: 60%;
+    height: 100%;
+}
+.s-box > div > .div1 img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
     gap: 25px;
 }
-.div1 img {
-    width: 65%;
+.s-box > div > .div2 {
+    padding-left: 30px;
+    width: 40%;
     height: 100%;
-    border: 2px solid var(--primary-color5);
-    border-radius: 20px;
 }
-.div1 .div2 {
-    width: 35%;
+.div2 .s-div2 {
+    width: 100%;
     height: 100%;
     display: grid;
     flex-direction: column;
 }
-.div2 .progress {
+.s-div2 .progress {
     margin-bottom: 10px;
     background-color: var(--donations-container-bgcolor);
     border-radius: 35px;
     height: 15px;
-    border: 1px solid #226878;
+    border: 1px solid var(--primary-color6);
 }
-.div2 .progress-bar {
-    background-color: #009E74;
+.s-div2 .progress-bar {
+    background-color: var(--primary-color5);
 }
-.div2 .div3 {
+.s-div2 .s-div-1 {
     padding-left: 15px;
     margin: 2px;
 }
-.div2 .div3:nth-child(2) span {
+.s-div2 .s-div2-1:nth-child(2) span {
     color: #009E74;
     font-size: 30px;
 }
-.div2 .div3:nth-child(3) span,
-.div2 .div3:nth-child(4) span {
+.s-div2 .s-div2-1:nth-child(3) span,
+.s-div2 .s-div2-1:nth-child(4) span {
     color: var(--primary-color6);
     font-size: 30px;
 }
-.div2 .div3 p {
+.s-div2 .div2 p {
     font-family: 'Nunito-Light';
     color: var(--primary-color6);
 }
-.div2 button {
+.s-div2 button {
     margin: auto;
     width: 150px;
     height: 35px;
-    background: linear-gradient(#009E74);
-    color: white;
-    border: 2px solid #226878;
+    background: linear-gradient(var(--primary-color5));
+    color: var(--primary-color1);
+    border: 2px solid var(--primary-color4);
     border-radius: 30px;
     transition: 250ms;
 }
-.div2 button:hover {
-    background: linear-gradient(135deg, #00dda2,#009E74 35% 65%, #00dda2);    
+.s-div2 button:hover {
+    background: linear-gradient(135deg, var(--primary-color3),var(--primary-color5) 35% 65%, var(--primary-color3));    
 }
-.div2 button:active {
+.s-div2 button:active {
     scale: 0.9;
-    background: linear-gradient(135deg, #009E74,#007153 35% 65%, #009E74);    
+    background: linear-gradient(135deg, var(--primary-color5), var(--primary-color6) 35% 65%, var(--primary-color5));    
 }
 
 /* ---------------------------------------------------- Pop-up when click backBtn */
