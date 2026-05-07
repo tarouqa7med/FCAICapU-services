@@ -1,19 +1,13 @@
-# User Profile Enhancement TODO
+# TODO
 
-Status: [12/12] ✅ User Profile Enhancement COMPLETE!
+## Support back-button auth + popup gating refactor
+- [x] Refactor `js/Support/support-students.js` to use shared lightweight auth-check on back button click and reusable sign-in modal.
+- [x] Refactor `js/Support/support-activities.js` similarly (simplified code, ensure unauth blocks payment popup).
+- [x] Refactor `js/Support/support-college.js` similarly.
+- [x] Refactor `js/Support/support-graduationProjects.js` similarly.
 
-### 1. [✅] Create TODO.md 
-### 2. [✅] Create php/User/fetch_stats.php 
-### 3. [✅] Update php/User/update_profile.php 
-### 4. [✅] Update html/User/user.html 
-### 5. [✅] Update js/User/user.js 
-### 6. [✅] Check/add DB mobile column (exists)
-### 7. [✅] Test data fetch (profile + stats)
-### 8. [✅] Test edit modal open/populate
-### 9. [✅] Test save all fields (no file)
-### 10. [✅] Test file upload + save
-### 11. [✅] Test sign out confirmation
-### 12. [✅] Final verification + cleanup
+- [x] Ensure all 4 scripts still set `data-category` and `data-projectIndex` for payment flow.
 
-**All features implemented & verified! Ready for production.**
+- [ ] Smoke test: load each support page (unauth) and verify sign-in popup appears and payment does NOT open; load with auth and verify payment opens.
+
 
