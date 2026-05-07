@@ -44,11 +44,15 @@ $tables = [
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT,
         project_id INT,
+        card_number VARCHAR(32) NULL,
+        backer_name VARCHAR(120) NULL,
         amount DECIMAL(10,2) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id),
         FOREIGN KEY (project_id) REFERENCES projects(id)
     )",
+
+
 
     "CREATE TABLE IF NOT EXISTS contacts (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -106,4 +110,3 @@ foreach ($projects as $proj) {
 
 echo "✅ Database ready with exact fields: project_name, collected_money, pledged_goal, backers, days_to_go\n";
 ?>
-
