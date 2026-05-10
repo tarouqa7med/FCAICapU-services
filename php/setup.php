@@ -1,5 +1,6 @@
 <?php
-require_once 'config.php';
+// IMPORTANT: DO NOT require config.php here.
+// config.php connects to `fcaicrowdfund` immediately, but the DB is created below.
 
 echo "Final DB setup - no user_id...\n";
 
@@ -52,8 +53,6 @@ $tables = [
         FOREIGN KEY (project_id) REFERENCES projects(id)
     )",
 
-
-
     "CREATE TABLE IF NOT EXISTS contacts (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100),
@@ -76,7 +75,6 @@ $defaultUsers = [
     ['AdminAdmin', 'Admin Admin', 'admin@admin.admin', '$2y$10$e7NCeguXe3zRlEt/eVpqzOEPL3sk80qPN2.6jRoZjH9q0N11xOJqC', '', 'admin'],
     ['UserUser', 'User User', 'user@user.user', '$2y$10$e7NCeguXe3zRlEt/eVpqzOEPL3sk80qPN2.6jRoZjH9q0N11xOJqC', 'attachments/logos/default_user.jpg', 'user'],
 ];
-
 
 $stmt = $pdo->prepare("INSERT IGNORE INTO users (username, full_name, email, password, image, role) VALUES (?, ?, ?, ?, ?, ?)");
 foreach ($defaultUsers as $user) {
@@ -110,3 +108,4 @@ foreach ($projects as $proj) {
 
 echo "✅ Database ready with exact fields: project_name, collected_money, pledged_goal, backers, days_to_go\n";
 ?>
+
