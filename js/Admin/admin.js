@@ -91,6 +91,7 @@ async function loadUsers() {
                 <td><input data-field="image" value="${user.image || ""}"></td>
                 <td>${user.created_at || ""}</td>
                 <td>
+                    <button onclick="saveRow(${user.id}, 'user')" class="btn btn-sm btn-success">Save</button>
                     <button onclick="deleteUser(${user.id})" class="btn btn-sm btn-danger">Delete</button>
                     <button onclick="viewActivities(${user.id})" class="btn btn-sm btn-info">Activities</button>
                 </td>
@@ -159,6 +160,15 @@ async function saveField(input) {
         alert("Save failed");
     } finally {
         input.classList.remove("is-saving");
+    }
+}
+
+async function saveRow(id, entity) {
+    const row = document.querySelector(`tr[data-id="${id}"][data-entity="${entity}"]`);
+    if (!row) return;
+    const inputs = row.querySelectorAll('[data-field]');
+    for (const input of inputs) {
+        await saveField(input);
     }
 }
 
@@ -246,7 +256,10 @@ async function loadProjects() {
                     <td><input data-field="days_to_go" value="${project.days_to_go || 0}" type="number"></td>
                     <td><input data-field="image" value="${project.image || ""}"></td>
                     <td><textarea data-field="description">${project.description || ""}</textarea></td>
-                    <td><button onclick="deleteProject(${project.id})" class="btn btn-sm btn-danger">Delete</button></td>
+                    <td>
+                        <button onclick="saveRow(${project.id}, 'project')" class="btn btn-sm btn-success">Save</button>
+                        <button onclick="deleteProject(${project.id})" class="btn btn-sm btn-danger">Delete</button>
+                    </td>
                 </tr>
             `)
             .join("");
@@ -338,7 +351,10 @@ async function loadDonations() {
                     <td><input data-field="card_number" value="${donation.card_number || ''}"></td>
                     <td><input data-field="backer_name" value="${donation.backer_name || ''}"></td>
                     <td>${donation.created_at || ''}</td>
-                    <td><button onclick="deleteDonation(${donation.id})" class="btn btn-sm btn-danger">Delete</button></td>
+                    <td>
+                        <button onclick="saveRow(${donation.id}, 'donation')" class="btn btn-sm btn-success">Save</button>
+                        <button onclick="deleteDonation(${donation.id})" class="btn btn-sm btn-danger">Delete</button>
+                    </td>
                 </tr>
             `)
             .join("");
@@ -388,7 +404,10 @@ async function loadContacts() {
                     <td><input data-field="email" value="${contact.email || ''}" type="email"></td>
                     <td><textarea data-field="message">${contact.message || ''}</textarea></td>
                     <td>${contact.created_at || ''}</td>
-                    <td><button onclick="deleteContact(${contact.id})" class="btn btn-sm btn-danger">Delete</button></td>
+                    <td>
+                        <button onclick="saveRow(${contact.id}, 'contact')" class="btn btn-sm btn-success">Save</button>
+                        <button onclick="deleteContact(${contact.id})" class="btn btn-sm btn-danger">Delete</button>
+                    </td>
                 </tr>
             `)
             .join("");
