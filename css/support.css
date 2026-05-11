@@ -170,7 +170,7 @@
 }
 .s-div2 .progress {
     margin-bottom: 10px;
-    background-color: var(--donations-container-bgcolor);
+    background-color: var(--primary-color2);
     border-radius: 35px;
     height: 15px;
     border: 1px solid var(--primary-color6);
@@ -227,7 +227,6 @@
     animation: pop-up 750ms forwards ease;
 }
 .pop-up .mini-pop-up {
-    /* padding-top: 40px; */
     width: 40%;
     min-width: 450px;
     background:  var(--primary-color2);

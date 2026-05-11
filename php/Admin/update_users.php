@@ -15,7 +15,7 @@ if (isset($_GET['stats']) && $_GET['stats'] === '1') {
 }
 
 // GET - list users
-if (!$_POST) {
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $stmt = $pdo->query("SELECT id, username, full_name, email, role, mobile, image, created_at FROM users ORDER BY id DESC");
     echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
     exit;

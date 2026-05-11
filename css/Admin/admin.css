@@ -94,36 +94,62 @@ body::after {
     padding: 20px;
     padding-top: 125px;
     width: 75%;
-    height: 100vh;
+    height: 562px;
     background: var(--primary-color1);
     position: absolute;
     top: 0;
     left: 25%;
-    overflow: scroll;
-    scrollbar-color: var(--primary-color6) var(--primary-color2);
 }
-
-/* .content .section */
-.section {
-    padding-left: 50px;
+.content .section {
     display: none;
     height: 100%;
+    gap: 0;
     color: var(--primary-color6);
-    overflow: auto;
+    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-color: var(--primary-color6) transparent;
 }
 .section h1 {
+    margin-bottom: 20px;
     text-align: center;
 }
-.active {
-    display: block;
+.section .stats-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 80%;
+    width: 100%;
+}
+.stats-grid div {
+    margin: 0 !important;
+    padding: 20px;
+    width: 45%;
+    height: 135px;
+    background: color-mix(in srgb, var(--primary-color1) 25%, transparent);
+    backdrop-filter: blur(50px);
+    border: 1px solid color-mix(in srgb, var(--primary-color6) 65%, transparent);
+    border-radius: 20px;
+    box-shadow: 0 0 35px 0 color-mix(in srgb, var(--primary-color6) 75%, transparent) inset;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.stats-grid div:hover {
+    font-size: 24px;
+    background-color: var(--primary-color2);
+    scale: 1.05;
+    transition: 50ms linear !important;
 }
 table {
-    width: 100%;
+    width: 200% !important;
     border-collapse: collapse;
-    margin-top: 20px;
     text-align: center;
 }
 th, td {
+    width: 200px !important;
     border: 1px solid var(--primary-color6);
     padding: 10px;
 }
@@ -136,12 +162,8 @@ button.action {
     margin: 2px;
     cursor: pointer;
 }
-
-/* ============== Edit width & height of all tables ================================================================= */
-
-th {
-    width: 200px !important;
-    height: auto;
+.active {
+    display: block;
 }
 
 /* --------- Log out -------------------------------------------------------------- */
