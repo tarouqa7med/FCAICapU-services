@@ -12,7 +12,9 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
     // Schema migration: ensure optional admin fields exist without breaking existing data.
     $projectImageColumn = $pdo->query("SHOW COLUMNS FROM projects LIKE 'image'")->fetch();

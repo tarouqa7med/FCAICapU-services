@@ -47,7 +47,7 @@ body::after {
 }
 .layout .sidebar {
     padding: 30px;
-    width: 35%;
+    width: 25%;
     height: 100vh;
     transform: translateY(90px);
     position: fixed;
@@ -93,12 +93,12 @@ body::after {
 .layout .content {
     padding: 20px;
     padding-top: 125px;
-    width: 65%;
+    width: 75%;
     height: 100vh;
     background: var(--primary-color1);
     position: absolute;
     top: 0;
-    left: 35%;
+    left: 25%;
     overflow: scroll;
     scrollbar-color: var(--primary-color6) var(--primary-color2);
 }
@@ -137,6 +137,13 @@ button.action {
     cursor: pointer;
 }
 
+/* ============== Edit width & height of all tables ================================================================= */
+
+th {
+    width: 200px !important;
+    height: auto;
+}
+
 /* --------- Log out -------------------------------------------------------------- */
 
 .modal-overlay {
@@ -169,3 +176,4 @@ button.action {
     padding: 8px 12px;
     cursor: pointer;
 }
+
