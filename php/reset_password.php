@@ -1,38 +1,42 @@
-
 <?php
-session_start();
+/**
+ * Password reset endpoint.
+ * Accepts POST with password and uses session email/OTP state.
+ */
+header('Content-Type: text/plain; charset=utf-8');
 
-$conn = new mysqli("localhost", "root", "", "fcaicrowdfund");
-
-$password = $_POST['password'] ?? '';
-
-if ($password == "") {
-    echo "empty";
-    exit;
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-// لازم يكون verified OTP
-if (!isset($_SESSION['email']) || !isset($_SESSION['otp'])) {
-    echo "error";
-    exit;
+$password = trim($_POST['password'] ?? '');
+if ($password === '') {
+    echo 'empty';
+    exit();
+}
+
+if (!isset($_SESSION['email'], $_SESSION['otp'])) {
+    echo 'error';
+    exit();
 }
 
 $email = $_SESSION['email'];
 
-// تشفير الباسورد
-$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+require_once 'config.php';
 
-// تحديث الباسورد
-$sql = "UPDATE users SET password = ? WHERE email = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("ss", $hashedPassword, $email);
+try {
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $stmt = $pdo->prepare('UPDATE users SET password = ? WHERE email = ?');
+    $stmt->execute([$hashedPassword, $email]);
 
-if ($stmt->execute()) {
-
-    session_destroy();
-
-    echo "success";
-} else {
-    echo "error";
+    if ($stmt->rowCount() > 0) {
+        session_destroy();
+        echo 'success';
+    } else {
+        echo 'error';
+    }
+} catch (Exception $e) {
+    error_log('reset_password.php error: ' . $e->getMessage());
+    echo 'error';
 }
 ?>

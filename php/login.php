@@ -1,5 +1,9 @@
 <?php
-header('Content-Type: application/json');
+/**
+ * Login endpoint.
+ * Accepts POST requests with email and password.
+ */
+header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -11,54 +15,44 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-// Validate input data
 $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 
-if (empty($email)) {
+if ($email === '') {
     echo json_encode(['success' => false, 'message' => 'Please enter your email']);
     exit();
 }
 
-if (empty($password)) {
+if ($password === '') {
     echo json_encode(['success' => false, 'message' => 'Please enter your password']);
     exit();
 }
 
 try {
-    // 1️⃣ Check if email exists
-    $stmt = $pdo->prepare("SELECT id, username, email, password, full_name, image, role FROM users WHERE email = ?");
+    $stmt = $pdo->prepare('SELECT id, username, email, password, full_name, image, role FROM users WHERE email = ?');
     $stmt->execute([$email]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+    $user = $stmt->fetch();
+
     if (!$user) {
-        sleep(1); // Brute force protection
-        echo json_encode([
-            'success' => false, 
-            'message' => 'Email not registered. Please check your email address.'
-        ]);
+        sleep(1);
+        echo json_encode(['success' => false, 'message' => 'Email not registered. Please check your email address.']);
         exit();
     }
-    
-    // 2️⃣ Verify password
+
     if (!password_verify($password, $user['password'])) {
-        sleep(1); // Brute force protection
-        echo json_encode([
-            'success' => false, 
-            'message' => 'Incorrect password'
-        ]);
+        sleep(1);
+        echo json_encode(['success' => false, 'message' => 'Incorrect password']);
         exit();
     }
-    
-    // 3️⃣ Login successful ✅
+
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['user_name'] = $user['username'];
     $_SESSION['user_email'] = $user['email'];
     $_SESSION['user_role'] = $user['role'];
-    
+
     echo json_encode([
         'success' => true,
-        'message' => 'Login successful! 🎉',
+        'message' => 'Login successful!',
         'user' => [
             'username' => $user['username'],
             'full_name' => $user['full_name'],
@@ -66,9 +60,8 @@ try {
             'image' => $user['image']
         ]
     ]);
-    
 } catch (Exception $e) {
-    error_log('Login error: ' . $e->getMessage());
+    error_log('login.php error: ' . $e->getMessage());
     echo json_encode(['success' => false, 'message' => 'Server error. Please try again.']);
 }
 ?>

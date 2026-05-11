@@ -1,33 +1,38 @@
 <?php
 /**
- * Database Configuration - FCAICapU Crowdfunding
-*/
+ * Database configuration for FCAICapU Crowdfunding.
+ *
+ * This file creates a shared PDO instance named $pdo and starts
+ * a session if one is not already active.
+ */
+
 $host = 'localhost';
-$dbname = 'fcaicrowdfund'; // Fixed to match setup.php
+$dbname = 'fcaicrowdfund';
 $username = 'root';
 $password = '';
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
 
-    // Schema migration: ensure optional admin fields exist without breaking existing data.
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+    // Keep the projects table compatible with the application.
     $projectImageColumn = $pdo->query("SHOW COLUMNS FROM projects LIKE 'image'")->fetch();
     if (!$projectImageColumn) {
         $pdo->exec("ALTER TABLE projects ADD COLUMN image VARCHAR(255) DEFAULT ''");
     }
+
     $projectDescriptionColumn = $pdo->query("SHOW COLUMNS FROM projects LIKE 'description'")->fetch();
     if (!$projectDescriptionColumn) {
         $pdo->exec("ALTER TABLE projects ADD COLUMN description TEXT NULL");
     }
-} catch(PDOException $e) {
-    die(json_encode(['success' => false, 'message' => 'DB Error: ' . $e->getMessage()]));
+} catch (PDOException $e) {
+    die(json_encode(['success' => false, 'message' => 'Database connection failed.']));
 }
-
 ?>
 

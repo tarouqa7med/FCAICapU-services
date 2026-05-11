@@ -1,28 +1,38 @@
-
 <?php
+/**
+ * OTP generator for password reset.
+ * Returns plain text: valid|<OTP> or invalid.
+ */
 
-session_start();
+header('Content-Type: text/plain; charset=utf-8');
 
-$conn = new mysqli("localhost", "root", "", "fcaicrowdfund");
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-$email = $_POST['email'] ?? '';
+$email = trim($_POST['email'] ?? '');
+if ($email === '') {
+    echo 'invalid';
+    exit();
+}
 
-$sql = "SELECT * FROM users WHERE email = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $email);
-$stmt->execute();
+require_once 'config.php';
 
-$result = $stmt->get_result();
+try {
+    $stmt = $pdo->prepare('SELECT id FROM users WHERE email = ?');
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
 
-if ($result->num_rows > 0) {
-
-    // هنا تقدر تولد OTP بعد ما تتأكد
-    $otp = rand(100000, 999999);
-    $_SESSION['otp'] = $otp;
-    $_SESSION['email'] = $email;
-
-    echo "valid|$otp";
-} else {
-    echo "invalid";
+    if ($user) {
+        $otp = strval(rand(100000, 999999));
+        $_SESSION['otp'] = $otp;
+        $_SESSION['email'] = $email;
+        echo 'valid|' . $otp;
+    } else {
+        echo 'invalid';
+    }
+} catch (Exception $e) {
+    error_log('send_otp.php error: ' . $e->getMessage());
+    echo 'invalid';
 }
 ?>
