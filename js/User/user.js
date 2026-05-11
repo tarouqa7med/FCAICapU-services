@@ -12,6 +12,7 @@ class UserProfile {
     init() {
         console.log("👤 UserProfile initializing...");
         this.loadUserData();
+        this.loadUserDonations();
     }
 
     // Get PHP URL based on current path
@@ -414,6 +415,69 @@ class UserProfile {
         const userName = document.getElementById("userName");
         if (userName) {
             userName.textContent = message;
+        }
+    }
+
+    // Load user donations
+    loadUserDonations() {
+        const path = window.location.pathname.toLowerCase().trim();
+        const donationsUrl = path.includes("/html/") 
+            ? '../../php/User/fetch_donations.php'
+            : './php/User/fetch_donations.php';
+
+        fetch(donationsUrl, { credentials: 'same-origin' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    this.displayDonations(data.donations);
+                } else {
+                    console.error("Failed to load donations:", data.error);
+                    this.showNoDonations("Failed to load donations");
+                }
+            })
+            .catch(err => {
+                console.error('Donations load error:', err);
+                this.showNoDonations("Error loading donations");
+            });
+    }
+
+    // Display donations in table
+    displayDonations(donations) {
+        const tbody = document.getElementById("donationsTableBody");
+        if (!tbody) return;
+
+        if (!donations || donations.length === 0) {
+            this.showNoDonations("No donations yet");
+            return;
+        }
+
+        tbody.innerHTML = '';
+        donations.forEach(donation => {
+            const date = new Date(donation.created_at);
+            const formattedDate = date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${donation.project_name}</td>
+                <td><span class="badge bg-info">${donation.category}</span></td>
+                <td><strong>${donation.amount.toLocaleString()} EGP</strong></td>
+                <td>${formattedDate}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    // Show no donations message
+    showNoDonations(message) {
+        const tbody = document.getElementById("donationsTableBody");
+        if (tbody) {
+            tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">${message}</td></tr>`;
         }
     }
 }

@@ -65,12 +65,25 @@ try {
         exit();
     }
 
-    // Ensure donations table has required columns.
-    // This is handled by php/setup.php update, but we guard anyway.
+    // Check if user has already backed this project
+    $stmt = $pdo->prepare('SELECT COUNT(*) as count FROM donations WHERE user_id = ? AND project_id = ?');
+    $stmt->execute([$userId, $projectId]);
+    $existingDonation = $stmt->fetch(PDO::FETCH_ASSOC);
+    $isNewBacker = ($existingDonation['count'] == 0);
 
     // Insert donation
     $stmt = $pdo->prepare('INSERT INTO donations (user_id, project_id, amount, created_at) VALUES (?, ?, ?, NOW())');
     $stmt->execute([$userId, $projectId, $amount]);
+
+    // Update projects table: add to collected_money
+    $stmt = $pdo->prepare('UPDATE projects SET collected_money = collected_money + ? WHERE id = ?');
+    $stmt->execute([$amount, $projectId]);
+
+    // Update backers count only if this is the first donation from this user to this project
+    if ($isNewBacker) {
+        $stmt = $pdo->prepare('UPDATE projects SET backers = backers + 1 WHERE id = ?');
+        $stmt->execute([$projectId]);
+    }
 
     // Card number requirement: donations table in this repo currently doesn't store card number.
     // To avoid breaking schema, we store it in a separate field if present.
