@@ -47,7 +47,7 @@ try {
     
     // Get all projects in this category
     $stmt = $pdo->prepare("
-        SELECT id, project_name, collected_money, pledged_goal, backers
+        SELECT id, project_name, collected_money, pledged_goal, backers, days_to_go, image, description
         FROM projects
         WHERE category = ?
         ORDER BY id ASC

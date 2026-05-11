@@ -37,6 +37,9 @@
                         <h2>Admin Control Panel</h2>
                         <button onclick="showSection('dashboard')">📊 Dashboard</button>
                         <button onclick="showSection('users')">👥 Users</button>
+                        <button onclick="showSection('projects')">🧩 Projects</button>
+                        <button onclick="showSection('donations')">💳 Donations</button>
+                        <button onclick="showSection('contacts')">✉️ Feedbacks</button>
                         <button onclick="showLogoutModal()">🚪 Sign Out</button>
                     </div>
 
@@ -110,6 +113,97 @@
                                 </table>
                             </div>
                         </div>
+
+                        <div id="projects" class="section">
+                            <h1>Projects Management</h1>
+                            <div class="add-form row g-2 mb-3">
+                                <div class="col-md-2">
+                                    <input id="newProjectName" class="form-control form-control-sm" placeholder="Project name">
+                                </div>
+                                <div class="col-md-2">
+                                    <select id="newProjectCategory" class="form-select form-select-sm">
+                                        <option value="activities">activities</option>
+                                        <option value="college">college</option>
+                                        <option value="graduationProjects">graduationProjects</option>
+                                        <option value="students">students</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <input id="newProjectGoal" class="form-control form-control-sm" type="number" placeholder="Pledged goal">
+                                </div>
+                                <div class="col-md-2">
+                                    <input id="newProjectDays" class="form-control form-control-sm" type="number" placeholder="Days to go" value="30">
+                                </div>
+                                <div class="col-md-2">
+                                    <input id="newProjectImage" class="form-control form-control-sm" placeholder="Image URL">
+                                </div>
+                                <div class="col-md-1">
+                                    <button id="createProjectBtn" class="btn btn-success">Add</button>
+                                </div>
+                            </div>
+                            <div id="projectsLoading" class="alert alert-info">Loading projects...</div>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Category</th>
+                                            <th>Collected</th>
+                                            <th>Goal</th>
+                                            <th>Backers</th>
+                                            <th>Days</th>
+                                            <th>Image</th>
+                                            <th>Description</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="projectsTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="donations" class="section">
+                            <h1>Donations Management</h1>
+                            <div id="donationsLoading" class="alert alert-info">Loading donations...</div>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>User</th>
+                                            <th>Project</th>
+                                            <th>Amount</th>
+                                            <th>Card</th>
+                                            <th>Backer</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="donationsTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="contacts" class="section">
+                            <h1>Feedbacks / Contacts</h1>
+                            <div id="contactsLoading" class="alert alert-info">Loading feedbacks...</div>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Message</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="contactsTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -150,7 +244,8 @@
     <style>
         .is-saving { opacity: 0.6; }
         .saved { background: #d4edda !important; }
-        .table input, .table select { margin: 0; width: 100%; }
+        .table input, .table select, .table textarea { margin: 0; width: 100%; }
+        .table textarea { min-height: 80px; resize: vertical; }
         .stat-card { background: var(--card-bg); padding: 20px; border-radius: 10px; text-align: center; }
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000; }

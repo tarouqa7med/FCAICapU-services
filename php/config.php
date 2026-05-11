@@ -13,6 +13,16 @@ try {
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     session_start();
+
+    // Schema migration: ensure optional admin fields exist without breaking existing data.
+    $projectImageColumn = $pdo->query("SHOW COLUMNS FROM projects LIKE 'image'")->fetch();
+    if (!$projectImageColumn) {
+        $pdo->exec("ALTER TABLE projects ADD COLUMN image VARCHAR(255) DEFAULT ''");
+    }
+    $projectDescriptionColumn = $pdo->query("SHOW COLUMNS FROM projects LIKE 'description'")->fetch();
+    if (!$projectDescriptionColumn) {
+        $pdo->exec("ALTER TABLE projects ADD COLUMN description TEXT NULL");
+    }
 } catch(PDOException $e) {
     die(json_encode(['success' => false, 'message' => 'DB Error: ' . $e->getMessage()]));
 }

@@ -4,7 +4,7 @@ require_once 'protect.php'; // Admin only
 
 
 // Dashboard stats
-if ($_GET['stats'] === '1') {
+if (isset($_GET['stats']) && $_GET['stats'] === '1') {
     $stats = [];
     $stats['users'] = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
     $stats['projects'] = $pdo->query("SELECT COUNT(*) FROM projects")->fetchColumn();
@@ -68,7 +68,7 @@ switch ($action) {
     case 'user_activities':
         $user_id = (int)$input['user_id'];
         $stmt = $pdo->prepare("
-            SELECT d.id, d.amount, d.created_at, p.name as project 
+            SELECT d.id, d.amount, d.created_at, p.project_name as project 
             FROM donations d 
             LEFT JOIN projects p ON d.project_id = p.id 
             WHERE d.user_id = ? 

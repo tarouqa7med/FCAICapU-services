@@ -4,35 +4,76 @@ async function loadDonationStats() {
         const response = await fetch('../php/Support/support-activities.php');
         const data = await response.json();
         
-        if (data.success) {
-            const analysisSpans = document.querySelectorAll('.analysis-box div span');
-            if (analysisSpans.length >= 3) {
-                analysisSpans[0].textContent = data.totalCollected.toLocaleString() + ' EGP';
-                analysisSpans[1].textContent = data.backers;
-                analysisSpans[2].textContent = data.projectCount;
-            }
-            
-            const projectBoxes = document.querySelectorAll('.s-box');
-            data.projects.forEach((project, index) => {
-                if (projectBoxes[index]) {
-                    projectBoxes[index].dataset.projectId = project.id;
-                    const spans = projectBoxes[index].querySelectorAll('.s-div-2 span');
-                    const labels = projectBoxes[index].querySelectorAll('.s-div-2 p');
-                    if (spans.length >= 1) {
-                        spans[0].innerHTML = project.collected_money.toLocaleString() + ' EGP<br><small>of ' + project.pledged_goal.toLocaleString() + ' EGP pledged</small>';
-                    }
-                    if (labels.length >= 1) {
-                        labels[0].textContent = 'total collected money of pledged goal';
-                    }
-                    if (spans.length >= 2) {
-                        spans[1].textContent = project.backers;
-                    }
-                }
-            });
+        if (!data.success) {
+            console.error('Support data failed:', data.error);
+            return;
         }
+
+        const analysisSpans = document.querySelectorAll('.analysis-box div span');
+        if (analysisSpans.length >= 3) {
+            analysisSpans[0].textContent = Number(data.totalCollected).toLocaleString() + ' EGP';
+            analysisSpans[1].textContent = data.backers;
+            analysisSpans[2].textContent = data.projectCount;
+        }
+
+        const boxContainer = document.querySelector('.box');
+        if (!boxContainer) return;
+
+        boxContainer.innerHTML = data.projects
+            .map((project) => renderSupportProjectCard(project))
+            .join('');
     } catch (error) {
         console.error('Error loading donation stats:', error);
     }
+}
+
+function renderSupportProjectCard(project) {
+    const collected = Number(project.collected_money || 0);
+    const pledged = Number(project.pledged_goal || 0);
+    const progressPercent = pledged > 0 ? Math.min(100, Math.round((collected / pledged) * 100)) : 0;
+    const imageSrc = project.image ? project.image : '../attachments/wallpapers/computers.png';
+    const description = project.description || 'Support this project to help students and improve learning resources.';
+
+    return `
+        <div class="s-box" data-project-id="${project.id}">
+            <p>${escapeHtml(project.project_name)}</p>
+            <p>${escapeHtml(description)}</p>
+            <div>
+                <div class="div1">
+                    <img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(project.project_name)}">
+                </div>
+                <div class="div2">
+                    <div class="s-div2">
+                        <div class="progress">
+                            <div class="progress-bar" style="width: ${progressPercent}%"></div>
+                        </div>
+                        <div class="s-div-2">
+                            <span>${collected.toLocaleString()} EGP</span>
+                            <p>total collected money of pledged goal</p>
+                        </div>
+                        <div class="s-div-2">
+                            <span>${project.backers}</span>
+                            <p>backers</p>
+                        </div>
+                        <div class="s-div-2">
+                            <span>${project.days_to_go || 0}</span>
+                            <p>days to go</p>
+                        </div>
+                        <button class="backBtn">Back this project</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
 }
 
 // Load stats when page loads

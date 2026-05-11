@@ -5,6 +5,8 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+require_once 'config.php';
+
 $contactsDir = '../contact/';
 $contactsFile = $contactsDir . 'contacts.txt';
 
@@ -14,8 +16,8 @@ if (!is_dir($contactsDir)) {
 
 if (!isset($_SESSION['user_id'])) {
     echo json_encode([
-        'success' => true,
-        'message' => 'Please sign in, First!❌',
+        'success' => false,
+        'message' => 'Please sign in first.',
         'loginRequired' => true
     ]);
     exit();
@@ -28,24 +30,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if (empty($name) || empty($email) || empty($message)) {
         echo json_encode([
-            'success' => true,
-            'message' => 'Please fill in all fields❌'
+            'success' => false,
+            'message' => 'Please fill in all fields.'
         ]);
         exit();
     }
     
     $user_name = $_SESSION['user_name'] ?? 'user_' . $_SESSION['user_id'];
     $data = date('Y-m-d H:i:s') . "\n\tUsername : $user_name\n\tName     : $name\n\tEmail    : $email\n\tMessage  : $message\n---------------------------------------------------------------------------------------\n\n";
-    
-    if (file_put_contents($contactsFile, $data, FILE_APPEND | LOCK_EX) !== false) {
+
+    $savedToFile = file_put_contents($contactsFile, $data, FILE_APPEND | LOCK_EX) !== false;
+    $savedToDb = false;
+
+    try {
+        $stmt = $pdo->prepare("INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)");
+        $savedToDb = $stmt->execute([$name, $email, $message]);
+    } catch (Exception $e) {
+        error_log('Contact DB save error: ' . $e->getMessage());
+    }
+
+    if ($savedToFile || $savedToDb) {
         echo json_encode([
             'success' => true,
             'message' => '✅ Your feedback has been submitted successfully! Thank you 😊'
         ]);
     } else {
         echo json_encode([
-            'success' => true,
-            'message' => 'Error saving data - please check permissions❌'
+            'success' => false,
+            'message' => 'Error saving feedback. Please try again later.'
         ]);
     }
     exit();
