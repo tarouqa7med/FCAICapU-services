@@ -2,8 +2,6 @@
 // IMPORTANT: DO NOT require config.php here.
 // config.php connects to `fcaicrowdfund` immediately, but the DB is created below.
 
-echo "Final DB setup - no user_id...\n";
-
 // Create DB
 try {
     $pdo_create = new PDO("mysql:host=localhost", 'root', '');
@@ -14,6 +12,8 @@ try {
 }
 
 require_once 'config.php';
+
+echo "Final DB setup - no user_id...\n";
 
 // Drop and recreate
 $pdo->exec("DROP TABLE IF EXISTS donations, projects, contacts, users");
