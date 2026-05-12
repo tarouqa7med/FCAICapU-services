@@ -1,18 +1,19 @@
 <?php
 /**
  * OTP generator for password reset.
- * Returns plain text: valid|<OTP>, invalid_email, or error.
+ * Returns JSON: { success: bool, message: string, otp?: string }
  */
 
-header('Content-Type: text/plain; charset=utf-8');
+header('Content-Type: application/json; charset=utf-8');
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$email = trim($_POST['email'] ?? '');
+$input = json_decode(file_get_contents('php://input'), true) ?: $_POST;
+$email = trim($input['email'] ?? '');
 if ($email === '') {
-    echo 'invalid_email';
+    echo json_encode(['success' => false, 'message' => 'invalid_email']);
     exit();
 }
 
@@ -24,7 +25,7 @@ try {
     $user = $stmt->fetch();
 
     if (!$user) {
-        echo 'invalid_email';
+        echo json_encode(['success' => false, 'message' => 'invalid_email']);
         exit();
     }
 
@@ -36,9 +37,9 @@ try {
         'created_at' => time(),
     ];
 
-    echo 'valid|' . $otp;
+    echo json_encode(['success' => true, 'message' => 'otp_sent', 'otp' => $otp]);
 } catch (Exception $e) {
     error_log('send_otp.php error: ' . $e->getMessage());
-    echo 'error';
+    echo json_encode(['success' => false, 'message' => 'error']);
 }
 ?>
