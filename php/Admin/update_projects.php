@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once 'protect.php';
+require_once __DIR__ . '/protect.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $stmt = $pdo->query("SELECT id, project_name, category, collected_money, pledged_goal, backers, days_to_go, image, description FROM projects ORDER BY id DESC");

@@ -15,14 +15,23 @@ if ($password === '') {
     exit();
 }
 
-if (!isset($_SESSION['email'], $_SESSION['otp'])) {
-    echo 'error';
+if (!isset($_SESSION['reset_password']['email'], $_SESSION['reset_password']['verified']) || $_SESSION['reset_password']['verified'] !== true) {
+    echo 'unauthorized';
     exit();
 }
 
-$email = $_SESSION['email'];
+$resetData = $_SESSION['reset_password'];
+$email = $resetData['email'];
 
-require_once 'config.php';
+require_once __DIR__ . '/config.php';
+
+$stmt = $pdo->prepare('SELECT id FROM users WHERE email = ?');
+$stmt->execute([$email]);
+$user = $stmt->fetch();
+if (!$user) {
+    echo 'invalid';
+    exit();
+}
 
 try {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -30,6 +39,7 @@ try {
     $stmt->execute([$hashedPassword, $email]);
 
     if ($stmt->rowCount() > 0) {
+        unset($_SESSION['reset_password']);
         session_destroy();
         echo 'success';
     } else {

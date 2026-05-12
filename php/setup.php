@@ -4,7 +4,6 @@
  *
  * This script creates the database, schema, default users, and initial projects.
  */
-echo "Final DB setup - no user_id...\n";
 
 try {
     $pdo_create = new PDO('mysql:host=localhost', 'root', '');
@@ -14,9 +13,10 @@ try {
     die('DB creation failed: ' . $e->getMessage());
 }
 
-require_once 'config.php';
+require_once __DIR__ . '/config.php';
 
-$pdo->exec('DROP TABLE IF EXISTS donations, projects, contacts, users');
+// Drop and recreate tables in case the structure changed.
+$pdo->exec("DROP TABLE IF EXISTS donations, projects, contacts, users");
 
 $tables = [
     'CREATE TABLE IF NOT EXISTS users (
