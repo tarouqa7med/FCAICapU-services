@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 /**
  * Database setup script for FCAICapU Crowdfunding.
  *
@@ -7,12 +6,6 @@
  */
 echo "Final DB setup - no user_id...\n";
 
-=======
-// IMPORTANT: DO NOT require config.php here.
-// config.php connects to `fcaicrowdfund` immediately, but the DB is created below.
-
-// Create DB
->>>>>>> c33bd7ab8d9641f58af48fdb3a8bfb339bc5d9d8
 try {
     $pdo_create = new PDO('mysql:host=localhost', 'root', '');
     $pdo_create->exec('CREATE DATABASE IF NOT EXISTS fcaicrowdfund CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
@@ -23,14 +16,7 @@ try {
 
 require_once 'config.php';
 
-<<<<<<< HEAD
 $pdo->exec('DROP TABLE IF EXISTS donations, projects, contacts, users');
-=======
-echo "Final DB setup - no user_id...\n";
-
-// Drop and recreate
-$pdo->exec("DROP TABLE IF EXISTS donations, projects, contacts, users");
->>>>>>> c33bd7ab8d9641f58af48fdb3a8bfb339bc5d9d8
 
 $tables = [
     'CREATE TABLE IF NOT EXISTS users (
