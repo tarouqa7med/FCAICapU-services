@@ -21,15 +21,17 @@ try {
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
-    // Keep the projects table compatible with the application.
-    $projectImageColumn = $pdo->query("SHOW COLUMNS FROM projects LIKE 'image'")->fetch();
-    if (!$projectImageColumn) {
-        $pdo->exec("ALTER TABLE projects ADD COLUMN image VARCHAR(255) DEFAULT ''");
-    }
+    // Keep the projects table compatible with the application only if the table already exists.
+    if ($pdo->query("SHOW TABLES LIKE 'projects'")->fetch()) {
+        $projectImageColumn = $pdo->query("SHOW COLUMNS FROM projects LIKE 'image'")->fetch();
+        if (!$projectImageColumn) {
+            $pdo->exec("ALTER TABLE projects ADD COLUMN image VARCHAR(255) DEFAULT ''");
+        }
 
-    $projectDescriptionColumn = $pdo->query("SHOW COLUMNS FROM projects LIKE 'description'")->fetch();
-    if (!$projectDescriptionColumn) {
-        $pdo->exec("ALTER TABLE projects ADD COLUMN description TEXT NULL");
+        $projectDescriptionColumn = $pdo->query("SHOW COLUMNS FROM projects LIKE 'description'")->fetch();
+        if (!$projectDescriptionColumn) {
+            $pdo->exec("ALTER TABLE projects ADD COLUMN description TEXT NULL");
+        }
     }
 } catch (PDOException $e) {
     die(json_encode(['success' => false, 'message' => 'Database connection failed.']));

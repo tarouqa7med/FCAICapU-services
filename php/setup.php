@@ -6,7 +6,11 @@
  */
 
 try {
-    $pdo_create = new PDO('mysql:host=localhost', 'root', '');
+    $pdo_create = new PDO('mysql:host=localhost;charset=utf8mb4', 'root', '', [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES => false,
+    ]);
     $pdo_create->exec('CREATE DATABASE IF NOT EXISTS fcaicrowdfund CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
     $pdo_create = null;
 } catch (PDOException $e) {
@@ -16,7 +20,9 @@ try {
 require_once __DIR__ . '/config.php';
 
 // Drop and recreate tables in case the structure changed.
-$pdo->exec("DROP TABLE IF EXISTS donations, projects, contacts, users");
+$pdo->exec('SET FOREIGN_KEY_CHECKS = 0');
+$pdo->exec('DROP TABLE IF EXISTS donations, contacts, projects, users');
+$pdo->exec('SET FOREIGN_KEY_CHECKS = 1');
 
 $tables = [
     'CREATE TABLE IF NOT EXISTS users (
@@ -25,11 +31,11 @@ $tables = [
         full_name VARCHAR(100) NOT NULL,
         email VARCHAR(100) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
-        image VARCHAR(255) DEFAULT "attachments/logos/default_user.jpg",
-        role ENUM("user", "admin") DEFAULT "user",
+        image VARCHAR(255) DEFAULT \'attachments/logos/default_user.jpg\',
+        role ENUM(\'user\', \'admin\') DEFAULT \'user\',
         mobile VARCHAR(20),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )',
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci',
     'CREATE TABLE IF NOT EXISTS projects (
         id INT AUTO_INCREMENT PRIMARY KEY,
         project_name VARCHAR(100) NOT NULL,
@@ -38,9 +44,9 @@ $tables = [
         pledged_goal DECIMAL(10,2) NOT NULL,
         backers INT DEFAULT 0,
         days_to_go INT DEFAULT 30,
-        image VARCHAR(255) DEFAULT "",
+        image VARCHAR(255) DEFAULT \'\',
         description TEXT NULL
-    )',
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci',
     'CREATE TABLE IF NOT EXISTS donations (
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT,
@@ -51,14 +57,14 @@ $tables = [
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id),
         FOREIGN KEY (project_id) REFERENCES projects(id)
-    )',
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci',
     'CREATE TABLE IF NOT EXISTS contacts (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100),
         email VARCHAR(100),
         message TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )',
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci',
 ];
 
 foreach ($tables as $sql) {
